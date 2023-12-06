@@ -51,9 +51,8 @@ public class PlayerController : MonoBehaviour
 
     private void Animate()
     {
-        // Determine if the player is moving
         bool isMoving = _input.magnitude > 0;
-        _animator.SetBool("IsMoving", isMoving);  // Assuming 'IsMoving' is a parameter in your animator
+        _animator.SetBool("IsMoving", isMoving);
     }
 }
 
