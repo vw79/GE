@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Transform _model;
     [SerializeField] private float _speed = 5;
-    [SerializeField] private float _turnSpeed = 360;
+    [SerializeField] private float _turnSpeed = 1000;
     private Rigidbody _rb;
     private Animator _animator;  
     private Vector3 _input;
