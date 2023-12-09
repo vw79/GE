@@ -5,21 +5,28 @@ using UnityEngine;
 public class FollowPlayer : MonoBehaviour
 {
     private GameObject player;
-    private Vector3 offset; 
+    private Vector3 offset;
 
     void Start()
     {
-        if (player == null)
+        player = GameObject.FindGameObjectWithTag("Player");
+
+        if (player != null)
         {
-            player = GameObject.FindGameObjectWithTag("Player");
+            offset = transform.position - player.transform.position;
         }
-        offset = transform.position - player.transform.position;
+        else
+        {
+            Debug.LogError("Player not found!");
+        }
     }
 
     void LateUpdate()
     {
-        Vector3 newPosition = player.transform.position + offset;
-        transform.position = newPosition;
+        if (player != null)
+        {
+            Vector3 newPosition = player.transform.position + offset;
+            transform.position = newPosition;
+        }
     }
 }
-
