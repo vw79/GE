@@ -123,6 +123,16 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &1437699425 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 351642387022362943, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
+  m_PrefabInstance: {fileID: 351642386607453115}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1579650172 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 352060823166459834, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
+  m_PrefabInstance: {fileID: 351642386607453115}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &351642386607453115
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -255,6 +265,18 @@ PrefabInstance:
       propertyPath: m_text
       value: v1.3.1
       objectReference: {fileID: 0}
+    - target: {fileID: 393194567867878790, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
+      propertyPath: extrasMenu
+      value: 
+      objectReference: {fileID: 1437699425}
+    - target: {fileID: 393194567867878790, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
+      propertyPath: PanelMovement
+      value: 
+      objectReference: {fileID: 1579650172}
+    - target: {fileID: 393194567867878790, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
+      propertyPath: lineKeyBindings
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 393768894833221070, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
       propertyPath: m_ShowToolkit
       value: 1
@@ -263,6 +285,10 @@ PrefabInstance:
       propertyPath: m_ShowCustomSorter
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 415971624532527858, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 12a8448dc79133e4382fbc3191a7590b, type: 3}
     - target: {fileID: 575974444132127564, guid: 0a68be1bd13d8694e8d8fe85574ac075, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
