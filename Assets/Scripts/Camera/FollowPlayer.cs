@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class FollowPlayer : MonoBehaviour
 {
-    private GameObject player;
+    public GameObject player;
+    public float smoothSpeed = 0.125f;
     private Vector3 offset;
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
 
         if (player != null)
         {
@@ -21,12 +25,13 @@ public class FollowPlayer : MonoBehaviour
         }
     }
 
-    void LateUpdate()
+    void FixedUpdate()
     {
         if (player != null)
         {
-            Vector3 newPosition = player.transform.position + offset;
-            transform.position = newPosition;
+            Vector3 desiredPosition = player.transform.position + offset;
+            Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
+            transform.position = smoothedPosition;
         }
     }
 }
