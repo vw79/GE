@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     private bool _isDashing;
     private float _dashTimeLeft;
     private float _dashCooldownTimer;
+    private Vector3 _lastInputDirection;
 
     private void Awake()
     {
@@ -50,7 +51,23 @@ public class PlayerController : MonoBehaviour
     private void GatherInput()
     {
         _input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        if (_input.magnitude > 0)
+        {
+            _lastInputDirection = _input; // Update the last input direction whenever there's input
+        }
     }
+
+    public Vector3 GetLastInputDirection()
+    {
+        return _lastInputDirection;
+    }
+
+    // Public property to access the turn speed
+    public float TurnSpeed
+    {
+        get { return _turnSpeed; }
+    }
+
 
     private void HandleDashInput()
     {
