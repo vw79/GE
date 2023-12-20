@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 _input;
     private float _currentSpeed;
     private bool _isDashing;
+    public bool IsDashing { get; private set; }
     private float _dashTimeLeft;
     private float _dashCooldownTimer;
     private Vector3 _lastInputDirection;
@@ -74,6 +75,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && !_isDashing && _dashCooldownTimer <= 0)
         {
             _isDashing = true;
+            IsDashing = true;
             _dashTimeLeft = _dashDuration;
             _dashCooldownTimer = _dashCooldown;
         }
@@ -84,6 +86,7 @@ public class PlayerController : MonoBehaviour
             if (_dashTimeLeft <= 0)
             {
                 _isDashing = false;
+                IsDashing = false;
             }
         }
 

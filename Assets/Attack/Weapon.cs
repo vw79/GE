@@ -6,6 +6,7 @@ public class Weapon : MonoBehaviour
 {
     public float damage;
     BoxCollider triggerBox;
+    public PlayerCombat playerCombat; 
 
     void Start()
     {
@@ -14,7 +15,7 @@ public class Weapon : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (playerCombat.isAttacking && other.CompareTag("Enemy"))
         {
             Destroy(other.gameObject);
         }
