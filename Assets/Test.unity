@@ -5643,7 +5643,6 @@ MonoBehaviour:
   _dashSpeed: 15
   _dashDuration: 0.2
   _dashCooldown: 1
-  playerCombat: {fileID: 1030921395}
 --- !u!54 &1030921390
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5754,6 +5753,22 @@ MonoBehaviour:
   isAttacking: 0
   weapon: {fileID: 1905141073}
   swordTrails: {fileID: 1690989244}
+--- !u!114 &1030921396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1030921388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e484a0b7f4fa6c34da7b3e1266d5ce37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skinnedMesh: {fileID: 752508027}
+  dissolveRate: 0.0125
+  RefreshRate: 0.025
+  sword: {fileID: 1905141068}
 --- !u!1 &1033825748
 GameObject:
   m_ObjectHideFlags: 0
@@ -5928,6 +5943,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1172324090021531726, guid: cdd40572aff05274d9c8e4be3b375c1e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: dad8dda02d5e1d148ab56a5d30665d77, type: 2}
+    - target: {fileID: 1172324090021531726, guid: cdd40572aff05274d9c8e4be3b375c1e, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: f2f6030237aa8044eb7b6de618ae2c22, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -5956,6 +5979,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cdd40572aff05274d9c8e4be3b375c1e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1030921395}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cdd40572aff05274d9c8e4be3b375c1e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1030921396}
   m_SourcePrefab: {fileID: 100100000, guid: cdd40572aff05274d9c8e4be3b375c1e, type: 3}
 --- !u!4 &1132921097 stripped
 Transform:
