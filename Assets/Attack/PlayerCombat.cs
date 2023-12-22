@@ -17,6 +17,10 @@ public class PlayerCombat : MonoBehaviour
     Animator anim;
     [SerializeField] Weapon weapon;
     public GameObject swordTrails;
+    private float trailDuration = 0.2f;
+    public BoxCollider swordCollider;
+    private float hitDuration = 0.2f;
+    public PlayerController playerController;
 
     #endregion
 
@@ -24,6 +28,7 @@ public class PlayerCombat : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         swordTrails.SetActive(false);
+        swordCollider.enabled = false;
     }
 
     void Update()
@@ -37,9 +42,9 @@ public class PlayerCombat : MonoBehaviour
         ExitAttack();
     }
 
+    #region Attack Combo
     void Attack()
     {
-
 
         // Check if enough time has passed since the last click to process a new attack.
         if (Time.time - lastClickTime > 0.7f)
@@ -67,14 +72,6 @@ public class PlayerCombat : MonoBehaviour
                 }
             }
         }
-
-        
-
-        // VFX
-        if (isAttacking)
-        {
-            swordTrails.SetActive(true);
-        }
     }
 
     public void EndCombo()
@@ -89,12 +86,54 @@ public class PlayerCombat : MonoBehaviour
     {
         if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.5f && anim.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
         {
-            Invoke("EndCombo", .5f); // Time to determine if the player is still attacking
+            Invoke("EndCombo", 1f); // Time to determine if the player is still attacking
         }
+    }
+    #endregion
+
+    #region Sword Collider
+    public void SwordCollider()
+    {
+        StartCoroutine(EnableSwordCollider());
+    }
+
+    private IEnumerator EnableSwordCollider()
+    {
+        swordCollider.enabled = true;
+
+        yield return new WaitForSeconds(hitDuration);
+
+        swordCollider.enabled = false;
+    }
+    #endregion
+
+    #region Sword Trails
+    public void SwordTrails()
+    {
+        StartCoroutine(EnableSwordTrails());
+    }
+
+    private IEnumerator EnableSwordTrails()
+    {
+        swordTrails.SetActive(true);
+
+        yield return new WaitForSeconds(trailDuration);
+
+        swordTrails.SetActive(false);
+    }
+    #endregion
+
+    #region Stop Movement During Attack
+    public void StartAttack()
+    {
+        isAttacking = true;
+        playerController.enabled = false;
     }
 
     public void AnimationAttackEnd()
     {
         isAttacking = false;
+        playerController.enabled = true;
     }
+    #endregion
 }
