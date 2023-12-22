@@ -114,6 +114,8 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
+
+
         if (_input.magnitude > 0)
         {
             _currentSpeed = Mathf.Min(_currentSpeed + _acceleration * Time.deltaTime, _maxSpeed);

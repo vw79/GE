@@ -50,7 +50,7 @@ Material:
     m_Ints: []
     m_Floats:
     - Vector1_FFE3378: 0.1
-    - _QueueControl: -1
+    - _QueueControl: 1
     - _QueueOffset: 0
     m_Colors:
     - Vector2_1BA47784: {r: 0, g: -2, b: 0, a: 0}
