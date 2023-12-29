@@ -15,12 +15,23 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rb;
     private Animator _animator;
     private Vector3 _input;
-    private float _currentSpeed;
+    public  float _currentSpeed;
     private bool _isDashing;
     public bool IsDashing { get; private set; }
     private float _dashTimeLeft;
     private float _dashCooldownTimer;
     private Vector3 _lastInputDirection;
+
+    private void ResetMovement()
+    {
+        _currentSpeed = 0;
+    }
+
+    private void OnDisable()
+    {
+        ResetMovement();
+        _animator.SetBool("IsMoving", false);
+    }
 
     private void Awake()
     {
@@ -133,6 +144,8 @@ public class PlayerController : MonoBehaviour
     {
         _animator.SetBool("IsMoving", _input.magnitude > 0);
     }
+
+    
 }
 
 public static class Helpers

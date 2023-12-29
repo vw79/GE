@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Resources;
 using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
@@ -24,11 +25,14 @@ public class PlayerCombat : MonoBehaviour
 
     #endregion
 
+    public GameObject ult;
+
     void Start()
     {
         anim = GetComponent<Animator>();
         swordTrails.SetActive(false);
         swordCollider.enabled = false;
+        ult.SetActive(false);
     }
 
     void Update()
@@ -37,6 +41,11 @@ public class PlayerCombat : MonoBehaviour
         {
             isAttacking = true;
             Attack();
+        }
+
+        if (Input.GetKey(KeyCode.Q))
+        {
+            Ultimate();
         }
 
         ExitAttack();
@@ -136,4 +145,43 @@ public class PlayerCombat : MonoBehaviour
         playerController.enabled = true;
     }
     #endregion
+
+    private void Ultimate() 
+    {
+        StartAttack();
+        anim.SetBool("Ultimate", true);
+        anim.Play("Ult");
+        StartCoroutine(Charge());
+    }
+
+
+    private IEnumerator Charge()
+    {
+        //Disable Health System
+        
+        yield return new WaitForSeconds(1.6f);
+        StartCoroutine(UltDamage());
+    }
+
+    private IEnumerator UltDamage()
+    {
+        ult.SetActive(true);
+        yield return new WaitForSeconds(.8f);    
+        UltEnd();
+    }
+
+    private void UltEnd()
+    {
+        anim.SetBool("Ultimate", false);
+        ult.SetActive(false);
+        AnimationAttackEnd();
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (isAttacking && other.CompareTag("Enemy"))
+        {
+            Destroy(other.gameObject);
+        }
+    }
 }
