@@ -1,37 +1,117 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-    public Transform target;
-    public int moveSpeed;
-    public int rotationSpeed;
-    public int maxDistance;
+    //State Machine
+    public EnemyAIStateMachine stateMachine;
+    public EnemyStateId initialState;
 
-    private Transform myTransform;
+    //Miscellaneous
+    public NavMeshAgent navMeshAgent;
+    public Transform playerTransform;
+    public LayerMask Ground, Player;
 
-    private void Awake()
+    [Header("Patrolling")]
+    public Vector3 walkPoint;
+    bool walkPointSet;
+    public float walkPointRange;
+
+    [Header("States")]
+    public float sightRange, attackRange;
+    public bool playerInSightRange, playerInAttackRange;
+
+    [Header("Attacking")]
+    public float timeBetweenAttacks;
+    bool alreadyAttacked;
+    
+    
+
+    public void Awake()
     {
-        myTransform = transform;
+        playerTransform = GameObject.Find("Player").transform;
+        
     }
-
-    void Start()
+    private void Start()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        target = player.transform;
-        maxDistance = 2;
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        stateMachine = new EnemyAIStateMachine(this);
+        //to register a new state
+        stateMachine.RegisterState(new EnemyChaseState());
+        stateMachine.RegisterState(new EnemyPatrolState());
+        stateMachine.RegisterState(new EnemyDeathState());
+        stateMachine.ChangeState(initialState);
     }
-
     void Update()
     {
-        //Look at target
-        myTransform.rotation = Quaternion.Slerp(myTransform.rotation, Quaternion.LookRotation(target.position - myTransform.position), rotationSpeed * Time.deltaTime);
-
-        if (Vector3.Distance(target.position, myTransform.position) > maxDistance)
-        { 
-            //Move towards target
-            myTransform.position += myTransform.forward * moveSpeed * Time.deltaTime;
-        }
+        stateMachine.Update();
     }
 }
+
+
+public class EnemyPatrolState : EnemyState
+{
+
+    public EnemyStateId getID()
+    {
+        return EnemyStateId.patrolling;
+    }
+
+    public void Enter(EnemyAI agent)
+    {
+    }
+
+    public void Update(EnemyAI agent)
+    {
+    }
+
+    public void Exit(EnemyAI agent)
+    {
+    }
+}
+
+public class EnemyChaseState : EnemyState
+{
+ 
+    public EnemyStateId getID()
+    {
+        return EnemyStateId.Chasing;
+    }
+
+    public void Enter(EnemyAI agent)
+    {
+    }
+
+    public void Update(EnemyAI agent)
+    {
+        agent.stateMachine.ChangeState(EnemyStateId.attacking);
+    }
+
+    public void Exit(EnemyAI agent)
+    {
+    }
+}
+
+public class EnemyDeathState : EnemyState
+{
+ 
+    public EnemyStateId getID()
+    {
+        return EnemyStateId.death;
+    }
+
+    public void Enter(EnemyAI agent)
+    {
+    }
+
+    public void Update(EnemyAI agent)
+    {
+    }
+
+    public void Exit(EnemyAI agent)
+    {
+    }
+}
+

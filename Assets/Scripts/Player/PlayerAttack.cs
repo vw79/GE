@@ -43,8 +43,8 @@ public class PlayerAttack : MonoBehaviour
         {
             if(direction > 0)
             {
-                EnemyHealth enemyHealth = target.GetComponent<EnemyHealth>();
-                enemyHealth.AdjustCurrentHealth(-10);
+                //EnemyHealth enemyHealth = target.GetComponent<EnemyHealth>();
+                //enemyHealth.AdjustCurrentHealth(-10);
             }
         }
     }

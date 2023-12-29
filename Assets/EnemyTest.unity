@@ -5396,7 +5396,6 @@ GameObject:
   - component: {fileID: 277965611}
   - component: {fileID: 277965610}
   - component: {fileID: 277965609}
-  - component: {fileID: 277965613}
   m_Layer: 0
   m_Name: Cube (4)
   m_TagString: Untagged
@@ -5490,28 +5489,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1145769476}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!195 &277965613
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 277965608}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 1
-  m_BaseOffset: 0.5
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!1001 &366136422
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5756,7 +5733,7 @@ GameObject:
   - component: {fileID: 539854204}
   m_Layer: 0
   m_Name: PLAYER
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6145,10 +6122,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48405035b1bce9f4793e74723113370d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 539854204}
-  moveSpeed: 2
-  rotationSpeed: 15
-  maxDistance: 1
+  initialState: 0
+  navMeshAgent: {fileID: 0}
+  playerTransform: {fileID: 0}
+  Ground:
+    serializedVersion: 2
+    m_Bits: 0
+  Player:
+    serializedVersion: 2
+    m_Bits: 0
+  walkPoint: {x: 0, y: 0, z: 0}
+  walkPointRange: 0
+  sightRange: 0
+  attackRange: 0
+  playerInSightRange: 0
+  playerInAttackRange: 0
+  timeBetweenAttacks: 0
 --- !u!1 &1209441360 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: cdd40572aff05274d9c8e4be3b375c1e, type: 3}
@@ -6177,6 +6166,9 @@ MonoBehaviour:
   isAttacking: 0
   weapon: {fileID: 98644540}
   swordTrails: {fileID: 201403223}
+  swordCollider: {fileID: 0}
+  playerController: {fileID: 0}
+  ult: {fileID: 0}
 --- !u!114 &1209441363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6213,6 +6205,7 @@ MonoBehaviour:
   _dashSpeed: 15
   _dashDuration: 0.2
   _dashCooldown: 1
+  _currentSpeed: 0
 --- !u!114 &1209441365
 MonoBehaviour:
   m_ObjectHideFlags: 0
