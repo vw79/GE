@@ -12,7 +12,7 @@ public class FollowPlayer : MonoBehaviour
     {
         if (player == null)
         {
-            player = GameObject.FindGameObjectWithTag("Player");
+            player = GameObject.FindGameObjectWithTag("PlayerLayer");
         }
 
         if (player != null)
@@ -21,7 +21,7 @@ public class FollowPlayer : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Player not found!");
+            Debug.LogError("PlayerLayer not found!");
         }
     }
 

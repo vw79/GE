@@ -4,14 +4,16 @@ using UnityEngine;
 
 public enum EnemyStateId
 {
+    Idle,
     Chasing,
-    patrolling,
-    attacking,
-    death
+    Patrolling,
+    Attacking,
+    Death
 }
 
 public interface EnemyState
 {
+    
     EnemyStateId getID();
     void Enter(EnemyAI agent);
     void Update(EnemyAI agent);
@@ -32,7 +34,7 @@ public class EnemyAIStateMachine
     public EnemyAIStateMachine(EnemyAI agent)
     {
         this.agent = agent;
-        int numStates = System.Enum.GetNames(typeof(EnemyState)).Length;
+        int numStates = System.Enum.GetNames(typeof(EnemyStateId)).Length;
         states = new EnemyState[numStates];
     }
 
@@ -50,6 +52,7 @@ public class EnemyAIStateMachine
 
     public void Update()
     {
+        Debug.Log(currentState);
         GetState(currentState)?.Update(agent);
     }
 
