@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Mohab/Main Menu.unity
+    guid: 139951993e223a74db8cb66860636bb8
+  - enabled: 1
+    path: Assets/Test.unity
+    guid: 18927483d13c4e14dab67d52b239467d
   m_configObjects: {}
