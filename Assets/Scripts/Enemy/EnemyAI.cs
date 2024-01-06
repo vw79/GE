@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,6 +12,7 @@ public class EnemyAI : MonoBehaviour
 
     //Miscellaneous
     public NavMeshAgent navMeshAgent;
+    public NavMeshSurface navMeshSurface;
     public Transform playerTransform;
     public LayerMask GroundLayer, PlayerLayer;
 
@@ -40,12 +42,15 @@ public class EnemyAI : MonoBehaviour
         else attackRange = 2;
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshSurface = GetComponent<NavMeshSurface>();
+
         
         
     }
     private void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshSurface = GetComponent<NavMeshSurface>();
         stateMachine = new EnemyAIStateMachine(this);
         //to register a new state
         stateMachine.RegisterState(new EnemyChaseState());
@@ -84,23 +89,43 @@ public class EnemyPatrolState : EnemyState
 
     public void Update(EnemyAI agent)
     {
-        if (!agent.walkPointSet) {
-            float RandomZ = Random.Range(-agent.walkPointRange, agent.walkPointRange);
-            float RandomX = Random.Range(-agent.walkPointRange, agent.walkPointRange);
+        //if (!agent.walkPointSet) {
+        //    float RandomZ = Random.Range(-agent.walkPointRange, agent.walkPointRange);
+        //    float RandomX = Random.Range(-agent.walkPointRange, agent.walkPointRange);
 
-            agent.walkPoint = new Vector3(agent.transform.position.x + RandomX, agent.transform.position.y, agent.transform.position.z + RandomZ);
-            agent.walkPointSet = true;
 
-            if (Physics.Raycast(agent.walkPoint, -agent.transform.up, agent.GroundLayer))
+        //    agent.walkPoint = new Vector3(agent.transform.position.x + RandomX, agent.transform.position.y, agent.transform.position.z + RandomZ);
+        //    agent.walkPointSet = true;
+
+        //    if (Physics.Raycast(agent.walkPoint, -agent.transform.up, agent.GroundLayer))
+        //    {
+        //        agent.navMeshAgent.SetDestination(agent.walkPoint);
+        //    }
+        //}
+
+        //Vector3 DistanceToWalkPoint =  agent.transform.position - agent.walkPoint;
+
+        //if(DistanceToWalkPoint.magnitude < 1f)
+        //    agent.walkPointSet = false;
+        if (!agent.walkPointSet)
+        {
+            Vector3 randomDirection = Random.insideUnitSphere * agent.walkPointRange;
+            randomDirection += agent.transform.position;
+
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(randomDirection, out hit, agent.walkPointRange, NavMesh.AllAreas))
             {
+                agent.walkPoint = hit.position;
+                agent.walkPointSet = true;
                 agent.navMeshAgent.SetDestination(agent.walkPoint);
             }
         }
 
-        Vector3 DistanceToWalkPoint =  agent.transform.position - agent.walkPoint;
+        Vector3 distanceToWalkPoint = agent.transform.position - agent.walkPoint;
 
-        if(DistanceToWalkPoint.magnitude < 1f)
+        if (distanceToWalkPoint.magnitude < 1f)
             agent.walkPointSet = false;
+
     }
 
     public void Exit(EnemyAI agent)
