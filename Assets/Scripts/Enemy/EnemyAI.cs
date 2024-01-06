@@ -38,7 +38,7 @@ public class EnemyAI : MonoBehaviour
         isMelee = Random.value > 0.5f;
         if (!isMelee) attackRange = 5;
         else attackRange = 2;
-        playerTransform = GameObject.Find("Ch44_nonPBR").transform;
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         navMeshAgent = GetComponent<NavMeshAgent>();
         
         

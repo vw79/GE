@@ -838,7 +838,7 @@ GameObject:
   - component: {fileID: 539854204}
   m_Layer: 7
   m_Name: PLAYER
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1129,7 +1129,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cdd40572aff05274d9c8e4be3b375c1e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.115463
+      value: -4.221
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cdd40572aff05274d9c8e4be3b375c1e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1163,13 +1163,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -1841058918131551357, guid: cdd40572aff05274d9c8e4be3b375c1e, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cdd40572aff05274d9c8e4be3b375c1e, type: 3}
       propertyPath: m_Name
       value: Ch44_nonPBR
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cdd40572aff05274d9c8e4be3b375c1e, type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 1172324090021531726, guid: cdd40572aff05274d9c8e4be3b375c1e, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -1487,7 +1491,7 @@ Transform:
   m_GameObject: {fileID: 1145769472}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.56, y: 0.98, z: -4.860797}
+  m_LocalPosition: {x: 0.04, y: 1.024, z: -4.860797}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1530,7 +1534,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialState: 2
   navMeshAgent: {fileID: 1145769477}
-  playerTransform: {fileID: 0}
+  playerTransform: {fileID: 1089572756}
   GroundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -1539,7 +1543,7 @@ MonoBehaviour:
     m_Bits: 128
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointSet: 0
-  walkPointRange: 20
+  walkPointRange: 5
   sightRange: 7
   attackRange: 2
   playerInSightRange: 0
