@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2282,7 +2282,7 @@ GameObject:
   - component: {fileID: 168464960}
   - component: {fileID: 168464959}
   - component: {fileID: 168464958}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3405,8 +3405,8 @@ Transform:
   m_GameObject: {fileID: 254734881}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.78, y: 0.68, z: 1.61}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -6.42, y: 1.5477, z: 0.8906}
+  m_LocalScale: {x: 1, y: 2.735332, z: 2.4387}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 153873045}
@@ -3729,7 +3729,7 @@ GameObject:
   - component: {fileID: 269987978}
   - component: {fileID: 269987977}
   - component: {fileID: 269987976}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (26)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5566,7 +5566,7 @@ GameObject:
   - component: {fileID: 402052435}
   - component: {fileID: 402052434}
   - component: {fileID: 402052433}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5671,7 +5671,7 @@ GameObject:
   - component: {fileID: 402130880}
   - component: {fileID: 402130879}
   - component: {fileID: 402130878}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6208,7 +6208,7 @@ GameObject:
   - component: {fileID: 425303407}
   - component: {fileID: 425303406}
   - component: {fileID: 425303405}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6313,7 +6313,7 @@ GameObject:
   - component: {fileID: 430005284}
   - component: {fileID: 430005283}
   - component: {fileID: 430005282}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6920,7 +6920,7 @@ GameObject:
   - component: {fileID: 475698148}
   - component: {fileID: 475698147}
   - component: {fileID: 475698146}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11008,7 +11008,7 @@ GameObject:
   - component: {fileID: 720554023}
   - component: {fileID: 720554022}
   - component: {fileID: 720554021}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12960,7 +12960,7 @@ GameObject:
   - component: {fileID: 860200942}
   - component: {fileID: 860200941}
   - component: {fileID: 860200940}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (37)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13121,7 +13121,7 @@ GameObject:
   - component: {fileID: 879831303}
   - component: {fileID: 879831302}
   - component: {fileID: 879831301}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13526,7 +13526,7 @@ GameObject:
   - component: {fileID: 914743442}
   - component: {fileID: 914743441}
   - component: {fileID: 914743440}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13848,7 +13848,7 @@ GameObject:
   - component: {fileID: 930545490}
   - component: {fileID: 930545489}
   - component: {fileID: 930545488}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (32)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14036,7 +14036,7 @@ GameObject:
   - component: {fileID: 951500794}
   - component: {fileID: 951500793}
   - component: {fileID: 951500792}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (27)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14385,7 +14385,7 @@ GameObject:
   - component: {fileID: 969029995}
   - component: {fileID: 969029994}
   - component: {fileID: 969029993}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (30)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15859,7 +15859,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!108 &1033825749
 Light:
   m_ObjectHideFlags: 0
@@ -15972,7 +15972,7 @@ GameObject:
   - component: {fileID: 1040911858}
   - component: {fileID: 1040911857}
   - component: {fileID: 1040911856}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (36)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16297,7 +16297,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: cdd40572aff05274d9c8e4be3b375c1e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -3.14
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cdd40572aff05274d9c8e4be3b375c1e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -16639,7 +16639,7 @@ GameObject:
   - component: {fileID: 1109353201}
   - component: {fileID: 1109353200}
   - component: {fileID: 1109353199}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17560,7 +17560,7 @@ GameObject:
   - component: {fileID: 1183036117}
   - component: {fileID: 1183036116}
   - component: {fileID: 1183036115}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (39)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18484,7 +18484,7 @@ GameObject:
   - component: {fileID: 1228469029}
   - component: {fileID: 1228469028}
   - component: {fileID: 1228469027}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18916,7 +18916,7 @@ GameObject:
   - component: {fileID: 1242314346}
   - component: {fileID: 1242314345}
   - component: {fileID: 1242314344}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (38)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19865,7 +19865,7 @@ GameObject:
   - component: {fileID: 1322352672}
   - component: {fileID: 1322352671}
   - component: {fileID: 1322352670}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (34)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19970,7 +19970,7 @@ GameObject:
   - component: {fileID: 1328235393}
   - component: {fileID: 1328235392}
   - component: {fileID: 1328235391}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (28)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20180,7 +20180,7 @@ GameObject:
   - component: {fileID: 1336363340}
   - component: {fileID: 1336363339}
   - component: {fileID: 1336363338}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (29)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20285,7 +20285,7 @@ GameObject:
   - component: {fileID: 1341544536}
   - component: {fileID: 1341544535}
   - component: {fileID: 1341544534}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (21)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20446,7 +20446,7 @@ GameObject:
   - component: {fileID: 1355843049}
   - component: {fileID: 1355843048}
   - component: {fileID: 1355843047}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (22)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20900,7 +20900,7 @@ GameObject:
   - component: {fileID: 1375005927}
   - component: {fileID: 1375005926}
   - component: {fileID: 1375005925}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (33)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24322,7 +24322,7 @@ GameObject:
   - component: {fileID: 1616541508}
   - component: {fileID: 1616541507}
   - component: {fileID: 1616541506}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25342,7 +25342,7 @@ GameObject:
   - component: {fileID: 1703888585}
   - component: {fileID: 1703888584}
   - component: {fileID: 1703888583}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (25)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25635,7 +25635,7 @@ GameObject:
   - component: {fileID: 1707423176}
   - component: {fileID: 1707423175}
   - component: {fileID: 1707423174}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (35)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26856,7 +26856,7 @@ GameObject:
   - component: {fileID: 1777809373}
   - component: {fileID: 1777809372}
   - component: {fileID: 1777809371}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28713,7 +28713,7 @@ GameObject:
   - component: {fileID: 1890238886}
   - component: {fileID: 1890238885}
   - component: {fileID: 1890238884}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (24)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30579,6 +30579,139 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2008964369}
   m_Mesh: {fileID: 4300002, guid: b47e3bba032b35441a80e6b384d61baf, type: 3}
+--- !u!1 &2016866599
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2016866602}
+  - component: {fileID: 2016866601}
+  - component: {fileID: 2016866600}
+  - component: {fileID: 2016866603}
+  m_Layer: 0
+  m_Name: Vertical Beam Attack
+  m_TagString: VFX
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!73398921 &2016866600
+VFXRenderer:
+  serializedVersion: 1
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016866599}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!2083052967 &2016866601
+VisualEffect:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016866599}
+  m_Enabled: 1
+  m_Asset: {fileID: 8926484042661614526, guid: 67a66a7ea1b583847b1119bff5a18989, type: 3}
+  m_InitialEventName: OnPlay
+  m_InitialEventNameOverriden: 0
+  m_StartSeed: 0
+  m_ResetSeedOnPlay: 1
+  m_AllowInstancing: 1
+  m_ResourceVersion: 1
+  m_PropertySheet:
+    m_Float:
+      m_Array: []
+    m_Vector2f:
+      m_Array: []
+    m_Vector3f:
+      m_Array: []
+    m_Vector4f:
+      m_Array: []
+    m_Uint:
+      m_Array: []
+    m_Int:
+      m_Array: []
+    m_Matrix4x4f:
+      m_Array: []
+    m_AnimationCurve:
+      m_Array: []
+    m_Gradient:
+      m_Array: []
+    m_NamedObject:
+      m_Array: []
+    m_Bool:
+      m_Array: []
+--- !u!4 &2016866602
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016866599}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.14, y: 0, z: 1.0810001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2016866603
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016866599}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.0049977, y: 4.960069, z: 4.060745}
+  m_Center: {x: -0.008661509, y: 1.4014218, z: -0.018482447}
 --- !u!1 &2019402516
 GameObject:
   m_ObjectHideFlags: 0
@@ -31529,7 +31662,7 @@ GameObject:
   - component: {fileID: 2068944757}
   - component: {fileID: 2068944756}
   - component: {fileID: 2068944755}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (31)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31905,7 +32038,7 @@ GameObject:
   - component: {fileID: 2104400210}
   - component: {fileID: 2104400209}
   - component: {fileID: 2104400208}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (23)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32486,6 +32619,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pause Manu Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 1147277939799578327, guid: 95d6c01401eecce4f80f8df4fd6edea5, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5983235335265849645, guid: 95d6c01401eecce4f80f8df4fd6edea5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -197.9798
@@ -32887,7 +33024,7 @@ GameObject:
   - component: {fileID: 6986157359762713025}
   - component: {fileID: 3733299862518158648}
   - component: {fileID: 2551797604635205687}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32906,7 +33043,7 @@ GameObject:
   - component: {fileID: 6986157359551042461}
   - component: {fileID: 3733299862726160228}
   - component: {fileID: 2551797604826421867}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32925,7 +33062,7 @@ GameObject:
   - component: {fileID: 6986157359548095264}
   - component: {fileID: 3733299862697125849}
   - component: {fileID: 2551797604845490902}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32944,7 +33081,7 @@ GameObject:
   - component: {fileID: 6986157359479483258}
   - component: {fileID: 3733299862226769795}
   - component: {fileID: 2551797604914242188}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32963,7 +33100,7 @@ GameObject:
   - component: {fileID: 6986157359040440790}
   - component: {fileID: 3733299862198670639}
   - component: {fileID: 2551797605353676832}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32982,7 +33119,7 @@ GameObject:
   - component: {fileID: 6986157359101009110}
   - component: {fileID: 3733299862141771823}
   - component: {fileID: 2551797605279995168}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33001,7 +33138,7 @@ GameObject:
   - component: {fileID: 6986157358865006329}
   - component: {fileID: 3733299861771698688}
   - component: {fileID: 2551797605516146447}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33020,7 +33157,7 @@ GameObject:
   - component: {fileID: 6986157358747237257}
   - component: {fileID: 3733299861921449840}
   - component: {fileID: 2551797605630112383}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Floor Tile 03 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34108,3 +34245,4 @@ SceneRoots:
   - {fileID: 1079076299}
   - {fileID: 254734885}
   - {fileID: 1722861121}
+  - {fileID: 2016866602}
