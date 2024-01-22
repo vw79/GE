@@ -1,0 +1,124 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class StateManager : MonoBehaviour
+{
+    public enum State
+    {
+        State1,
+        State2,
+        State3
+    }
+
+    // Materials for the sword components
+    public Material[] guardMaterials; // Assign materials for each state in the inspector
+    public Material[] cylinderMaterials; // Assign materials for each state in the inspector
+
+    // Renderer references for the sword's components
+    public Renderer guardRenderer;
+    public Renderer cylinderRenderer;
+
+    // Trail particle system and its colors for each state
+    public ParticleSystem trailParticleSystem;
+    public Color[] trailColors; // Assign colors for each state in the inspector
+
+    private State currentState = State.State1;
+    private bool state2Unlocked = false;
+    private bool state3Unlocked = false;
+    private bool isCooldown = false;
+    public float cooldown = 5f; // Cooldown time in seconds
+
+    public Warp warp;
+
+    void Start()
+    {
+        UpdateMaterialsAndTrail();
+        warp.enabled = false;
+    }
+
+    void Update()
+    {
+        // Check for state change inputs
+        if (Input.GetKeyDown(KeyCode.Alpha1) && currentState != State.State1 && !isCooldown)
+        {
+            StartCoroutine(ChangeStateWithCooldown(State.State1));
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2) && currentState != State.State2 && !isCooldown && state2Unlocked)
+        {
+            StartCoroutine(ChangeStateWithCooldown(State.State2));
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3) && currentState != State.State3 && !isCooldown && state3Unlocked)
+        {
+            StartCoroutine(ChangeStateWithCooldown(State.State3));
+        }
+
+        // Check for behavior when pressing "E"
+        if (Input.GetKeyUp(KeyCode.E))
+        {
+            PerformStateSpecificAction();
+        }
+    }
+
+    private void PerformStateSpecificAction()
+    {
+        if (currentState == State.State1)
+        {
+            Debug.Log("Ice");
+        }
+        else if (currentState == State.State2)
+        {
+            Debug.Log("Fire");
+        }
+        else if (currentState == State.State3)
+        {
+            warp.enabled = true;
+        }
+    }
+
+    public void UnlockState2()
+    {
+        state2Unlocked = true;
+    }
+
+    public void UnlockState3()
+    {
+        state3Unlocked = true;
+    }
+
+    IEnumerator ChangeStateWithCooldown(State newState)
+    {
+        ChangeState(newState);
+        isCooldown = true;
+        yield return new WaitForSeconds(cooldown);
+        isCooldown = false;
+    }
+
+    private void ChangeState(State newState)
+    {
+        currentState = newState;
+        UpdateMaterialsAndTrail();
+    }
+
+    private void UpdateMaterialsAndTrail()
+    {
+        int stateIndex = (int)currentState;
+
+        // Update materials
+        if (stateIndex < guardMaterials.Length && guardRenderer)
+        {
+            guardRenderer.material = guardMaterials[stateIndex];
+        }
+        if (stateIndex < cylinderMaterials.Length && cylinderRenderer)
+        {
+            cylinderRenderer.material = cylinderMaterials[stateIndex];
+        }
+
+        // Update trail particle system color
+        if (stateIndex < trailColors.Length && trailParticleSystem)
+        {
+            var colorModule = trailParticleSystem.colorOverLifetime;
+            colorModule.color = new ParticleSystem.MinMaxGradient(trailColors[stateIndex]);
+        }
+    }
+}

@@ -147,6 +147,7 @@ public class PlayerCombat : MonoBehaviour
     }
     #endregion
 
+    #region Ultimate
     private void Ultimate() 
     {
         StartAttack();
@@ -185,4 +186,5 @@ public class PlayerCombat : MonoBehaviour
             Destroy(other.gameObject);
         }
     }
+    #endregion
 }
