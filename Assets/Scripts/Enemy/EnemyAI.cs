@@ -15,6 +15,7 @@ public class EnemyAI : MonoBehaviour
     //public NavMeshSurface navMeshSurface;
     public Transform playerTransform;
     public LayerMask GroundLayer, PlayerLayer;
+    [SerializeField] public HealthSystem pHealth;
 
     [Header("Patrolling")]
     public Vector3 walkPoint;
@@ -28,11 +29,11 @@ public class EnemyAI : MonoBehaviour
 
     [Header("Attacking")]
     public bool isMelee;
+    public bool nextAttack;
     public float AttackCD;
-    bool alreadyAttacked;
+    public float attackDamage;
     public GameObject projectile;
     public Rigidbody body;
-
     public Animator animator;
 
 
@@ -42,21 +43,18 @@ public class EnemyAI : MonoBehaviour
         isMelee = Random.value > 0.5f;
         if (!isMelee) attackRange = 5;
         else attackRange = 2;
+        nextAttack = true;
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
-        //navMeshSurface = GetComponent<NavMeshSurface>();
 
-        
-        
     }
     private void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
-        //navMeshSurface = GetComponent<NavMeshSurface>();
         stateMachine = new EnemyAIStateMachine(this);
         //to register a new state 
         stateMachine.RegisterState(new EnemyChaseState());
-        //stateMachine.RegisterState(new EnemyPatrolState());
         stateMachine.RegisterState(new EnemyAttackState());
         stateMachine.RegisterState(new EnemyDeathState());
         stateMachine.ChangeState(initialState);
@@ -68,60 +66,24 @@ public class EnemyAI : MonoBehaviour
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, PlayerLayer);
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, PlayerLayer);
 
-        //if (!playerInAttackRange && !playerInSightRange &&!walkPointSet) stateMachine.ChangeState(EnemyStateId.Patrolling);
         if (!playerInAttackRange && playerInSightRange)
-        {   stateMachine.ChangeState(EnemyStateId.Chasing);
+        {   
+            stateMachine.ChangeState(EnemyStateId.Chasing);
             animator.Play("Run");       
         }
 
-        if (playerInAttackRange && playerInSightRange) stateMachine.ChangeState(EnemyStateId.Attacking);
+        if (playerInAttackRange && playerInSightRange) 
+        { 
+            stateMachine.ChangeState(EnemyStateId.Attacking); 
+        }
+    }
+
+    IEnumerable AttackDelay()
+    {
+        yield return nextAttack = true;
     }
 }
 
-
-//public class EnemyPatrolState : EnemyState
-//{
-
-//    public EnemyStateId getID()
-//    {
-//        return EnemyStateId.Patrolling;
-//    }
-
-//    public void Enter(EnemyAI agent)
-//    {
-
-//    }
-
-
-//    public void Update(EnemyAI agent)
-//    {
-
-//        if (!agent.walkPointSet)
-//        {
-//            Vector3 randomDirection = Random.insideUnitSphere * agent.walkPointRange;
-//            randomDirection += agent.transform.position;
-
-//            NavMeshHit hit;
-//            if (NavMesh.SamplePosition(randomDirection, out hit, agent.walkPointRange, NavMesh.AllAreas))
-//            {
-//                agent.walkPoint = hit.position;
-//                agent.walkPointSet = true;
-//                agent.navMeshAgent.SetDestination(agent.walkPoint);
-//            }
-//        }
-
-//        Vector3 distanceToWalkPoint = agent.transform.position - agent.walkPoint;
-
-//        if (distanceToWalkPoint.magnitude < 1f)
-//            agent.walkPointSet = false;
-
-//    }
-
-//    public void Exit(EnemyAI agent)
-//    {
-
-//    }
-////}
 
 public class EnemyChaseState : EnemyState
 {
@@ -131,13 +93,14 @@ public class EnemyChaseState : EnemyState
         return EnemyStateId.Chasing;
     }
 
-    public void Enter(EnemyAI agent)
-    {
-    }
-
     public void Update(EnemyAI agent)
     {
-        agent.navMeshAgent.SetDestination(agent.playerTransform.position);
+        agent.navMeshAgent.SetDestination(agent.playerTransform.position );
+    }
+
+
+    public void Enter(EnemyAI agent)
+    {
     }
 
     public void Exit(EnemyAI agent)
@@ -152,6 +115,24 @@ public class EnemyAttackState : EnemyState
     {
         return EnemyStateId.Attacking;
     }
+
+    public void Update(EnemyAI agent)
+    {
+        agent.navMeshAgent.SetDestination(agent.transform.position );
+        agent.transform.LookAt(agent.playerTransform);
+
+        if(agent.nextAttack)
+        {
+            agent.nextAttack = false;
+            agent.animator.SetTrigger("Attack");
+            Debug.Log(agent.nextAttack);
+            agent.pHealth.TakeDamage(agent.attackDamage);
+            if (Time.time > agent.AttackCD) agent.nextAttack = true;
+            Debug.Log(agent.nextAttack);
+
+        }
+    }
+
     public void Enter(EnemyAI agent)
     {
     }
@@ -160,17 +141,9 @@ public class EnemyAttackState : EnemyState
     {
     }
 
+ 
 
-    public void Update(EnemyAI agent)
-    {
-        agent.navMeshAgent.SetDestination(agent.transform.position);
-        agent.transform.LookAt(agent.playerTransform);
 
-        if(!agent.isMelee)
-        {
-            
-        }
-    }
 }
 
 public class EnemyDeathState : EnemyState
@@ -181,11 +154,11 @@ public class EnemyDeathState : EnemyState
         return EnemyStateId.Death;
     }
 
-    public void Enter(EnemyAI agent)
+    public void Update(EnemyAI agent)
     {
     }
 
-    public void Update(EnemyAI agent)
+    public void Enter(EnemyAI agent)
     {
     }
 
