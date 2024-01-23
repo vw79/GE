@@ -1,3 +1,4 @@
+using Cinemachine;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
@@ -7,7 +8,13 @@ public class Weapon : MonoBehaviour
     public PlayerCombat playerCombat;
     private StateManager stateManager;
     private ChromaticAberrationEffect chromaticEffect;
+    private CinemachineImpulseSource impulseSource;
 
+    private void Awake()
+    {
+        impulseSource = GetComponent<CinemachineImpulseSource>();
+    }
+    
     void Start()
     {
         triggerBox = GetComponent<BoxCollider>();
@@ -28,6 +35,7 @@ public class Weapon : MonoBehaviour
             {
                 // Trigger chromatic aberration effect if state or layer condition not met
                 chromaticEffect?.TriggerChromaAb();
+                CamShake.instance.CameraShake(impulseSource);
             }
         }
     }
