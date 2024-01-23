@@ -15,7 +15,7 @@ public class EnemyAiAgent : MonoBehaviour
         //stateMachine = new EnemyAIStateMachine(this);
         //to register a new state
         stateMachine.RegisterState(new EnemyChaseState());
-        stateMachine.RegisterState(new EnemyPatrolState());
+        //stateMachine.RegisterState(new EnemyPatrolState());
         stateMachine.RegisterState(new EnemyDeathState());
         stateMachine.ChangeState(initialState);
     }

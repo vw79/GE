@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum EnemyStateId
 {
-    Idle,
+    //Idle,
     Chasing,
     Patrolling,
     Attacking,

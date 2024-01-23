@@ -12,7 +12,7 @@ public class EnemyAI : MonoBehaviour
 
     //Miscellaneous
     public NavMeshAgent navMeshAgent;
-    public NavMeshSurface navMeshSurface;
+    //public NavMeshSurface navMeshSurface;
     public Transform playerTransform;
     public LayerMask GroundLayer, PlayerLayer;
 
@@ -28,7 +28,7 @@ public class EnemyAI : MonoBehaviour
 
     [Header("Attacking")]
     public bool isMelee;
-    public float timeBetweenAttacks;
+    public float AttackCD;
     bool alreadyAttacked;
     public GameObject projectile;
     public Rigidbody body;
@@ -42,7 +42,7 @@ public class EnemyAI : MonoBehaviour
         else attackRange = 2;
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         navMeshAgent = GetComponent<NavMeshAgent>();
-        navMeshSurface = GetComponent<NavMeshSurface>();
+        //navMeshSurface = GetComponent<NavMeshSurface>();
 
         
         
@@ -50,11 +50,11 @@ public class EnemyAI : MonoBehaviour
     private void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
-        navMeshSurface = GetComponent<NavMeshSurface>();
+        //navMeshSurface = GetComponent<NavMeshSurface>();
         stateMachine = new EnemyAIStateMachine(this);
-        //to register a new state
+        //to register a new state 
         stateMachine.RegisterState(new EnemyChaseState());
-        stateMachine.RegisterState(new EnemyPatrolState());
+        //stateMachine.RegisterState(new EnemyPatrolState());
         stateMachine.RegisterState(new EnemyAttackState());
         stateMachine.RegisterState(new EnemyDeathState());
         stateMachine.ChangeState(initialState);
@@ -66,73 +66,56 @@ public class EnemyAI : MonoBehaviour
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, PlayerLayer);
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, PlayerLayer);
 
-        if (!playerInAttackRange && !playerInSightRange &&!walkPointSet) stateMachine.ChangeState(EnemyStateId.Patrolling);
+        //if (!playerInAttackRange && !playerInSightRange &&!walkPointSet) stateMachine.ChangeState(EnemyStateId.Patrolling);
         if (!playerInAttackRange && playerInSightRange) stateMachine.ChangeState(EnemyStateId.Chasing);
         if (playerInAttackRange && playerInSightRange) stateMachine.ChangeState(EnemyStateId.Attacking);
     }
 }
 
 
-public class EnemyPatrolState : EnemyState
-{
+//public class EnemyPatrolState : EnemyState
+//{
 
-    public EnemyStateId getID()
-    {
-        return EnemyStateId.Patrolling;
-    }
+//    public EnemyStateId getID()
+//    {
+//        return EnemyStateId.Patrolling;
+//    }
 
-    public void Enter(EnemyAI agent)
-    {
+//    public void Enter(EnemyAI agent)
+//    {
 
-    }
-
-
-    public void Update(EnemyAI agent)
-    {
-        //if (!agent.walkPointSet) {
-        //    float RandomZ = Random.Range(-agent.walkPointRange, agent.walkPointRange);
-        //    float RandomX = Random.Range(-agent.walkPointRange, agent.walkPointRange);
+//    }
 
 
-        //    agent.walkPoint = new Vector3(agent.transform.position.x + RandomX, agent.transform.position.y, agent.transform.position.z + RandomZ);
-        //    agent.walkPointSet = true;
+//    public void Update(EnemyAI agent)
+//    {
 
-        //    if (Physics.Raycast(agent.walkPoint, -agent.transform.up, agent.GroundLayer))
-        //    {
-        //        agent.navMeshAgent.SetDestination(agent.walkPoint);
-        //    }
-        //}
+//        if (!agent.walkPointSet)
+//        {
+//            Vector3 randomDirection = Random.insideUnitSphere * agent.walkPointRange;
+//            randomDirection += agent.transform.position;
 
-        //Vector3 DistanceToWalkPoint =  agent.transform.position - agent.walkPoint;
+//            NavMeshHit hit;
+//            if (NavMesh.SamplePosition(randomDirection, out hit, agent.walkPointRange, NavMesh.AllAreas))
+//            {
+//                agent.walkPoint = hit.position;
+//                agent.walkPointSet = true;
+//                agent.navMeshAgent.SetDestination(agent.walkPoint);
+//            }
+//        }
 
-        //if(DistanceToWalkPoint.magnitude < 1f)
-        //    agent.walkPointSet = false;
-        if (!agent.walkPointSet)
-        {
-            Vector3 randomDirection = Random.insideUnitSphere * agent.walkPointRange;
-            randomDirection += agent.transform.position;
+//        Vector3 distanceToWalkPoint = agent.transform.position - agent.walkPoint;
 
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(randomDirection, out hit, agent.walkPointRange, NavMesh.AllAreas))
-            {
-                agent.walkPoint = hit.position;
-                agent.walkPointSet = true;
-                agent.navMeshAgent.SetDestination(agent.walkPoint);
-            }
-        }
+//        if (distanceToWalkPoint.magnitude < 1f)
+//            agent.walkPointSet = false;
 
-        Vector3 distanceToWalkPoint = agent.transform.position - agent.walkPoint;
+//    }
 
-        if (distanceToWalkPoint.magnitude < 1f)
-            agent.walkPointSet = false;
+//    public void Exit(EnemyAI agent)
+//    {
 
-    }
-
-    public void Exit(EnemyAI agent)
-    {
-   
-    }
-}
+//    }
+////}
 
 public class EnemyChaseState : EnemyState
 {
