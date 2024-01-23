@@ -7,14 +7,14 @@ public class HealthBar: MonoBehaviour
 {
     public Slider healthSlider;
     public Slider easeHealthSlider;
-    public float maxHealth = 100;
     public float health;
     private float learpSpeed = 0.02f;
+    public HealthSystem healthSystem;
 
     // Start is called before the first frame update
     void Start()
     {
-        health = maxHealth;
+        health = healthSystem.GetHealth();
     }
 
     // Update is called once per frame

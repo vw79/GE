@@ -23,6 +23,7 @@ public class PlayerCombat : MonoBehaviour
     public BoxCollider swordCollider;
     private float hitDuration = 0.2f;
     public PlayerController playerController;
+    public HealthSystem healthSystem;
 
     #endregion
 
@@ -159,8 +160,7 @@ public class PlayerCombat : MonoBehaviour
 
     private IEnumerator Charge()
     {
-        //Disable Health System
-        
+        healthSystem.enabled = false;
         yield return new WaitForSeconds(1.6f);
         StartCoroutine(UltDamage());
     }
@@ -177,11 +177,12 @@ public class PlayerCombat : MonoBehaviour
         anim.SetBool("Ultimate", false);
         ult.SetActive(false);
         AnimationAttackEnd();
+        healthSystem.enabled = true;
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (isAttacking && other.CompareTag("Enemy"))
+        if (isAttacking && other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             Destroy(other.gameObject);
         }

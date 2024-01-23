@@ -121,4 +121,19 @@ public class StateManager : MonoBehaviour
             colorModule.color = new ParticleSystem.MinMaxGradient(trailColors[stateIndex]);
         }
     }
+
+    public bool CanAttack(GameObject enemy)
+    {
+        switch (currentState)
+        {
+            case State.State1:
+                return enemy.CompareTag("Red");
+            case State.State2:
+                return enemy.CompareTag("Green");
+            case State.State3:
+                return enemy.CompareTag("Blue");
+            default:
+                return false;
+        }
+    }
 }
