@@ -14,20 +14,29 @@ public class PlayerCombat : MonoBehaviour
     float lastComboEnd;
     int comboCounter;
     public bool isAttacking;
+    private bool isUltimateActive;
 
     // References
-    Animator anim;
-    [SerializeField] Weapon weapon;
+    private Animator anim;
+    public Weapon weapon;
     public GameObject swordTrails;
     private float trailDuration = 0.2f;
-    public BoxCollider swordCollider;
+    private BoxCollider swordCollider;
     private float hitDuration = 0.2f;
-    public PlayerController playerController;
-    public HealthSystem healthSystem;
+    private PlayerController playerController;
+    private HealthSystem healthSystem;
 
     #endregion
 
     public GameObject ult;
+
+    private void Awake()
+    {
+        anim = GetComponent<Animator>();
+        swordCollider = weapon.GetComponent<BoxCollider>();
+        playerController = GetComponent<PlayerController>();
+        healthSystem = GetComponent<HealthSystem>();
+    }
 
     void Start()
     {
@@ -39,13 +48,13 @@ public class PlayerCombat : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !isUltimateActive)
         {
             isAttacking = true;
             Attack();
         }
 
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKey(KeyCode.Q) && !isAttacking)
         {
             Ultimate();
         }
@@ -56,6 +65,7 @@ public class PlayerCombat : MonoBehaviour
     #region Attack Combo
     void Attack()
     {
+        if (isUltimateActive) return;
 
         // Check if enough time has passed since the last click to process a new attack.
         if (Time.time - lastClickTime > 0.7f)
@@ -151,6 +161,7 @@ public class PlayerCombat : MonoBehaviour
     #region Ultimate
     private void Ultimate() 
     {
+        isUltimateActive = true;
         StartAttack();
         anim.SetBool("Ultimate", true);
         anim.Play("Ult");
@@ -174,6 +185,7 @@ public class PlayerCombat : MonoBehaviour
 
     private void UltEnd()
     {
+        isUltimateActive = false;
         anim.SetBool("Ultimate", false);
         ult.SetActive(false);
         AnimationAttackEnd();

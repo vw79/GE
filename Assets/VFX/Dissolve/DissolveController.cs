@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class DissolveController: MonoBehaviour
 {
-    public SkinnedMeshRenderer skinnedMesh;
-    public float dissolveRate = 0.0125f;
-    public float RefreshRate = 0.025f; // Double of dissolveRate
-    public GameObject sword;
+    private SkinnedMeshRenderer skinnedMesh;
+    private float dissolveRate = 0.0125f;
+    private float RefreshRate = 0.025f; // Double of dissolveRate
+    private GameObject sword;
 
     private Material[] skinnedMaterials;
 
+    private void Awake()
+    {
+        skinnedMesh = GetComponent<SkinnedMeshRenderer>();
+        sword = GameObject.FindWithTag("Sword");
+    }
     void Start()
     {
         if(skinnedMesh !=null)

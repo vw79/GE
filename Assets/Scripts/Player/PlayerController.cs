@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rb;
     private Animator _animator;
     private Vector3 _input;
-    public  float _currentSpeed;
+    private  float _currentSpeed;
     private bool _isDashing;
     public bool IsDashing { get; private set; }
     private float _dashTimeLeft;
