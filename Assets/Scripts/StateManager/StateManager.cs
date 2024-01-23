@@ -29,12 +29,15 @@ public class StateManager : MonoBehaviour
     private bool isCooldown = false;
     public float cooldown = 5f; // Cooldown time in seconds
 
+    private bool isActionCooldown = false;
+    public float actionCooldown = 10f;
+
     public Warp warp;
+    public Animator animator;
 
     void Start()
     {
         UpdateMaterialsAndTrail();
-        warp.enabled = false;
     }
 
     void Update()
@@ -53,11 +56,25 @@ public class StateManager : MonoBehaviour
             StartCoroutine(ChangeStateWithCooldown(State.State3));
         }
 
-        // Check for behavior when pressing "E"
-        if (Input.GetKeyUp(KeyCode.E))
+        if (Input.GetKeyUp(KeyCode.E) && !isActionCooldown)
         {
-            PerformStateSpecificAction();
+            StartCoroutine(PerformActionWithCooldown());
         }
+    }
+
+    private IEnumerator PerformActionWithCooldown()
+    {
+        // Perform the action
+        PerformStateSpecificAction();
+
+        // Set the cooldown flag
+        isActionCooldown = true;
+
+        // Wait for the cooldown period
+        yield return new WaitForSeconds(actionCooldown);
+
+        // Reset the cooldown flag
+        isActionCooldown = false;
     }
 
     private void PerformStateSpecificAction()
@@ -72,7 +89,7 @@ public class StateManager : MonoBehaviour
         }
         else if (currentState == State.State3)
         {
-            warp.enabled = true;
+            warp.StartWarp();
         }
     }
 
