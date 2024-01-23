@@ -33,6 +33,8 @@ public class EnemyAI : MonoBehaviour
     public GameObject projectile;
     public Rigidbody body;
 
+    public Animator animator;
+
 
     public void Awake()
     {
@@ -67,7 +69,11 @@ public class EnemyAI : MonoBehaviour
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, PlayerLayer);
 
         //if (!playerInAttackRange && !playerInSightRange &&!walkPointSet) stateMachine.ChangeState(EnemyStateId.Patrolling);
-        if (!playerInAttackRange && playerInSightRange) stateMachine.ChangeState(EnemyStateId.Chasing);
+        if (!playerInAttackRange && playerInSightRange)
+        {   stateMachine.ChangeState(EnemyStateId.Chasing);
+            animator.Play("Run");       
+        }
+
         if (playerInAttackRange && playerInSightRange) stateMachine.ChangeState(EnemyStateId.Attacking);
     }
 }
