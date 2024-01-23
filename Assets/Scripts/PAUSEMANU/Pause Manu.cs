@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 public class PauseManu : MonoBehaviour
 {
     public GameObject pauseMenu;
+    public PlayerController playerController;
+    public PlayerCombat playerCombat;
+
     //public GameObject Crosshair;
 
     public static bool isPaused;
@@ -35,6 +38,8 @@ public class PauseManu : MonoBehaviour
     {
         pauseMenu.SetActive(true);
         //Crosshair.SetActive(false);
+        playerCombat.enabled = false;
+        playerController.enabled = false;
         Time.timeScale = 0f;
         isPaused = true;
 
@@ -44,6 +49,8 @@ public class PauseManu : MonoBehaviour
     {
         pauseMenu.SetActive(false);
         //Crosshair.SetActive(true);
+        playerCombat.enabled = true;
+        playerController.enabled = true;
         Time.timeScale = 1f;
         isPaused = false;
 
