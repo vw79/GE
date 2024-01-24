@@ -16,7 +16,7 @@ public interface EnemyState
     void Update(EnemyAI agent);
     void Exit(EnemyAI agent);
 }
-public class EnemyAIStateMachine
+public class EnemyAIStateMachine 
 {
     public EnemyState[] states;
     public EnemyAI agent;

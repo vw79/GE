@@ -78,10 +78,8 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    IEnumerable AttackDelay()
-    {
-        yield return nextAttack = true;
-    }
+
+  
 }
 
 
@@ -118,31 +116,30 @@ public class EnemyAttackState : EnemyState
 
     public void Update(EnemyAI agent)
     {
-        agent.navMeshAgent.SetDestination(agent.transform.position );
-        agent.transform.LookAt(agent.playerTransform);
+        agent.animator.SetTrigger("Attack");
+        agent.pHealth.TakeDamage(agent.attackDamage);
+        agent.StartCoroutine(AttackDelay(agent));
 
-        if(agent.nextAttack)
-        {
-            agent.nextAttack = false;
-            agent.animator.SetTrigger("Attack");
-            Debug.Log(agent.nextAttack);
-            agent.pHealth.TakeDamage(agent.attackDamage);
-            if (Time.time > agent.AttackCD) agent.nextAttack = true;
-            Debug.Log(agent.nextAttack);
-
-        }
     }
 
     public void Enter(EnemyAI agent)
     {
+        agent.navMeshAgent.SetDestination(agent.transform.position);
+        agent.transform.LookAt(agent.playerTransform);
     }
 
     public void Exit(EnemyAI agent)
     {
+
+
     }
 
- 
-
+    private IEnumerator AttackDelay(EnemyAI agent)
+    {
+        yield return new WaitForSeconds(agent.AttackCD);
+        Debug.Log("Attack Delay!!");
+       
+    }
 
 }
 
