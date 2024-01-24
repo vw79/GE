@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
+using Unity.Transforms;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -31,10 +32,12 @@ public class EnemyAI : MonoBehaviour
     public bool isMelee;
     public bool nextAttack;
     public float AttackCD;
+    public float CDTimer;
     public float attackDamage;
     public GameObject projectile;
     public Rigidbody body;
     public Animator animator;
+    public bool isDead;
 
 
     public void Awake()
@@ -44,9 +47,11 @@ public class EnemyAI : MonoBehaviour
         if (!isMelee) attackRange = 5;
         else attackRange = 2;
         nextAttack = true;
+        isDead = false;
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        
 
     }
     private void Start()
@@ -63,22 +68,40 @@ public class EnemyAI : MonoBehaviour
     {
       
         stateMachine.Update();
-        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, PlayerLayer);
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, PlayerLayer);
+        if (!isDead)
+        {
+            playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, PlayerLayer);
+            playerInSightRange = Physics.CheckSphere(transform.position, sightRange, PlayerLayer);
 
-        if (!playerInAttackRange && playerInSightRange)
-        {   
-            stateMachine.ChangeState(EnemyStateId.Chasing);
-            animator.Play("Run");       
+            if (!playerInAttackRange && playerInSightRange)
+            {
+                stateMachine.ChangeState(EnemyStateId.Chasing);
+                animator.Play("Run");
+
+            }
+
+            if (playerInAttackRange && playerInSightRange)
+            {
+                stateMachine.ChangeState(EnemyStateId.Attacking);
+            }
+
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                stateMachine.ChangeState(EnemyStateId.Death);
+            }
         }
 
-        if (playerInAttackRange && playerInSightRange) 
-        { 
-            stateMachine.ChangeState(EnemyStateId.Attacking); 
-        }
     }
 
-
+    public void DealDamage()
+    {
+        pHealth.TakeDamage(attackDamage);
+        nextAttack = true;
+    }
+    public void Disintegrate()
+    {
+        GameObject.Destroy(gameObject);
+    }
   
 }
 
@@ -113,32 +136,25 @@ public class EnemyAttackState : EnemyState
     {
         return EnemyStateId.Attacking;
     }
-
-    public void Update(EnemyAI agent)
-    {
-        agent.animator.SetTrigger("Attack");
-        agent.pHealth.TakeDamage(agent.attackDamage);
-        agent.StartCoroutine(AttackDelay(agent));
-
-    }
-
     public void Enter(EnemyAI agent)
     {
         agent.navMeshAgent.SetDestination(agent.transform.position);
         agent.transform.LookAt(agent.playerTransform);
     }
 
-    public void Exit(EnemyAI agent)
+    public void Update(EnemyAI agent)
     {
-
-
+        
+        if (agent.nextAttack)
+        {
+            agent.nextAttack = false;
+            agent.animator.SetTrigger("Attack");
+        }
     }
 
-    private IEnumerator AttackDelay(EnemyAI agent)
+    public void Exit(EnemyAI agent)
     {
-        yield return new WaitForSeconds(agent.AttackCD);
-        Debug.Log("Attack Delay!!");
-       
+        agent.nextAttack=true;
     }
 
 }
@@ -153,10 +169,13 @@ public class EnemyDeathState : EnemyState
 
     public void Update(EnemyAI agent)
     {
+        agent.animator.SetTrigger("Death");
+
     }
 
     public void Enter(EnemyAI agent)
     {
+        agent.isDead = true;
     }
 
     public void Exit(EnemyAI agent)

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum EnemyStateId
 {
+    Idle,
     Chasing,
     Attacking,
     Death
