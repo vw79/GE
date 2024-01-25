@@ -34,7 +34,6 @@ public class Weapon : MonoBehaviour
             }
             else
             {
-                // Trigger chromatic aberration effect if state or layer condition not met
                 chromaticEffect?.TriggerChromaAb();
                 CamShake.instance.CameraShake(impulseSource);
                 animator.SetTrigger("WrongColor");

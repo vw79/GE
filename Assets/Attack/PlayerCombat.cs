@@ -14,7 +14,7 @@ public class PlayerCombat : MonoBehaviour
     float lastComboEnd;
     int comboCounter;
     public bool isAttacking;
-    private bool isUltimateActive;
+    public bool isUltimateActive;
 
     // References
     private Animator anim;
@@ -25,7 +25,8 @@ public class PlayerCombat : MonoBehaviour
     private float hitDuration = 0.2f;
     private PlayerController playerController;
     private HealthSystem healthSystem;
-
+    private GameObject player;
+ 
     #endregion
 
     public GameObject ult;
@@ -36,6 +37,7 @@ public class PlayerCombat : MonoBehaviour
         swordCollider = weapon.GetComponent<BoxCollider>();
         playerController = GetComponent<PlayerController>();
         healthSystem = GetComponent<HealthSystem>();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     void Start()

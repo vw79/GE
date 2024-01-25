@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7984268590427606435}
   - component: {fileID: 203109804767627241}
   - component: {fileID: 1391786462566505397}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Trails
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4898,7 +4898,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5545947377730954975}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SwordTrails
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4981,6 +4981,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 164.633
       objectReference: {fileID: 0}
+    - target: {fileID: -7899905140607844995, guid: 76cfe4aba4e308b42812ec67bf8557d5, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0759599075d25904c85751c1a4fa0591, type: 2}
+    - target: {fileID: -7899905140607844995, guid: 76cfe4aba4e308b42812ec67bf8557d5, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0759599075d25904c85751c1a4fa0591, type: 2}
+    - target: {fileID: -5568371526223589888, guid: 76cfe4aba4e308b42812ec67bf8557d5, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -4804417135258681137, guid: 76cfe4aba4e308b42812ec67bf8557d5, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -2685979608563545031, guid: 76cfe4aba4e308b42812ec67bf8557d5, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: -2577548232221058511, guid: 76cfe4aba4e308b42812ec67bf8557d5, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
@@ -5002,9 +5022,29 @@ PrefabInstance:
       value: Sword 4_1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 76cfe4aba4e308b42812ec67bf8557d5, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 76cfe4aba4e308b42812ec67bf8557d5, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 76cfe4aba4e308b42812ec67bf8557d5, type: 3}
+      propertyPath: m_TagString
+      value: Sword
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202271454713460447, guid: 76cfe4aba4e308b42812ec67bf8557d5, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0759599075d25904c85751c1a4fa0591, type: 2}
+    - target: {fileID: 7202271454713460447, guid: 76cfe4aba4e308b42812ec67bf8557d5, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0759599075d25904c85751c1a4fa0591, type: 2}
+    - target: {fileID: 7202271454713460447, guid: 76cfe4aba4e308b42812ec67bf8557d5, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0759599075d25904c85751c1a4fa0591, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -5024,6 +5064,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 76cfe4aba4e308b42812ec67bf8557d5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1649067706520706483}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 76cfe4aba4e308b42812ec67bf8557d5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4822466911032983210}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 76cfe4aba4e308b42812ec67bf8557d5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7053501553881842495}
   m_SourcePrefab: {fileID: 100100000, guid: 76cfe4aba4e308b42812ec67bf8557d5, type: 3}
 --- !u!4 &6995870648954889065 stripped
 Transform:
@@ -5068,7 +5114,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 164e8431239681344ac4ec6f92bc75f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
+  animator: {fileID: 0}
+  damage: 50
   playerCombat: {fileID: 0}
 --- !u!65 &4600556374122009663
 BoxCollider:
@@ -5089,8 +5136,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.83565164, y: 1.5626915, z: 7.4624376}
-  m_Center: {x: 0.0071709403, y: 0.035167616, z: 4.640954}
+  m_Size: {x: 0.83565164, y: 2.9847705, z: 7.821516}
+  m_Center: {x: 0.007178777, y: -0.048179448, z: 4.820417}
 --- !u!54 &1649067706520706483
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5118,3 +5165,69 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &4822466911032983210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7664427166988892627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_ImpulseShape: 4
+    m_CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ImpulseDuration: 0.2
+    m_ImpulseType: 1
+    m_DissipationRate: 0.25
+    m_RawSignal: {fileID: 0}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 100
+    m_PropagationSpeed: 343
+  m_DefaultVelocity: {x: 1, y: -1, z: 1}
+--- !u!114 &7053501553881842495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7664427166988892627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4acd056902870847b1810a98af04662, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  globalShakeForce1: 0.05

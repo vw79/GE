@@ -10,6 +10,8 @@ public class DissolveController: MonoBehaviour
     private GameObject sword;
     private GameObject player;
     private Animator animator;
+    private PlayerController playerController;
+    private PlayerCombat playerCombat;
 
     private Material[] skinnedMaterials;
 
@@ -19,6 +21,8 @@ public class DissolveController: MonoBehaviour
         sword = GameObject.FindWithTag("Sword");
         player = GameObject.FindWithTag("Player");
         animator = player.GetComponent<Animator>();
+        playerController = player.GetComponent<PlayerController>();
+        playerCombat = player.GetComponent<PlayerCombat>();
     }
     void Start()
     {
@@ -28,6 +32,8 @@ public class DissolveController: MonoBehaviour
 
     public void PlayerDeath()
     {
+        playerCombat.enabled = false;
+        playerController.enabled = false;
         animator.Play("PlayerDeath");
         StartCoroutine(DeathStart());
     }
