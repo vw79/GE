@@ -8,6 +8,8 @@ public class DissolveController: MonoBehaviour
     private float dissolveRate = 0.0125f;
     private float RefreshRate = 0.025f; // Double of dissolveRate
     private GameObject sword;
+    private GameObject player;
+    private Animator animator;
 
     private Material[] skinnedMaterials;
 
@@ -15,6 +17,8 @@ public class DissolveController: MonoBehaviour
     {
         skinnedMesh = GetComponent<SkinnedMeshRenderer>();
         sword = GameObject.FindWithTag("Sword");
+        player = GameObject.FindWithTag("Player");
+        animator = player.GetComponent<Animator>();
     }
     void Start()
     {
@@ -22,17 +26,22 @@ public class DissolveController: MonoBehaviour
             skinnedMaterials = skinnedMesh.materials;     
     }
 
-    void Update()
+    public void PlayerDeath()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Destroy(sword);
-            StartCoroutine(Dissolve());
-        }       
+        animator.Play("PlayerDeath");
+        StartCoroutine(DeathStart());
+    }
+
+    IEnumerator DeathStart()
+    {
+        yield return new WaitForSeconds(2.14f);
+        StartCoroutine(Dissolve());
     }
 
     IEnumerator Dissolve()
     {
+        sword.SetActive(false);
+
         float counter = 0;
         while (skinnedMaterials[0].GetFloat("_DissolveAmount") < 1)
         {
@@ -44,6 +53,8 @@ public class DissolveController: MonoBehaviour
 
             yield return new WaitForSeconds(RefreshRate);
         }
+
+        Destroy(player);
     }
 }
 
