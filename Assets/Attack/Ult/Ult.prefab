@@ -9,7 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2940499519284208282}
+  - component: {fileID: 1278348619057685047}
   - component: {fileID: 8654806276865925156}
+  - component: {fileID: 4520507631425303052}
   m_Layer: 0
   m_Name: UltCollider
   m_TagString: Untagged
@@ -32,6 +34,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2584672810207940814}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1278348619057685047
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899380834991921498}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!65 &8654806276865925156
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -47,12 +76,24 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 8.12995, y: 3.9899101, z: 5.9654994}
-  m_Center: {x: 0, y: 2.1679735, z: 2.4827497}
+  m_Size: {x: 8.12995, y: 3.9899101, z: 6.327738}
+  m_Center: {x: 0, y: 2.1679735, z: 2.3016305}
+--- !u!114 &4520507631425303052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899380834991921498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e25ac2c9e74ad264f985312c47b8bb99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3037991730054934805
 GameObject:
   m_ObjectHideFlags: 0
@@ -19669,7 +19710,7 @@ Transform:
   m_GameObject: {fileID: 9169001589991535420}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -1.18, y: -1.34, z: 0.23}
+  m_LocalPosition: {x: -1.18, y: -1.34, z: 0.66}
   m_LocalScale: {x: 0.563236, y: 0.56323606, z: 0.56323606}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -20619,7 +20660,7 @@ ParticleSystem:
     m_BurstCount: 1
     m_Bursts:
     - serializedVersion: 2
-      time: 0.4
+      time: 0.35
       countCurve:
         serializedVersion: 2
         minMaxState: 3

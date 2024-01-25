@@ -1100,6 +1100,7 @@ MonoBehaviour:
   PlayerLayer:
     serializedVersion: 2
     m_Bits: 128
+  pHealth: {fileID: 0}
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointSet: 0
   walkPointRange: 5
@@ -1108,10 +1109,14 @@ MonoBehaviour:
   playerInSightRange: 0
   playerInAttackRange: 0
   isMelee: 0
+  nextAttack: 0
   AttackCD: 0
+  CDTimer: 0
+  attackDamage: 0
   projectile: {fileID: 0}
   body: {fileID: 0}
   animator: {fileID: 0}
+  isDead: 0
 --- !u!95 &260442059
 Animator:
   serializedVersion: 5
@@ -1743,6 +1748,7 @@ MonoBehaviour:
   PlayerLayer:
     serializedVersion: 2
     m_Bits: 128
+  pHealth: {fileID: 0}
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointSet: 0
   walkPointRange: 5
@@ -1751,10 +1757,14 @@ MonoBehaviour:
   playerInSightRange: 0
   playerInAttackRange: 0
   isMelee: 0
+  nextAttack: 0
   AttackCD: 0
+  CDTimer: 0
+  attackDamage: 0
   projectile: {fileID: 0}
   body: {fileID: 0}
   animator: {fileID: 0}
+  isDead: 0
 --- !u!54 &694629368
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1866,8 +1876,6 @@ MonoBehaviour:
   - {r: 0.14831792, g: 0.9528302, b: 0.15397441, a: 0.9647059}
   cooldown: 3
   actionCooldown: 10
-  warp: {fileID: 1030921398}
-  animator: {fileID: 1030921392}
 --- !u!4 &787793945
 Transform:
   m_ObjectHideFlags: 0
@@ -2222,7 +2230,6 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 512
-  enableOutline: 0
   targetMaterials:
   - {fileID: 2100000, guid: 1546d3b5ff8741945add0ace129a84bb, type: 2}
   - {fileID: 2100000, guid: c2dbaa8bcc665be44aef5ae891f89dfe, type: 2}
@@ -3845,6 +3852,7 @@ MonoBehaviour:
   PlayerLayer:
     serializedVersion: 2
     m_Bits: 128
+  pHealth: {fileID: 0}
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointSet: 0
   walkPointRange: 5
@@ -3853,10 +3861,14 @@ MonoBehaviour:
   playerInSightRange: 0
   playerInAttackRange: 0
   isMelee: 0
+  nextAttack: 0
   AttackCD: 0
+  CDTimer: 0
+  attackDamage: 0
   projectile: {fileID: 0}
   body: {fileID: 0}
   animator: {fileID: 0}
+  isDead: 0
 --- !u!95 &1653510999
 Animator:
   serializedVersion: 5
@@ -5147,33 +5159,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4866478740005875638, guid: 28402fc722ec8dd43a38b22efa2091be, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.66
-      objectReference: {fileID: 0}
     - target: {fileID: 5021707197545536256, guid: 28402fc722ec8dd43a38b22efa2091be, type: 3}
       propertyPath: m_Name
       value: Ult
-      objectReference: {fileID: 0}
-    - target: {fileID: 6057295819543554522, guid: 28402fc722ec8dd43a38b22efa2091be, type: 3}
-      propertyPath: EmissionModule.m_Bursts.Array.data[0].time
-      value: 0.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 8654806276865925156, guid: 28402fc722ec8dd43a38b22efa2091be, type: 3}
-      propertyPath: m_Size.z
-      value: 6.327738
-      objectReference: {fileID: 0}
-    - target: {fileID: 8654806276865925156, guid: 28402fc722ec8dd43a38b22efa2091be, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8654806276865925156, guid: 28402fc722ec8dd43a38b22efa2091be, type: 3}
-      propertyPath: m_Center.z
-      value: 2.3016305
-      objectReference: {fileID: 0}
-    - target: {fileID: 8654806276865925156, guid: 28402fc722ec8dd43a38b22efa2091be, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

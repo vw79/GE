@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class StateManager : MonoBehaviour
 {
+    [Header("Sword Material")]
+    public Material[] guardMaterials; 
+    public Material[] cylinderMaterials;
+
+    [Header("Sword Renderer")]
+    public Renderer guardRenderer;
+    public Renderer cylinderRenderer;
+
+    [Header("Sword Trail")]
+    public ParticleSystem trailParticleSystem;
+    public Color[] trailColors;
+
     public enum State
     {
         State1,
@@ -11,30 +23,22 @@ public class StateManager : MonoBehaviour
         State3
     }
 
-    // Materials for the sword components
-    public Material[] guardMaterials; // Assign materials for each state in the inspector
-    public Material[] cylinderMaterials; // Assign materials for each state in the inspector
-
-    // Renderer references for the sword's components
-    public Renderer guardRenderer;
-    public Renderer cylinderRenderer;
-
-    // Trail particle system and its colors for each state
-    public ParticleSystem trailParticleSystem;
-    public Color[] trailColors; // Assign colors for each state in the inspector
-
     private State currentState = State.State1;
     private bool state2Unlocked = false;
     private bool state3Unlocked = false;
     private bool isCooldown = false;
-    public float cooldown = 5f; // Cooldown time in seconds
+    public float cooldown = 2f;
 
     private bool isActionCooldown = false;
-    public float actionCooldown = 10f;
+    [SerializeField] public float actionCooldown = 10f;
 
-    public Warp warp;
-    public Animator animator;
+    private Warp warp;
 
+    private void Awake()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        warp = player.GetComponent<Warp>();
+    }
     void Start()
     {
         UpdateMaterialsAndTrail();

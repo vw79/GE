@@ -19,6 +19,15 @@ public class Warp : MonoBehaviour
     private float warpStartTime;
 
     public Animator animator;
+    private PlayerCombat playerCombat;
+    private PlayerController playerController;
+
+
+    void Awake()
+    {
+        playerCombat = GetComponent<PlayerCombat>();
+        playerController = GetComponent<PlayerController>();
+    }
 
     void Start()
     {
@@ -94,6 +103,8 @@ public class Warp : MonoBehaviour
             }
         }
 
+        playerCombat.enabled = false;
+        playerController.enabled = false;
         animator.Play("Warp");
         StartCoroutine(WaitAnim());
     }
@@ -115,6 +126,8 @@ public class Warp : MonoBehaviour
         warpStartPosition = playerTransform.position;
         warpTargetPosition = enemyPosition - directionToEnemy * (safeDistance + 1f); // Adjusted for safe distance
         warpStartTime = Time.time;
+        playerController.enabled = true;
+        playerCombat.enabled = true;
     }
 
     // Coroutine to revert the material after a delay

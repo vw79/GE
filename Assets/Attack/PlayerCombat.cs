@@ -191,13 +191,5 @@ public class PlayerCombat : MonoBehaviour
         AnimationAttackEnd();
         healthSystem.enabled = true;
     }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (isAttacking && other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-        {
-            Destroy(other.gameObject);
-        }
-    }
     #endregion
 }
