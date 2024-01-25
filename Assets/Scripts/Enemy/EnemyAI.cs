@@ -42,6 +42,7 @@ public class EnemyAI : MonoBehaviour
     [Header("Shooting")]
     public Transform gunTip;
     public GameObject bullet;
+    public float shootForce;
 
 
     public void Awake()
@@ -101,14 +102,10 @@ public class EnemyAI : MonoBehaviour
     public void Shoot()
     {
         //instantiate bullet/projectile
-        GameObject currentBullet = Instantiate(bullet, attackPoint.position, Quaternion.identity);
-
-        //rorate bullet to shoot direction
-        currentBullet.transform.forward = directionWithSpread.normalized;
+        GameObject currentBullet = Instantiate(bullet, gunTip.position, Quaternion.identity);
 
         //add forces to bullets
-        currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * shootForce, ForceMode.Impulse);
-        currentBullet.GetComponent<Rigidbody>().AddForce(Camera.transform.up, ForceMode.Impulse);
+        currentBullet.GetComponent<Rigidbody>().AddForce(Vector3.forward * shootForce, ForceMode.Impulse);
     }
     public void DealDamage()
     {
