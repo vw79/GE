@@ -24,18 +24,15 @@ public class HealthBar: MonoBehaviour
         {
             healthSlider.value = health;
         }
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            TakeDamage(20);
-        }
+
         if (healthSlider.value != easeHealthSlider.value)
         {
             easeHealthSlider.value = Mathf.Lerp(easeHealthSlider.value, health, learpSpeed);
         }
     }
 
-    void TakeDamage(float damage)
+    public void SetHealth(float health)
     {
-        health -= damage;
+        this.health = health;
     }
 }

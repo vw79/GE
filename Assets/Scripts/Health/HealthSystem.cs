@@ -5,6 +5,7 @@ public class HealthSystem: MonoBehaviour
 {
     [SerializeField] private float max_health = 100f;
     private float current_health;
+    public HealthBar healthBar;
 
     public UnityEvent OnDeath;
     public UnityEvent OnHurt;
@@ -12,6 +13,7 @@ public class HealthSystem: MonoBehaviour
     private void Start()
     {
         current_health = max_health;
+        healthBar.SetHealth(current_health);
     }
 
     public float GetHealth()
@@ -27,7 +29,7 @@ public class HealthSystem: MonoBehaviour
     public void TakeDamage(float damage)
     {
         current_health -= damage;
-        Debug.Log(current_health);
+        healthBar.SetHealth(current_health);
 
         if (current_health <= 0)
         {
