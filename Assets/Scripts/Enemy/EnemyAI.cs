@@ -39,19 +39,23 @@ public class EnemyAI : MonoBehaviour
     public Animator animator;
     public bool isDead;
 
+    [Header("Shooting")]
+    public Transform gunTip;
+    public GameObject bullet;
+
 
     public void Awake()
     {
         //to randomly generate melee or range
         isMelee = Random.value > 0.5f;
         if (!isMelee) attackRange = 5;
-        else attackRange = 2;
+        else attackRange = 1;
         nextAttack = true;
         isDead = false;
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
-        
+        //pHealth = GetComponent<HealthSystem>();
 
     }
     private void Start()
@@ -96,7 +100,15 @@ public class EnemyAI : MonoBehaviour
     //animation event functions
     public void Shoot()
     {
+        //instantiate bullet/projectile
+        GameObject currentBullet = Instantiate(bullet, attackPoint.position, Quaternion.identity);
 
+        //rorate bullet to shoot direction
+        currentBullet.transform.forward = directionWithSpread.normalized;
+
+        //add forces to bullets
+        currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * shootForce, ForceMode.Impulse);
+        currentBullet.GetComponent<Rigidbody>().AddForce(Camera.transform.up, ForceMode.Impulse);
     }
     public void DealDamage()
     {
