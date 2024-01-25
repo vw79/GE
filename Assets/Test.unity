@@ -1979,7 +1979,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04b20612c15ebaf41a54d625aacc5628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  max_health: 100
+  max_health: 999999
+  animator: {fileID: 1030921392}
+  playerController: {fileID: 1030921389}
   healthBar: {fileID: 1158986005}
   OnDeath:
     m_PersistentCalls:
@@ -2182,6 +2184,9 @@ MonoBehaviour:
   body: {fileID: 0}
   animator: {fileID: 0}
   isDead: 0
+  gunTip: {fileID: 0}
+  bullet: {fileID: 0}
+  shootForce: 0
 --- !u!95 &1056995899
 Animator:
   serializedVersion: 5
@@ -4360,6 +4365,9 @@ MonoBehaviour:
   body: {fileID: 0}
   animator: {fileID: 0}
   isDead: 0
+  gunTip: {fileID: 0}
+  bullet: {fileID: 0}
+  shootForce: 0
 --- !u!95 &1539559461
 Animator:
   serializedVersion: 5
@@ -5023,6 +5031,9 @@ MonoBehaviour:
   body: {fileID: 0}
   animator: {fileID: 0}
   isDead: 0
+  gunTip: {fileID: 0}
+  bullet: {fileID: 0}
+  shootForce: 0
 --- !u!95 &1985858574
 Animator:
   serializedVersion: 5
@@ -5829,6 +5840,10 @@ PrefabInstance:
       propertyPath: damage
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 4093166639055832284, guid: 49df8c3e53985574db1e0efb23e21d63, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 1030921392}
     - target: {fileID: 4093166639055832284, guid: 49df8c3e53985574db1e0efb23e21d63, type: 3}
       propertyPath: playerCombat
       value: 

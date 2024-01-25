@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    public Animator animator;
     public float damage;
     BoxCollider triggerBox;
     public PlayerCombat playerCombat;
@@ -36,6 +37,7 @@ public class Weapon : MonoBehaviour
                 // Trigger chromatic aberration effect if state or layer condition not met
                 chromaticEffect?.TriggerChromaAb();
                 CamShake.instance.CameraShake(impulseSource);
+                animator.SetTrigger("WrongColor");
             }
         }
     }
