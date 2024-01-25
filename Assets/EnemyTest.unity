@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -693,6 +693,64 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!1001 &628520269
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 719002091486743448, guid: 1229acf1ce437674c8e11f1a89b11774, type: 3}
+      propertyPath: m_Name
+      value: Robot_Soldier_Blue
+      objectReference: {fileID: 0}
+    - target: {fileID: 5798538191027985318, guid: 1229acf1ce437674c8e11f1a89b11774, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.36927032
+      objectReference: {fileID: 0}
+    - target: {fileID: 5798538191027985318, guid: 1229acf1ce437674c8e11f1a89b11774, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.00049996376
+      objectReference: {fileID: 0}
+    - target: {fileID: 5798538191027985318, guid: 1229acf1ce437674c8e11f1a89b11774, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.6089885
+      objectReference: {fileID: 0}
+    - target: {fileID: 5798538191027985318, guid: 1229acf1ce437674c8e11f1a89b11774, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5798538191027985318, guid: 1229acf1ce437674c8e11f1a89b11774, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5798538191027985318, guid: 1229acf1ce437674c8e11f1a89b11774, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5798538191027985318, guid: 1229acf1ce437674c8e11f1a89b11774, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5798538191027985318, guid: 1229acf1ce437674c8e11f1a89b11774, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5798538191027985318, guid: 1229acf1ce437674c8e11f1a89b11774, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5798538191027985318, guid: 1229acf1ce437674c8e11f1a89b11774, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 0}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1229acf1ce437674c8e11f1a89b11774, type: 3}
 --- !u!1001 &709145003
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1133,7 +1191,7 @@ Transform:
   m_GameObject: {fileID: 732822302}
   serializedVersion: 2
   m_LocalRotation: {x: 0.23911765, y: 0.3696438, z: -0.09904577, w: 0.89239913}
-  m_LocalPosition: {x: -4.884869, y: 3.4846673, z: -10.028479}
+  m_LocalPosition: {x: -4.8848686, y: 3.3816671, z: -10.028479}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1303,7 +1361,7 @@ Transform:
   m_GameObject: {fileID: 884694954}
   serializedVersion: 2
   m_LocalRotation: {x: 0.23911765, y: 0.3696438, z: -0.09904577, w: 0.89239913}
-  m_LocalPosition: {x: -4.884869, y: 3.4846673, z: -10.028479}
+  m_LocalPosition: {x: -4.8848686, y: 3.3816671, z: -10.028479}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1390,7 +1448,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cdd40572aff05274d9c8e4be3b375c1e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.163
+      value: 0.06
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cdd40572aff05274d9c8e4be3b375c1e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2468,6 +2526,7 @@ MonoBehaviour:
   projectile: {fileID: 0}
   body: {fileID: 0}
   animator: {fileID: 0}
+  isDead: 0
 --- !u!95 &1128761255
 Animator:
   serializedVersion: 5
@@ -3554,3 +3613,4 @@ SceneRoots:
   - {fileID: 1128761251}
   - {fileID: 886406040}
   - {fileID: 1494949198}
+  - {fileID: 628520269}

@@ -93,6 +93,11 @@ public class EnemyAI : MonoBehaviour
 
     }
 
+    //animation event functions
+    public void Shoot()
+    {
+
+    }
     public void DealDamage()
     {
         pHealth.TakeDamage(attackDamage);
@@ -148,7 +153,13 @@ public class EnemyAttackState : EnemyState
         if (agent.nextAttack)
         {
             agent.nextAttack = false;
-            agent.animator.SetTrigger("Attack");
+            if (agent.isMelee)
+            {
+                agent.animator.SetTrigger("MeleeAttack");
+            }else if(!agent.isMelee)
+            {
+                agent.animator.SetTrigger("RangedAttack");
+            }
         }
     }
 
