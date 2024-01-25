@@ -8,15 +8,19 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour
 {
     //State Machine
-    public EnemyAIStateMachine stateMachine;
+    [HideInInspector] public EnemyAIStateMachine stateMachine;
     public EnemyStateId initialState;
 
     //Miscellaneous
-    public NavMeshAgent navMeshAgent;
+    [HideInInspector] public NavMeshAgent navMeshAgent;
     //public NavMeshSurface navMeshSurface;
-    public Transform playerTransform;
+    [HideInInspector] public Transform playerTransform;
     public LayerMask GroundLayer, PlayerLayer;
     [SerializeField] public HealthSystem pHealth;
+
+    [Header("Animation")]
+    public Animation[] meleeAnimation;
+    public Animation[] rangedAnimation;
 
     [Header("Patrolling")]
     public Vector3 walkPoint;
@@ -31,11 +35,7 @@ public class EnemyAI : MonoBehaviour
     [Header("Attacking")]
     public bool isMelee;
     public bool nextAttack;
-    public float AttackCD;
-    public float CDTimer;
     public float attackDamage;
-    public GameObject projectile;
-    public Rigidbody body;
     public Animator animator;
     public bool isDead;
 
@@ -43,12 +43,13 @@ public class EnemyAI : MonoBehaviour
     public Transform gunTip;
     public GameObject bullet;
     public float shootForce;
-
+    public float bulletDamage;
+    [HideInInspector] public bullet Bullet;
 
     public void Awake()
     {
         //to randomly generate melee or range
-        isMelee = Random.value > 0.5f;
+        isMelee = Random.value > 0.9f;
         if (!isMelee) attackRange = 5;
         else attackRange = 1;
         nextAttack = true;
@@ -56,7 +57,10 @@ public class EnemyAI : MonoBehaviour
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
-        //pHealth = GetComponent<HealthSystem>();
+        if (!isMelee)
+        {
+            Bullet.bulletDamage = bulletDamage;
+        }
 
     }
     private void Start()
@@ -105,7 +109,9 @@ public class EnemyAI : MonoBehaviour
         GameObject currentBullet = Instantiate(bullet, gunTip.position, Quaternion.identity);
 
         //add forces to bullets
-        currentBullet.GetComponent<Rigidbody>().AddForce(Vector3.forward * shootForce, ForceMode.Impulse);
+        currentBullet.GetComponent<Rigidbody>().AddForce(transform.forward * shootForce, ForceMode.Impulse);
+
+        Destroy(currentBullet,2);
     }
     public void DealDamage()
     {

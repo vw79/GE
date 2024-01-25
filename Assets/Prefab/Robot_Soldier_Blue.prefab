@@ -121,10 +121,11 @@ Transform:
   m_GameObject: {fileID: 579229227251684297}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: -0.06}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3140799905647759262}
   m_Father: {fileID: 4604886710586041368}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &4996571802826842860
@@ -990,7 +991,7 @@ GameObject:
   - component: {fileID: 3956642622778077573}
   m_Layer: 9
   m_Name: Robot_Soldier_Blue
-  m_TagString: Untagged
+  m_TagString: Blue
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1004,7 +1005,7 @@ Transform:
   m_GameObject: {fileID: 3419679704983127048}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.36927032, y: 0.00049996376, z: 3.6089885}
+  m_LocalPosition: {x: 0.36927032, y: -15.33, z: 3.6089885}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1031,14 +1032,14 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1536
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.58790183
-  m_Height: 2.2400002
+  m_Height: 2.09
   m_Direction: 1
   m_Center: {x: -0.04334593, y: 1.05, z: -0.08875227}
 --- !u!54 &240656081787521592
@@ -1060,7 +1061,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1536
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
@@ -1133,6 +1134,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   pHealth: {fileID: 0}
+  meleeAnimation: []
+  rangedAnimation: []
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointSet: 0
   walkPointRange: 5
@@ -1142,13 +1145,14 @@ MonoBehaviour:
   playerInAttackRange: 0
   isMelee: 0
   nextAttack: 255
-  AttackCD: 2.3
-  CDTimer: 0
   attackDamage: 10
-  projectile: {fileID: 0}
-  body: {fileID: 0}
   animator: {fileID: 0}
   isDead: 0
+  gunTip: {fileID: 3140799905647759262}
+  bullet: {fileID: 0}
+  shootForce: 10
+  bulletDamage: 15
+  Bullet: {fileID: 0}
 --- !u!1 &3511929645619263031
 GameObject:
   m_ObjectHideFlags: 0
@@ -1971,7 +1975,7 @@ Transform:
   m_GameObject: {fileID: 5343044503346722262}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 1.0000956, z: 0.015437293}
+  m_LocalPosition: {x: -0, y: 0.983, z: 0.015437293}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2010,6 +2014,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3923625876487354269}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5458720293071511568
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3140799905647759262}
+  m_Layer: 9
+  m_Name: GunTip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3140799905647759262
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5458720293071511568}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.234, y: 1.591, z: 1.887}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2662703913382664326}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5749093348472936631
 GameObject:
