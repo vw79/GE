@@ -21,12 +21,14 @@ public class Warp : MonoBehaviour
     public Animator animator;
     private PlayerCombat playerCombat;
     private PlayerController playerController;
+    private CapsuleCollider playerCollider;
 
 
     void Awake()
     {
         playerCombat = GetComponent<PlayerCombat>();
         playerController = GetComponent<PlayerController>();
+        playerCollider = GetComponent<CapsuleCollider>();
     }
 
     void Start()
@@ -98,13 +100,14 @@ public class Warp : MonoBehaviour
                     furthestEnemy.GetComponentInChildren<SkinnedMeshRenderer>().material = enemyMaterial;
 
                     // Start a coroutine to revert to the original material after a delay
-                    StartCoroutine(RevertMaterialAfterDelay(furthestEnemy.gameObject, originalMaterial, 1.5f)); 
+                    StartCoroutine(RevertMaterialAfterDelay(furthestEnemy.gameObject, originalMaterial, 1.5f));
                 }
             }
         }
 
         playerCombat.enabled = false;
         playerController.enabled = false;
+        playerCollider.enabled = false;
         animator.Play("Warp");
         StartCoroutine(WaitAnim());
     }
@@ -128,6 +131,7 @@ public class Warp : MonoBehaviour
         warpStartTime = Time.time;
         playerController.enabled = true;
         playerCombat.enabled = true;
+        playerCollider.enabled = true;
     }
 
     // Coroutine to revert the material after a delay

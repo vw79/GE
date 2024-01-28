@@ -16,6 +16,10 @@ public class StateManager : MonoBehaviour
     public ParticleSystem trailParticleSystem;
     public Color[] trailColors;
 
+    private SkinnedMeshRenderer playerRenderer;
+    private Material[] playerMaterialDefault;
+    public Material[] playerNewMaterials;
+
     public enum State
     {
         State1,
@@ -27,21 +31,26 @@ public class StateManager : MonoBehaviour
     private bool state2Unlocked = false;
     private bool state3Unlocked = false;
     private bool isCooldown = false;
-    public float cooldown = 2f;
+    private float cooldown = 0.5f;
 
     private bool isActionCooldown = false;
     [SerializeField] public float actionCooldown = 10f;
 
     private Warp warp;
+    private PlayerCombat playerCombat;
 
     private void Awake()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         warp = player.GetComponent<Warp>();
+        playerCombat = player.GetComponent<PlayerCombat>();
+        playerRenderer = player.GetComponentInChildren<SkinnedMeshRenderer>();
+        playerMaterialDefault = playerRenderer.materials;
     }
     void Start()
     {
         UpdateMaterialsAndTrail();
+        
     }
 
     void Update()
@@ -62,6 +71,7 @@ public class StateManager : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.E) && !isActionCooldown)
         {
+            if (playerCombat.isUltimateActive) return;
             StartCoroutine(PerformActionWithCooldown());
         }
     }
@@ -119,6 +129,7 @@ public class StateManager : MonoBehaviour
     {
         currentState = newState;
         UpdateMaterialsAndTrail();
+        StartCoroutine(FlashPlayerMaterial(newState));
     }
 
     private void UpdateMaterialsAndTrail()
@@ -141,6 +152,28 @@ public class StateManager : MonoBehaviour
             var colorModule = trailParticleSystem.colorOverLifetime;
             colorModule.color = new ParticleSystem.MinMaxGradient(trailColors[stateIndex]);
         }
+    }
+
+    private IEnumerator FlashPlayerMaterial(State newState)
+    {
+        Material[] currentMaterials = playerRenderer.materials;
+
+        switch (newState)
+        {
+            case State.State1:
+                playerRenderer.materials = new Material[] { playerNewMaterials[0], playerNewMaterials[0] };
+                break;
+            case State.State2:
+                playerRenderer.materials = new Material[] { playerNewMaterials[1], playerNewMaterials[1] };
+                break;
+            case State.State3:
+                playerRenderer.materials = new Material[] { playerNewMaterials[2], playerNewMaterials[2] };
+                break;
+        }
+
+        yield return new WaitForSeconds(0.5f); 
+
+        playerRenderer.materials = playerMaterialDefault;
     }
 
     public bool CanAttack(GameObject enemy)

@@ -12,7 +12,7 @@ public class HealthSystem: MonoBehaviour
     private ChromaticAberrationEffect chromaticEffect;
     private CinemachineImpulseSource impulseSource;
     public bool isDead;
-    public PlayerCombat playerCombat;
+    private PlayerCombat playerCombat;
 
     public UnityEvent OnDeath;
 

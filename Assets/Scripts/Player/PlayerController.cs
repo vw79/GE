@@ -12,12 +12,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _dashDuration = 0.2f;
     [SerializeField] private float _dashCooldown = 1f;
 
+    public float activeTime = 0.2f;
+    private MeshTrail _meshTrail;
+
     private Rigidbody _rb;
+    private CapsuleCollider _collider;
     private Animator _animator;
     private Vector3 _input;
-    private  float _currentSpeed;
+    private float _currentSpeed;
     private bool _isDashing;
-    public bool IsDashing { get; private set; }
+
     private float _dashTimeLeft;
     private float _dashCooldownTimer;
     private Vector3 _lastInputDirection;
@@ -38,6 +42,9 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
         _animator.Play("Idle");
+        _collider = GetComponent<CapsuleCollider>();
+        _meshTrail = GetComponent<MeshTrail>();
+        
     }
 
     private void Update()
@@ -83,10 +90,9 @@ public class PlayerController : MonoBehaviour
 
     private void HandleDashInput()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !_isDashing && _dashCooldownTimer <= 0)
+        if (Input.GetKeyDown(KeyCode.Space) && !_isDashing && _dashCooldownTimer <= 0 && _currentSpeed >= 0.1)
         {
             _isDashing = true;
-            IsDashing = true;
             _dashTimeLeft = _dashDuration;
             _dashCooldownTimer = _dashCooldown;
         }
@@ -97,7 +103,7 @@ public class PlayerController : MonoBehaviour
             if (_dashTimeLeft <= 0)
             {
                 _isDashing = false;
-                IsDashing = false;
+                _collider.enabled = true;
             }
         }
 
@@ -109,6 +115,8 @@ public class PlayerController : MonoBehaviour
 
     private void Dash()
     {
+        _collider.enabled = false;
+        StartCoroutine(_meshTrail.ActivateTrail(activeTime));
         _rb.MovePosition(transform.position + _input.ToIso().normalized * _dashSpeed * Time.deltaTime);
     }
 
@@ -145,7 +153,7 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool("IsMoving", _input.magnitude > 0);
     }
 
-    
+
 }
 
 public static class Helpers
