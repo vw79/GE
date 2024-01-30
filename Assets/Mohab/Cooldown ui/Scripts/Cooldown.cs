@@ -14,10 +14,11 @@ public class Cooldown : MonoBehaviour
     private TMP_Text textCooldown;
     [SerializeField]
     private Image imageEdge;
+    [SerializeField]
+    private float cooldownTime;
 
     //variable for looking after the cooldown
     private bool isCoolDown = false;
-    private float cooldownTime = 10.0f;
     private float cooldownTimer = 0.0f;
     // Start is called before the first frame update
     void Start()
@@ -30,11 +31,6 @@ public class Cooldown : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            UseSpell();
-        }
-
         if (isCoolDown)
         {
             ApplyCooldown();

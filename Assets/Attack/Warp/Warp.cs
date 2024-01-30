@@ -69,6 +69,7 @@ public class Warp : MonoBehaviour
             }
         }
 
+
         if (furthestEnemy != null)
         {
             // Check if the furthestEnemy has one of the specified tags
@@ -120,6 +121,8 @@ public class Warp : MonoBehaviour
 
     private void WarpToEnemy()
     {
+        
+
         Vector3 enemyPosition = furthestEnemy.position;
         Vector3 directionToEnemy = (enemyPosition - playerTransform.position).normalized;
 

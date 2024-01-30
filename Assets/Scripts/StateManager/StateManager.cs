@@ -31,6 +31,18 @@ public class StateManager : MonoBehaviour
     public Sprite redSkillImage;
     public Sprite greenSkillImage;
 
+    public Cooldown redCDScript;
+    public Cooldown blueCDScript;
+    public Cooldown greenCDScript;
+
+    public GameObject redCD;
+    public GameObject blueCD;
+    public GameObject greenCD;
+
+    public Canvas redCanvas;
+    public Canvas blueCanvas;   
+    public Canvas greenCanvas;
+
     public enum State
     {
         State1,
@@ -64,7 +76,16 @@ public class StateManager : MonoBehaviour
         actionCooldowns = new float[3] { 2f, 5f, 10f }; 
         isActionCooldowns = new bool[3] { false, false, false };
        
+        redCDScript = redCD.GetComponentInChildren<Cooldown>();
+        blueCDScript = blueCD.GetComponentInChildren<Cooldown>();
+        greenCDScript = greenCD.GetComponentInChildren<Cooldown>();
 
+        redCanvas = redCD.GetComponentInChildren<Canvas>();
+        blueCanvas = blueCD.GetComponentInChildren<Canvas>();
+        greenCanvas = greenCD.GetComponentInChildren<Canvas>();
+
+        redCanvas.enabled = false;
+        greenCanvas.enabled = false;
     }
     void Start()
     {
@@ -119,15 +140,17 @@ public class StateManager : MonoBehaviour
     {
         if (currentState == State.State1)
         {
-            
+            blueCDScript.UseSpell();
             Debug.Log("Ice");
         }
         else if (currentState == State.State2)
         {
+            redCDScript.UseSpell();
             Debug.Log("Fire");
         }
         else if (currentState == State.State3)
         {
+            greenCDScript.UseSpell();
             warp.StartWarp();
         }
     }
@@ -223,16 +246,25 @@ public class StateManager : MonoBehaviour
             case State.State1:
                 stateImage.sprite = blueImage;
                 stateSkillImage.sprite = blueSkillImage;
+                blueCanvas.enabled = true;
+                redCanvas.enabled = false;
+                greenCanvas.enabled = false;
                 break;
 
             case State.State2:
                 stateImage.sprite = redImage;
                 stateSkillImage.sprite = redSkillImage;
+                blueCanvas.enabled = false;
+                redCanvas.enabled = true;
+                greenCanvas.enabled = false;
                 break;
 
             case State.State3:
                 stateImage.sprite = greenImage;
                 stateSkillImage.sprite = greenSkillImage;
+                blueCanvas.enabled = false;
+                redCanvas.enabled = false;
+                greenCanvas.enabled = true;
                 break;
         }
     }

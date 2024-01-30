@@ -10,6 +10,7 @@ public class EnemySpawnController : MonoBehaviour
     public Material redMelee;
     public Material greenMelee;
     public Material blueMelee;
+    public LayerMask LayerShit;
 
 
     public Transform[] spawnPoints;
