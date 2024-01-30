@@ -15,68 +15,58 @@ public class SpellCooldown : MonoBehaviour
     [SerializeField]
     private Image imageEdge;
 
-    //variable for looking after the cooldown
-    private bool isCoolDown = false;
-    private float cooldownTime = 10.0f;
-    private float cooldownTimer = 0.0f;
-    // Start is called before the first frame update
+    private bool isCoolDown;
+    private float cooldownTime;
+    private float cooldownTimer;
+
+    private StateManager stateManager;
+
     void Start()
     {
+        GameObject sm = GameObject.Find("StateManager");  
+        stateManager = sm.GetComponent<StateManager>();
+
         textCooldown.gameObject.SetActive(false);
         imageEdge.gameObject.SetActive(false);
         imageCooldown.fillAmount = 0.0f;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Q))
+        if (stateManager != null)
         {
-            UseSpell();
+            cooldownTime = stateManager.GetCurrentStateCooldown(); 
         }
 
-        if(isCoolDown)
-        {
-            ApplyCooldown();
-        }
+        ApplyCooldown();
     }
 
     void ApplyCooldown()
     {
-        cooldownTimer -= Time.deltaTime;
-        if(cooldownTimer < 0.0f)
+        if (isCoolDown)
         {
-            isCoolDown = false;
-            textCooldown.gameObject.SetActive(false);
-            imageEdge.gameObject.SetActive(false);
-            imageCooldown.fillAmount = 0.0f;
+            cooldownTimer -= Time.deltaTime;
+            if (cooldownTimer < 0.0f)
+            {
+                isCoolDown = false;
+                textCooldown.gameObject.SetActive(false);
+                imageEdge.gameObject.SetActive(false);
+                imageCooldown.fillAmount = 0.0f;
+            }
+            else
+            {
+                textCooldown.text = Mathf.RoundToInt(cooldownTimer).ToString();
+                imageCooldown.fillAmount = cooldownTimer / cooldownTime;
+                imageEdge.transform.localEulerAngles = new Vector3(0, 0, 360.0f * (cooldownTimer / cooldownTime));
+            }
         }
-        else
-        {
-            textCooldown.text = Mathf.RoundToInt(cooldownTimer).ToString();
-            imageCooldown.fillAmount = cooldownTimer / cooldownTime;
-
-            imageEdge.transform.localEulerAngles = new Vector3(0, 0, 360.0f * (cooldownTimer / cooldownTime));
-        }
-
     }
 
-    public bool UseSpell()
+    public void StartCooldown(float cooldown)
     {
-        if(isCoolDown)
-        {
-            return false;
-        }
-        else
-        {
-            isCoolDown = true;
-            textCooldown.gameObject.SetActive(true);
-            cooldownTimer = cooldownTime;
-            textCooldown.text = Mathf.RoundToInt(cooldownTimer).ToString();
-            imageCooldown.fillAmount = 1.0f;
-
-            imageEdge.gameObject.SetActive(true);
-            return true; 
-        }
+        isCoolDown = true;
+        cooldownTimer = cooldown;
+        textCooldown.gameObject.SetActive(true);
+        imageEdge.gameObject.SetActive(true);
     }
 }

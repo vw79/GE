@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StateManager : MonoBehaviour
 {
@@ -20,6 +21,16 @@ public class StateManager : MonoBehaviour
     private Material[] playerMaterialDefault;
     public Material[] playerNewMaterials;
 
+    public Image stateImage; 
+    public Sprite blueImage; 
+    public Sprite redImage;
+    public Sprite greenImage;
+
+    public Image stateSkillImage;
+    public Sprite blueSkillImage;
+    public Sprite redSkillImage;
+    public Sprite greenSkillImage;
+
     public enum State
     {
         State1,
@@ -33,8 +44,11 @@ public class StateManager : MonoBehaviour
     private bool isCooldown = false;
     private float cooldown = 0.5f;
 
+    private float[] actionCooldowns;
+    private bool[] isActionCooldowns;
+
+
     private bool isActionCooldown = false;
-    [SerializeField] public float actionCooldown = 10f;
 
     private Warp warp;
     private PlayerCombat playerCombat;
@@ -46,6 +60,11 @@ public class StateManager : MonoBehaviour
         playerCombat = player.GetComponent<PlayerCombat>();
         playerRenderer = player.GetComponentInChildren<SkinnedMeshRenderer>();
         playerMaterialDefault = playerRenderer.materials;
+
+        actionCooldowns = new float[3] { 2f, 5f, 10f }; 
+        isActionCooldowns = new bool[3] { false, false, false };
+       
+
     }
     void Start()
     {
@@ -78,23 +97,29 @@ public class StateManager : MonoBehaviour
 
     private IEnumerator PerformActionWithCooldown()
     {
-        // Perform the action
-        PerformStateSpecificAction();
+        int stateIndex = (int)currentState;
 
-        // Set the cooldown flag
-        isActionCooldown = true;
+        // Perform the action if not in cooldown
+        if (!isActionCooldowns[stateIndex])
+        {
+            PerformStateSpecificAction();
 
-        // Wait for the cooldown period
-        yield return new WaitForSeconds(actionCooldown);
+            // Set the cooldown flag for the specific state
+            isActionCooldowns[stateIndex] = true;
 
-        // Reset the cooldown flag
-        isActionCooldown = false;
+            // Wait for the cooldown period
+            yield return new WaitForSeconds(actionCooldowns[stateIndex]);
+
+            // Reset the cooldown flag for the specific state
+            isActionCooldowns[stateIndex] = false;
+        }
     }
 
     private void PerformStateSpecificAction()
     {
         if (currentState == State.State1)
         {
+            
             Debug.Log("Ice");
         }
         else if (currentState == State.State2)
@@ -130,6 +155,7 @@ public class StateManager : MonoBehaviour
         currentState = newState;
         UpdateMaterialsAndTrail();
         StartCoroutine(FlashPlayerMaterial(newState));
+        UpdateStateInfo();
     }
 
     private void UpdateMaterialsAndTrail()
@@ -174,6 +200,41 @@ public class StateManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f); 
 
         playerRenderer.materials = playerMaterialDefault;
+    }
+
+    public float GetCurrentStateCooldown()
+    {
+        int stateIndex = (int)currentState; // Assuming currentState is a variable representing current state
+        if (stateIndex >= 0 && stateIndex < actionCooldowns.Length)
+        {
+            return actionCooldowns[stateIndex];
+        }
+        else
+        {
+            Debug.LogWarning("State index out of range. Returning default cooldown.");
+            return 0f; // Default or error value
+        }
+    }
+
+    private void UpdateStateInfo()
+    {
+        switch (currentState)
+        {
+            case State.State1:
+                stateImage.sprite = blueImage;
+                stateSkillImage.sprite = blueSkillImage;
+                break;
+
+            case State.State2:
+                stateImage.sprite = redImage;
+                stateSkillImage.sprite = redSkillImage;
+                break;
+
+            case State.State3:
+                stateImage.sprite = greenImage;
+                stateSkillImage.sprite = greenSkillImage;
+                break;
+        }
     }
 
     public bool CanAttack(GameObject enemy)
