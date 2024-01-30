@@ -23,12 +23,18 @@ public class Warp : MonoBehaviour
     private PlayerController playerController;
     private CapsuleCollider playerCollider;
 
+    private Cooldown greenCDScript;
+    private GameObject greenCD;
+
+
 
     void Awake()
     {
         playerCombat = GetComponent<PlayerCombat>();
         playerController = GetComponent<PlayerController>();
         playerCollider = GetComponent<CapsuleCollider>();
+        greenCD = GameObject.Find("GreenCdUI");
+        greenCDScript = greenCD.GetComponentInChildren<Cooldown>();
     }
 
     void Start()
@@ -54,9 +60,10 @@ public class Warp : MonoBehaviour
         }
     }
 
-    public void StartWarp()
+    public bool TryStartWarp()
     {
         Collider[] hitColliders = Physics.OverlapSphere(playerTransform.position, radius, enemyLayer);
+        furthestEnemy = null;
         float maxDistance = 0f;
 
         foreach (var hitCollider in hitColliders)
@@ -69,47 +76,55 @@ public class Warp : MonoBehaviour
             }
         }
 
-
         if (furthestEnemy != null)
         {
-            // Check if the furthestEnemy has one of the specified tags
-            string enemyTag = furthestEnemy.gameObject.tag;
-            if (enemyTag == "Red" || enemyTag == "Green" || enemyTag == "Blue")
-            {
-                // Apply the corresponding material
-                Material enemyMaterial = null;
-
-                if (enemyTag == "Red")
-                {
-                    enemyMaterial = targetMaterials[0];
-                }
-                else if (enemyTag == "Green")
-                {
-                    enemyMaterial = targetMaterials[1];
-                }
-                else if (enemyTag == "Blue")
-                {
-                    enemyMaterial = targetMaterials[2];
-                }
-
-                if (enemyMaterial != null)
-                {
-                    // Store the original material
-                    Material originalMaterial = furthestEnemy.GetComponentInChildren<SkinnedMeshRenderer>().material;
-
-                    // Apply the new material
-                    furthestEnemy.GetComponentInChildren<SkinnedMeshRenderer>().material = enemyMaterial;
-
-                    // Start a coroutine to revert to the original material after a delay
-                    StartCoroutine(RevertMaterialAfterDelay(furthestEnemy.gameObject, originalMaterial, 1.5f));
-                }
-            }
+            StartWarp();
+            return true;
         }
 
+        return false;
+    }
+
+    public void StartWarp()
+    {
+        // Check if the furthestEnemy has one of the specified tags
+        string enemyTag = furthestEnemy.gameObject.tag;
+        if (enemyTag == "Red" || enemyTag == "Green" || enemyTag == "Blue")
+        {
+            // Apply the corresponding material
+            Material enemyMaterial = null;
+
+            if (enemyTag == "Red")
+            {
+                enemyMaterial = targetMaterials[0];
+            }
+            else if (enemyTag == "Green")
+            {
+                enemyMaterial = targetMaterials[1];
+            }
+            else if (enemyTag == "Blue")
+            {
+                enemyMaterial = targetMaterials[2];
+            }
+
+            if (enemyMaterial != null)
+            {
+                // Store the original material
+                Material originalMaterial = furthestEnemy.GetComponentInChildren<SkinnedMeshRenderer>().material;
+
+                // Apply the new material
+                furthestEnemy.GetComponentInChildren<SkinnedMeshRenderer>().material = enemyMaterial;
+
+                // Start a coroutine to revert to the original material after a delay
+                StartCoroutine(RevertMaterialAfterDelay(furthestEnemy.gameObject, originalMaterial, 1.5f));
+            }
+        }
+        
         playerCombat.enabled = false;
         playerController.enabled = false;
         playerCollider.enabled = false;
         animator.Play("Warp");
+        greenCDScript.UseSpell();
         StartCoroutine(WaitAnim());
     }
 
@@ -120,9 +135,7 @@ public class Warp : MonoBehaviour
     }
 
     private void WarpToEnemy()
-    {
-        
-
+    {     
         Vector3 enemyPosition = furthestEnemy.position;
         Vector3 directionToEnemy = (enemyPosition - playerTransform.position).normalized;
 

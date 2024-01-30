@@ -31,17 +31,16 @@ public class StateManager : MonoBehaviour
     public Sprite redSkillImage;
     public Sprite greenSkillImage;
 
-    public Cooldown redCDScript;
-    public Cooldown blueCDScript;
-    public Cooldown greenCDScript;
+    private Cooldown redCDScript;
+    private Cooldown blueCDScript;
 
     public GameObject redCD;
     public GameObject blueCD;
     public GameObject greenCD;
 
-    public Canvas redCanvas;
-    public Canvas blueCanvas;   
-    public Canvas greenCanvas;
+    private Canvas redCanvas;
+    private Canvas blueCanvas;   
+    private Canvas greenCanvas;
 
     public enum State
     {
@@ -53,8 +52,6 @@ public class StateManager : MonoBehaviour
     private State currentState = State.State1;
     private bool state2Unlocked = false;
     private bool state3Unlocked = false;
-    private bool isCooldown = false;
-    private float cooldown = 0.5f;
 
     private float[] actionCooldowns;
     private bool[] isActionCooldowns;
@@ -73,12 +70,11 @@ public class StateManager : MonoBehaviour
         playerRenderer = player.GetComponentInChildren<SkinnedMeshRenderer>();
         playerMaterialDefault = playerRenderer.materials;
 
-        actionCooldowns = new float[3] { 2f, 5f, 10f }; 
+        actionCooldowns = new float[3] { 1f, 20f, 30f }; 
         isActionCooldowns = new bool[3] { false, false, false };
        
         redCDScript = redCD.GetComponentInChildren<Cooldown>();
         blueCDScript = blueCD.GetComponentInChildren<Cooldown>();
-        greenCDScript = greenCD.GetComponentInChildren<Cooldown>();
 
         redCanvas = redCD.GetComponentInChildren<Canvas>();
         blueCanvas = blueCD.GetComponentInChildren<Canvas>();
@@ -87,26 +83,26 @@ public class StateManager : MonoBehaviour
         redCanvas.enabled = false;
         greenCanvas.enabled = false;
     }
+
     void Start()
     {
         UpdateMaterialsAndTrail();
-        
     }
 
     void Update()
     {
         // Check for state change inputs
-        if (Input.GetKeyDown(KeyCode.Alpha1) && currentState != State.State1 && !isCooldown)
+        if (Input.GetKeyDown(KeyCode.Alpha1) && currentState != State.State1)
         {
-            StartCoroutine(ChangeStateWithCooldown(State.State1));
+            ChangeState(State.State1);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2) && currentState != State.State2 && !isCooldown && state2Unlocked)
+        else if (Input.GetKeyDown(KeyCode.Alpha2) && currentState != State.State2 && state2Unlocked)
         {
-            StartCoroutine(ChangeStateWithCooldown(State.State2));
+            ChangeState(State.State2);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3) && currentState != State.State3 && !isCooldown && state3Unlocked)
+        else if (Input.GetKeyDown(KeyCode.Alpha3) && currentState != State.State3 && state3Unlocked)
         {
-            StartCoroutine(ChangeStateWithCooldown(State.State3));
+            ChangeState(State.State3);
         }
 
         if (Input.GetKeyUp(KeyCode.E) && !isActionCooldown)
@@ -123,36 +119,41 @@ public class StateManager : MonoBehaviour
         // Perform the action if not in cooldown
         if (!isActionCooldowns[stateIndex])
         {
-            PerformStateSpecificAction();
+            bool actionPerformed = PerformStateSpecificAction();
 
-            // Set the cooldown flag for the specific state
-            isActionCooldowns[stateIndex] = true;
+            // Set the cooldown flag for the specific state only if the action was performed
+            if (actionPerformed)
+            {
+                isActionCooldowns[stateIndex] = true;
 
-            // Wait for the cooldown period
-            yield return new WaitForSeconds(actionCooldowns[stateIndex]);
+                // Wait for the cooldown period
+                yield return new WaitForSeconds(actionCooldowns[stateIndex]);
 
-            // Reset the cooldown flag for the specific state
-            isActionCooldowns[stateIndex] = false;
+                // Reset the cooldown flag for the specific state
+                isActionCooldowns[stateIndex] = false;
+            }
         }
     }
 
-    private void PerformStateSpecificAction()
+    private bool PerformStateSpecificAction()
     {
         if (currentState == State.State1)
         {
             blueCDScript.UseSpell();
             Debug.Log("Ice");
+            return true;
         }
         else if (currentState == State.State2)
         {
             redCDScript.UseSpell();
             Debug.Log("Fire");
+            return true;
         }
         else if (currentState == State.State3)
         {
-            greenCDScript.UseSpell();
-            warp.StartWarp();
+            return warp.TryStartWarp();
         }
+        return false;
     }
 
     public void UnlockState2()
@@ -165,13 +166,6 @@ public class StateManager : MonoBehaviour
         state3Unlocked = true;
     }
 
-    IEnumerator ChangeStateWithCooldown(State newState)
-    {
-        ChangeState(newState);
-        isCooldown = true;
-        yield return new WaitForSeconds(cooldown);
-        isCooldown = false;
-    }
 
     private void ChangeState(State newState)
     {
@@ -181,6 +175,7 @@ public class StateManager : MonoBehaviour
         UpdateStateInfo();
     }
 
+    #region Update Player Material
     private void UpdateMaterialsAndTrail()
     {
         int stateIndex = (int)currentState;
@@ -225,20 +220,9 @@ public class StateManager : MonoBehaviour
         playerRenderer.materials = playerMaterialDefault;
     }
 
-    public float GetCurrentStateCooldown()
-    {
-        int stateIndex = (int)currentState; // Assuming currentState is a variable representing current state
-        if (stateIndex >= 0 && stateIndex < actionCooldowns.Length)
-        {
-            return actionCooldowns[stateIndex];
-        }
-        else
-        {
-            Debug.LogWarning("State index out of range. Returning default cooldown.");
-            return 0f; // Default or error value
-        }
-    }
+    #endregion
 
+    #region Update UI
     private void UpdateStateInfo()
     {
         switch (currentState)
@@ -268,6 +252,7 @@ public class StateManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
     public bool CanAttack(GameObject enemy)
     {

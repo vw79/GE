@@ -35,7 +35,7 @@ public class SpellCooldown : MonoBehaviour
     {
         if (stateManager != null)
         {
-            cooldownTime = stateManager.GetCurrentStateCooldown(); 
+            return;
         }
 
         ApplyCooldown();
