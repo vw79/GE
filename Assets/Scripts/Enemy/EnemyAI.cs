@@ -49,7 +49,6 @@ public class EnemyAI : MonoBehaviour
     public void Awake()
     {
         //to randomly generate melee or range
-        isMelee = Random.value > 0.9f;
         if (!isMelee) attackRange = 5;
         else attackRange = 1;
         nextAttack = true;

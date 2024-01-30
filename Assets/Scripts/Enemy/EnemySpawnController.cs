@@ -6,67 +6,45 @@ public class EnemySpawnController : MonoBehaviour
     public GameObject redRangeEnemyPrefab;
     public GameObject greenRangeEnemyPrefab;
     public GameObject blueRangeEnemyPrefab;
-    public GameObject MeleeEnemyPrefab;
-    public Material redMelee;
-    public Material greenMelee;
-    public Material blueMelee;
-    public LayerMask LayerShit;
-
-
+    public GameObject RedEnemyPrefab;
+    public GameObject BlueEnemyPrefab;
+    public GameObject GreenEnemyPrefab;
     public Transform[] spawnPoints;
-    public Dropdown enemyTypeDropdown;
-    public InputField numberOfEnemiesInput;
-
-    private void Start()
+    public int numberOfEnemies;
+    public bool isRed;
+    public bool isBlue;
+    public bool isGreen;
+    [HideInInspector]
+    bool Melee;
+    EnemyAI enemy;
+    private void Awake()
     {
-        // Assuming you have a button to trigger the spawning, you can link it to a method like this:
-        // For example, you might attach this to a UI button's onClick event
-        // You can also call this method from elsewhere in your code when you want to spawn enemies
+        enemy = GetComponent<EnemyAI>();
     }
-
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player")) 
+        {
+            SpawnEnemies();
+        }
+    }
     public void SpawnEnemies()
-    {
-        // Get the selected enemy type from the dropdown
-        string selectedEnemyType = enemyTypeDropdown.options[enemyTypeDropdown.value].text;
-
-        // Get the number of enemies to spawn from the input field
-        int numberOfEnemies = int.Parse(numberOfEnemiesInput.text);
-
-        // Spawn enemies
-        for (int i = 0; i < numberOfEnemies; i++)
         {
-            // Choose the correct prefab based on the selected enemy type
-            GameObject enemyPrefab = GetEnemyPrefab(selectedEnemyType);
+            if (isRed)
+            {
+                SpawnColorEnemies(RedEnemyPrefab, redRangeEnemyPrefab);
+            }
 
-            // Choose a random spawn point
-            Transform spawnPoint = GetRandomSpawnPoint();
+            if (isBlue)
+            {
+                SpawnColorEnemies(BlueEnemyPrefab, blueRangeEnemyPrefab);
+            }
 
-            // Instantiate the selected enemy prefab at the chosen spawn point
-            Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
+            if (isGreen)
+            {
+                SpawnColorEnemies(GreenEnemyPrefab, greenRangeEnemyPrefab);
+            }
         }
-    }
-
-    private GameObject GetEnemyPrefab(string enemyType)
-    {
-        switch (enemyType)
-        {
-            case "Red Range":
-                return redRangeEnemyPrefab; 
-            
-            case "Red Melee":
-                return redRangeEnemyPrefab;
-
-            case "Green":
-                return greenRangeEnemyPrefab;
-
-            case "Blue":
-                return blueRangeEnemyPrefab;
-
-            default:
-                Debug.LogWarning("Invalid enemy type");
-                return null;
-        }
-    }
 
     private Transform GetRandomSpawnPoint()
     {
@@ -80,6 +58,24 @@ public class EnemySpawnController : MonoBehaviour
         {
             Debug.LogWarning("No spawn points assigned.");
             return null;
+        }
+    }
+
+    private void SpawnColorEnemies(GameObject meleePrefab, GameObject rangedPrefab)
+    {
+        for (int i = 0; i < numberOfEnemies; i++)
+        {
+            Melee = Random.value > 0.9f;
+            if (Melee)
+            {
+                enemy.isMelee = true;
+                Instantiate(meleePrefab, GetRandomSpawnPoint().position, GetRandomSpawnPoint().rotation);
+            }
+            else
+            {
+                enemy.isMelee = false;
+                Instantiate(rangedPrefab, GetRandomSpawnPoint().position, GetRandomSpawnPoint().rotation);
+            }
         }
     }
 }
