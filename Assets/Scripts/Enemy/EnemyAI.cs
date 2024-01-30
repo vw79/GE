@@ -18,6 +18,10 @@ public class EnemyAI : MonoBehaviour
     public LayerMask GroundLayer, PlayerLayer;
     [SerializeField] public PlayerHealthSystem pHealth;
 
+    [Header("Health")]
+    public float maxEnemyHealth;
+    private float currentHealth;
+
     [Header("Animation")]
     public Animation[] meleeAnimation;
     public Animation[] rangedAnimation;
@@ -74,7 +78,7 @@ public class EnemyAI : MonoBehaviour
     }
     void Update()
     {
-      
+        currentHealth = maxEnemyHealth;
         stateMachine.Update();
         if (!isDead)
         {
@@ -95,10 +99,24 @@ public class EnemyAI : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.J))
             {
-                stateMachine.ChangeState(EnemyStateId.Death);
+                dead();
             }
         }
 
+    }
+
+    public void takeDamage(float damage)
+    {
+        currentHealth -= damage;
+        if(currentHealth <= 0)
+        {
+            dead();
+        }
+    }
+
+    public void dead()
+    {
+        stateMachine.ChangeState(EnemyStateId.Death);
     }
 
     //animation event functions

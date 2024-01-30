@@ -11,21 +11,23 @@ public class EnemySpawnController : MonoBehaviour
     public GameObject GreenEnemyPrefab;
     public Transform[] spawnPoints;
     public int numberOfEnemies;
+    bool isEntered;
     public bool isRed;
     public bool isBlue;
     public bool isGreen;
     [HideInInspector]
     bool Melee;
-    EnemyAI enemy;
+    [SerializeField]public EnemyAI enemy;
     private void Awake()
     {
-        enemy = GetComponent<EnemyAI>();
+        
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")) 
+        if (other.CompareTag("Player")&&!isEntered) 
         {
             SpawnEnemies();
+            isEntered = true;
         }
     }
     public void SpawnEnemies()
@@ -65,7 +67,7 @@ public class EnemySpawnController : MonoBehaviour
     {
         for (int i = 0; i < numberOfEnemies; i++)
         {
-            Melee = Random.value > 0.9f;
+            Melee = Random.value > 0.5f;
             if (Melee)
             {
                 enemy.isMelee = true;
