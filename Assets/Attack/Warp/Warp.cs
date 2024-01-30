@@ -26,8 +26,6 @@ public class Warp : MonoBehaviour
     private Cooldown greenCDScript;
     private GameObject greenCD;
 
-
-
     void Awake()
     {
         playerCombat = GetComponent<PlayerCombat>();
@@ -44,7 +42,6 @@ public class Warp : MonoBehaviour
 
     void Update()
     {
-        // Handle the warp animation
         if (warpStartTime > 0f)
         {
             float warpProgress = (Time.time - warpStartTime) / warpDuration;
@@ -60,6 +57,7 @@ public class Warp : MonoBehaviour
         }
     }
 
+    //Check if there is an enemy within the radius
     public bool TryStartWarp()
     {
         Collider[] hitColliders = Physics.OverlapSphere(playerTransform.position, radius, enemyLayer);
@@ -85,13 +83,12 @@ public class Warp : MonoBehaviour
         return false;
     }
 
+    // Change the material of the enemy and start the warp animation
     public void StartWarp()
     {
-        // Check if the furthestEnemy has one of the specified tags
         string enemyTag = furthestEnemy.gameObject.tag;
         if (enemyTag == "Red" || enemyTag == "Green" || enemyTag == "Blue")
         {
-            // Apply the corresponding material
             Material enemyMaterial = null;
 
             if (enemyTag == "Red")
@@ -109,13 +106,8 @@ public class Warp : MonoBehaviour
 
             if (enemyMaterial != null)
             {
-                // Store the original material
                 Material originalMaterial = furthestEnemy.GetComponentInChildren<SkinnedMeshRenderer>().material;
-
-                // Apply the new material
                 furthestEnemy.GetComponentInChildren<SkinnedMeshRenderer>().material = enemyMaterial;
-
-                // Start a coroutine to revert to the original material after a delay
                 StartCoroutine(RevertMaterialAfterDelay(furthestEnemy.gameObject, originalMaterial, 1.5f));
             }
         }
@@ -128,29 +120,30 @@ public class Warp : MonoBehaviour
         StartCoroutine(WaitAnim());
     }
 
+    // Wait for the specific time of the animation to warp
     IEnumerator WaitAnim()
     {
         yield return new WaitForSeconds(1.1f);
-        WarpToEnemy(); // Call the updated function
+        WarpToEnemy(); 
     }
 
+    // Warp the player to the enemy
     private void WarpToEnemy()
     {     
         Vector3 enemyPosition = furthestEnemy.position;
         Vector3 directionToEnemy = (enemyPosition - playerTransform.position).normalized;
 
-        // Rotate the player to face the enemy's position
         playerTransform.LookAt(enemyPosition);
 
         warpStartPosition = playerTransform.position;
-        warpTargetPosition = enemyPosition - directionToEnemy * (safeDistance + 1f); // Adjusted for safe distance
+        warpTargetPosition = enemyPosition - directionToEnemy * (safeDistance + 1f);
         warpStartTime = Time.time;
         playerController.enabled = true;
         playerCombat.enabled = true;
         playerCollider.enabled = true;
     }
 
-    // Coroutine to revert the material after a delay
+    // Revert the material of the enemy after a delay
     private IEnumerator RevertMaterialAfterDelay(GameObject targetObject, Material originalMaterial, float delay)
     {
         yield return new WaitForSeconds(delay);

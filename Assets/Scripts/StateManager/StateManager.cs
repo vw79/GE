@@ -91,7 +91,6 @@ public class StateManager : MonoBehaviour
 
     void Update()
     {
-        // Check for state change inputs
         if (Input.GetKeyDown(KeyCode.Alpha1) && currentState != State.State1)
         {
             ChangeState(State.State1);
@@ -112,29 +111,25 @@ public class StateManager : MonoBehaviour
         }
     }
 
+    // Perform the action for the current state with a cooldown
     private IEnumerator PerformActionWithCooldown()
     {
         int stateIndex = (int)currentState;
 
-        // Perform the action if not in cooldown
         if (!isActionCooldowns[stateIndex])
         {
             bool actionPerformed = PerformStateSpecificAction();
 
-            // Set the cooldown flag for the specific state only if the action was performed
             if (actionPerformed)
             {
                 isActionCooldowns[stateIndex] = true;
-
-                // Wait for the cooldown period
                 yield return new WaitForSeconds(actionCooldowns[stateIndex]);
-
-                // Reset the cooldown flag for the specific state
                 isActionCooldowns[stateIndex] = false;
             }
         }
     }
 
+    // Perform the action for the current state
     private bool PerformStateSpecificAction()
     {
         if (currentState == State.State1)
@@ -198,6 +193,7 @@ public class StateManager : MonoBehaviour
         }
     }
 
+    // Update the player material to reflect the current state
     private IEnumerator FlashPlayerMaterial(State newState)
     {
         Material[] currentMaterials = playerRenderer.materials;
@@ -223,6 +219,7 @@ public class StateManager : MonoBehaviour
     #endregion
 
     #region Update UI
+    // Update the UI info to reflect the current state
     private void UpdateStateInfo()
     {
         switch (currentState)
