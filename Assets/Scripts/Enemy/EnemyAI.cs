@@ -16,7 +16,7 @@ public class EnemyAI : MonoBehaviour
     //public NavMeshSurface navMeshSurface;
     [HideInInspector] public Transform playerTransform;
     public LayerMask GroundLayer, PlayerLayer;
-    [SerializeField] public HealthSystem pHealth;
+    [SerializeField] public PlayerHealthSystem pHealth;
 
     [Header("Animation")]
     public Animation[] meleeAnimation;

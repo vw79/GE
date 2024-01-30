@@ -2,11 +2,11 @@ using Cinemachine;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class HealthSystem: MonoBehaviour
+public class PlayerHealthSystem: MonoBehaviour
 {
     [SerializeField] private float max_health = 100f;
-    public Animator animator;   
-    public PlayerController playerController;
+    private Animator animator;   
+    private PlayerController playerController;
     private float current_health;
     public HealthBar healthBar;
     private ChromaticAberrationEffect chromaticEffect;
@@ -18,9 +18,11 @@ public class HealthSystem: MonoBehaviour
 
     private void Awake()
     {
+        animator = GetComponent<Animator>();
         impulseSource = GetComponent<CinemachineImpulseSource>();
         chromaticEffect = FindObjectOfType<ChromaticAberrationEffect>();
         playerCombat = GetComponent<PlayerCombat>();
+        playerController = GetComponent<PlayerController>();
     }
 
     private void Start()

@@ -9,7 +9,7 @@ public class HealthBar: MonoBehaviour
     public Slider easeHealthSlider;
     public float health;
     private float learpSpeed = 0.02f;
-    public HealthSystem healthSystem;
+    public PlayerHealthSystem healthSystem;
 
     // Start is called before the first frame update
     void Start()

@@ -12,6 +12,7 @@ public class DissolveController: MonoBehaviour
     private Animator animator;
     private PlayerController playerController;
     private PlayerCombat playerCombat;
+    private CapsuleCollider playerCollider;
 
     private Material[] skinnedMaterials;
 
@@ -24,6 +25,7 @@ public class DissolveController: MonoBehaviour
         playerController = player.GetComponent<PlayerController>();
         playerCombat = player.GetComponent<PlayerCombat>();
     }
+
     void Start()
     {
         if(skinnedMesh !=null)

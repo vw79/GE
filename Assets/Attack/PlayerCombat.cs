@@ -24,7 +24,7 @@ public class PlayerCombat : MonoBehaviour
     private BoxCollider swordCollider;
     private float hitDuration = 0.2f;
     private PlayerController playerController;
-    private HealthSystem healthSystem;
+    private PlayerHealthSystem healthSystem;
     private GameObject player;
  
     #endregion
@@ -36,7 +36,7 @@ public class PlayerCombat : MonoBehaviour
         anim = GetComponent<Animator>();
         swordCollider = weapon.GetComponent<BoxCollider>();
         playerController = GetComponent<PlayerController>();
-        healthSystem = GetComponent<HealthSystem>();
+        healthSystem = GetComponent<PlayerHealthSystem>();
         player = GameObject.FindGameObjectWithTag("Player");
     }
 

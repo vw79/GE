@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class bullet : MonoBehaviour
 {
-    public HealthSystem playerHealth;
+    public PlayerHealthSystem playerHealth;
     public float bulletDamage;
     private void Start()
     {
