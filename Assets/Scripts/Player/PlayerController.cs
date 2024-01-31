@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour
     private MeshTrail _meshTrail;
 
     private Rigidbody _rb;
-    private CapsuleCollider _collider;
     private Animator _animator;
     private Vector3 _input;
     private float _currentSpeed;
@@ -42,7 +41,6 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
         _animator.Play("Idle");
-        _collider = GetComponent<CapsuleCollider>();
         _meshTrail = GetComponent<MeshTrail>();
         
     }
@@ -103,7 +101,6 @@ public class PlayerController : MonoBehaviour
             if (_dashTimeLeft <= 0)
             {
                 _isDashing = false;
-                _collider.enabled = true;
             }
         }
 
@@ -115,7 +112,6 @@ public class PlayerController : MonoBehaviour
 
     private void Dash()
     {
-        _collider.enabled = false;
         StartCoroutine(_meshTrail.ActivateTrail(activeTime));
         _rb.MovePosition(transform.position + _input.ToIso().normalized * _dashSpeed * Time.deltaTime);
     }
