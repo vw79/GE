@@ -1076,8 +1076,24 @@ PrefabInstance:
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1268887823554130735, guid: e1f70507cb5416e47a357220a7f8cd2e, type: 3}
+      propertyPath: m_Constraints
+      value: 116
+      objectReference: {fileID: 0}
+    - target: {fileID: 1268887823554130735, guid: e1f70507cb5416e47a357220a7f8cd2e, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1268887823554130735, guid: e1f70507cb5416e47a357220a7f8cd2e, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1268887823554130735, guid: e1f70507cb5416e47a357220a7f8cd2e, type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
       value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 4906278437392778483, guid: e1f70507cb5416e47a357220a7f8cd2e, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4906278437392778483, guid: e1f70507cb5416e47a357220a7f8cd2e, type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
@@ -2619,8 +2635,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7612c3e35fe4224ba3c7095480e0dab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Boss: {fileID: 1073707885}
+  BossObject: {fileID: 1073707885}
   inMotion: 0
+  intervalTime: 0
+  animator: {fileID: 0}
+  maxHealth: 0
   redMat: {fileID: 2100000, guid: 92092938bd63b6d4a824f23c3bf7f6d6, type: 2}
   blueMat: {fileID: 2100000, guid: 5f49b7629f4ee754ebcdabe5055dd240, type: 2}
   greenMat: {fileID: 2100000, guid: 494aac000244c9d49babba42c13191fc, type: 2}
@@ -2629,6 +2648,14 @@ MonoBehaviour:
   isBlue: 0
   isGreen: 0
   colourTimer: 5
+  spawn: 0
+  wait: 0
+  phaseOne: 0
+  phaseTwo: 0
+  phaseThree: 0
+  phaseFour: 0
+  death: 0
+  playerTransform: {fileID: 0}
 --- !u!64 &1073707890
 MeshCollider:
   m_ObjectHideFlags: 0
