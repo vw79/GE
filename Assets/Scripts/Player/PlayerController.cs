@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviour
     private void Dash()
     {
         StartCoroutine(_meshTrail.ActivateTrail(activeTime));
-        _rb.MovePosition(transform.position + _input.ToIso().normalized * _dashSpeed * Time.deltaTime);
+        _rb.AddForce(_input.ToIso().normalized * _dashSpeed, ForceMode.VelocityChange);
     }
 
     private void Look()
