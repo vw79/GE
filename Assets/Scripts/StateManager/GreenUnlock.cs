@@ -17,7 +17,7 @@ public class GreenUnlock : MonoBehaviour
                 stateManager.UnlockState3();
             }
 
-            // Optionally, destroy the orb after unlocking the state
+            // Optionally, destroy the orb after unlocking the CurrentState
             Destroy(gameObject);
         }
     }

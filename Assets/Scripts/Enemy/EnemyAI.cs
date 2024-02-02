@@ -70,7 +70,7 @@ public class EnemyAI : MonoBehaviour
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         stateMachine = new EnemyAIStateMachine(this);
-        //to register a new state 
+        //to register a new CurrentState 
         stateMachine.RegisterState(new EnemyChaseState());
         stateMachine.RegisterState(new EnemyAttackState());
         stateMachine.RegisterState(new EnemyDeathState());

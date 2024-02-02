@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BossController : MonoBehaviour
 {
     public GameObject BossObject;
     public bool inMotion;
-    public float intervalTime;
     public Animator animator;
+    public NavMeshAgent agent;
 
     [Header("Health")]
     public float maxHealth;
@@ -23,18 +24,32 @@ public class BossController : MonoBehaviour
     public bool isGreen;
     public float colourTimer;
 
+
     [Header("State")]
-    bossState state;
-    public bool spawn;
-    public bool wait;
-    public bool phaseOne;
-    public bool phaseTwo;
-    public bool phaseThree;
-    public bool phaseFour;
-    public bool death;
+    public float phaseDuration; //duration for each attack
+    public float waitDuration; //duration for each attack
+    public float phaseTimer;
+    public float waitTimer;
+    bossState CurrentState;
 
     [Header("Phase 1")]
-    public Transform playerTransform;
+    [HideInInspector]public Transform playerTransform;
+
+
+    [Header("Phase 2")]
+    public float PullForce;
+
+
+    [Header("Phase 3")]
+    public int bulletsShot;
+    public int maxBulletsPerWave;
+    public float shootForce;
+    public GameObject Sphere;
+    public Transform[] spawnPoint;
+
+
+    [Header("Phase 4")]
+    public float tenseiRadius;
 
 
     private enum bossState
@@ -47,92 +62,98 @@ public class BossController : MonoBehaviour
         PhaseTwo,
         //Phase 3 - Sphere Spawn
         PhaseThree,
-        //Phase 4 - Heat Seeking Missile
+        //Phase 4 - shinra tensei
         PhaseFour,
+        PhaseFive,
         Shinda
     }
 
     private void Awake()
     {
+        transform.rotation = Quaternion.identity;
         currentHealth = maxHealth;
+        inMotion = false;
+    }
+    private void Start()
+    {
+        CurrentState = bossState.Spawn;
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        phaseTimer = 0f;
+        waitTimer = 0f;
+        agent = GetComponent<NavMeshAgent>();
+       
     }
 
     private void Update()
     {
-        stateHandler();
+        if (!inMotion) { stateHandler(); }
+        
         if (!isChanged)
         {
             Invoke("colorChange", colourTimer);
             isChanged = true;
         }
-        if (!inMotion)
-        {
-           randomPhase();
-        }
+
     }
 
+  
     public void stateHandler()
     {
-        if (spawn)
-        {
-            state = bossState.Spawn;
-            Spawn();
-        }else if (wait)
-        {
-            state = bossState.Wait;
-            Invoke("PhaseInterval", intervalTime);
-        }
-        else if (phaseOne)
-        {
-            state = bossState.PhaseOne;
-        }
-        else if (phaseTwo)
-        {
-            state = bossState.PhaseTwo;
-        }
-        else if (phaseThree)
-        {
-            state = bossState.PhaseThree;
-        }
-        else if (phaseFour)
-        {
-            state = bossState.PhaseFour;
-        }
-        else if (death)
-        {
-            state = bossState.Shinda;
-            Death();
-        }
+            switch (CurrentState)
+            {
+                case bossState.Spawn:
+                    print("SPAWN");
+                    Spawn();
+                    break;
+                case bossState.Wait:
+                    print("WAIT PHASE");
+                    PhaseInterval();
+                    break;
+                case bossState.PhaseOne:
+                    print("PHASE ONE");
+                    moveToPlayer();
+                    break;
+                case bossState.PhaseTwo:
+                    print("PHASE TWO");
+                    BanshoTenin();
+                    break;
+                case bossState.PhaseThree:
+                    print("PHASE THREE");
+                    rasengan();
+                    break;
+                case bossState.PhaseFour:
+                    print("PHASE FOUR");
+                    shinraTensei();
+                    break;
+            case bossState.PhaseFive:
+                    print("PHASE FIVE");
+                    aoeBlast();
+                    break;
+                case bossState.Shinda:
+                    Death();
+                    break;
+            }
     }
 
-    public bool resetBool(bool trigger)
-    {
-        return trigger = false;
-    }
 
     public void PhaseInterval()
     {
-        inMotion = false;
-        resetBool(wait);
-    }
-
-    public void randomPhase()
-    {
-        int randNum = Random.Range(1, 5);
-        switch (randNum)
+        transform.LookAt(playerTransform.position, Vector3.forward);
+        // Transition to a random phase after the wait duration
+        if (waitTimer <= 0f)
         {
-            case 1:
-                phaseOne = true;
-                break;
-            case 2:
-                phaseTwo = true;
-                break;
-            case 3:
-                phaseThree = true;
-                break;
-            case 4:
-                phaseFour = true;
-                break;
+            // Choose a random phase
+            CurrentState = (bossState)Random.Range((int)bossState.PhaseOne, (int)bossState.PhaseFour + 1);
+            
+
+            // Reset the phase timer
+            waitTimer = waitDuration;
+            phaseTimer = phaseDuration;
+        }
+        else
+        {
+            // Decrement the phase timer
+            waitTimer -= Time.deltaTime;
         }
     }
 
@@ -141,7 +162,7 @@ public class BossController : MonoBehaviour
         currentHealth -= damage;
         if(currentHealth <= 0)
         {
-            death = true;
+            CurrentState = bossState.Shinda;
         }
     }
     
@@ -179,26 +200,104 @@ public class BossController : MonoBehaviour
 
     public void Spawn()
     {
-        animator.SetTrigger("Spawn");
-        wait = true;
-        resetBool(spawn);
+        //animator.SetTrigger("Spawn");
+        CurrentState = bossState.Wait; 
     }
 
     public void Death()
     {
-        animator.SetTrigger("Death");
+        //animator.SetTrigger("Death");
         Destroy(BossObject);
     }
 
     public void moveToPlayer()
     {
-        BossObject.transform.LookAt(playerTransform);
+
+        agent.SetDestination(playerTransform.position);
+
+        if (Vector3.Distance(transform.position, playerTransform.position) < 4.0f)
+        {
+            CurrentState = bossState.PhaseFour;
+            phaseTimer = phaseDuration; // Reset the phase timer for the next phase
+        }
+    }
+
+    public void BanshoTenin()
+    {
+        Vector3 directionToPlayer =  (playerTransform.position - transform.position).normalized;
+        playerTransform.GetComponent<Rigidbody>().AddForce(-directionToPlayer * PullForce, ForceMode.Impulse);
+        phaseTimer = phaseDuration;
+        CurrentState = bossState.PhaseFive;
+        
 
     }
 
-    public void laser()
+    public void aoeBlast()
     {
+        print("Blast");
 
+        if (phaseTimer <= 0f)
+        {
+            CurrentState = bossState.Wait;
+            phaseTimer = phaseDuration;
+        }
+        else
+        {
+            phaseTimer -= Time.deltaTime;
+        }
+    }
+
+    public void rasengan()
+    {
+        inMotion = true;
+        if (bulletsShot < maxBulletsPerWave)
+        {
+            foreach (Transform shootingPoint in spawnPoint)
+            {
+                GameObject clone = Instantiate(Sphere, shootingPoint.position, transform.rotation);
+                clone.GetComponent<Rigidbody>().AddForce(transform.forward * shootForce, ForceMode.Acceleration);
+                // Increment the counter
+                bulletsShot++;
+            }
+
+            
+        }
+
+        // Check if all bullets for this wave have been shot
+        if (bulletsShot >= maxBulletsPerWave)
+        {
+            // Reset the counter for the next wave
+            bulletsShot = 0;
+            CurrentState = bossState.Wait;
+            phaseTimer = phaseDuration;
+            inMotion = false;
+
+        }
+
+
+    }
+
+
+    public void shinraTensei()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, tenseiRadius);
+        foreach (Collider collider in hitColliders)
+        {
+            if (collider.CompareTag("Player"))
+            {
+                Vector3 directionToPlayer = (collider.transform.position - transform.position).normalized;
+                collider.GetComponent<Rigidbody>().AddForce(directionToPlayer * 10f, ForceMode.Impulse);
+            }
+        }
+        if (phaseTimer <= 0f)
+        {
+            CurrentState = bossState.Wait;
+            phaseTimer = phaseDuration;
+        }
+        else
+        {
+            phaseTimer -= Time.deltaTime;
+        }
     }
 
 }

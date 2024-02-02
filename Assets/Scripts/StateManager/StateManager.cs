@@ -111,7 +111,7 @@ public class StateManager : MonoBehaviour
         }
     }
 
-    // Perform the action for the current state with a cooldown
+    // Perform the action for the current CurrentState with a cooldown
     private IEnumerator PerformActionWithCooldown()
     {
         int stateIndex = (int)currentState;
@@ -129,7 +129,7 @@ public class StateManager : MonoBehaviour
         }
     }
 
-    // Perform the action for the current state
+    // Perform the action for the current CurrentState
     private bool PerformStateSpecificAction()
     {
         if (currentState == State.State1)
@@ -193,7 +193,7 @@ public class StateManager : MonoBehaviour
         }
     }
 
-    // Update the player material to reflect the current state
+    // Update the player material to reflect the current CurrentState
     private IEnumerator FlashPlayerMaterial(State newState)
     {
         Material[] currentMaterials = playerRenderer.materials;
@@ -219,7 +219,7 @@ public class StateManager : MonoBehaviour
     #endregion
 
     #region Update UI
-    // Update the UI info to reflect the current state
+    // Update the UI info to reflect the current CurrentState
     private void UpdateStateInfo()
     {
         switch (currentState)

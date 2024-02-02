@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class EnemyAiAgent : MonoBehaviour
 {
-    //all referencing needed for each state are done here
+    //all referencing needed for each CurrentState are done here
     public EnemyAIStateMachine stateMachine;
     public EnemyStateId initialState;
     public NavMeshAgent navMeshAgent;
@@ -13,7 +13,7 @@ public class EnemyAiAgent : MonoBehaviour
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         //stateMachine = new EnemyAIStateMachine(this);
-        //to register a new state
+        //to register a new CurrentState
         stateMachine.RegisterState(new EnemyChaseState());
         //stateMachine.RegisterState(new EnemyPatrolState());
         stateMachine.RegisterState(new EnemyDeathState());

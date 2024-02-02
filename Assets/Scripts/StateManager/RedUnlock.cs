@@ -17,7 +17,7 @@ public class RedUnlock : MonoBehaviour
                 stateManager.UnlockState2();
             }
 
-            // Optionally, destroy the orb after unlocking the state
+            // Optionally, destroy the orb after unlocking the CurrentState
             Destroy(gameObject);
         }
     }
