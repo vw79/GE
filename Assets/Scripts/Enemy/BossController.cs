@@ -71,6 +71,7 @@ public class BossController : MonoBehaviour
 
     private void Awake()
     {
+        
         transform.rotation = Quaternion.identity;
         currentHealth = maxHealth;
         inMotion = false;
@@ -79,8 +80,9 @@ public class BossController : MonoBehaviour
     {
         CurrentState = bossState.Spawn;
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        animator = GetComponent<Animator>();
         phaseTimer = 0f;
-        waitTimer = 0f;
+        waitTimer = 2f;
         agent = GetComponent<NavMeshAgent>();
        
     }
@@ -97,38 +99,38 @@ public class BossController : MonoBehaviour
 
     }
 
-  
     public void stateHandler()
     {
             switch (CurrentState)
             {
                 case bossState.Spawn:
-                    print("SPAWN");
-                    Spawn();
+                    animator.SetTrigger("Spawn");
                     break;
                 case bossState.Wait:
                     print("WAIT PHASE");
+                    animator.SetTrigger("Idle");
                     PhaseInterval();
                     break;
                 case bossState.PhaseOne:
                     print("PHASE ONE");
+                    animator.SetTrigger("Walk");
                     moveToPlayer();
                     break;
                 case bossState.PhaseTwo:
                     print("PHASE TWO");
-                    BanshoTenin();
+                    animator.SetTrigger("Pull");
                     break;
                 case bossState.PhaseThree:
                     print("PHASE THREE");
-                    rasengan();
+                    animator.SetTrigger("Missile");
                     break;
                 case bossState.PhaseFour:
                     print("PHASE FOUR");
-                    shinraTensei();
+                    animator.SetTrigger("Push");
                     break;
             case bossState.PhaseFive:
                     print("PHASE FIVE");
-                    aoeBlast();
+                    animator.SetTrigger("Slam");
                     break;
                 case bossState.Shinda:
                     Death();
@@ -169,7 +171,6 @@ public class BossController : MonoBehaviour
     
     public void colorChange()
     {
-        print("change!");
         SkinnedMeshRenderer renderer = BossObject.GetComponent<SkinnedMeshRenderer>();
         Material[] emiMat = DetectMaterials();
         int randomNumber = Random.Range(1, 4);
@@ -209,6 +210,7 @@ public class BossController : MonoBehaviour
         
     }
 
+    //to detect emission materials
     Material[] DetectMaterials()
     {
         SkinnedMeshRenderer renderer = BossObject.GetComponent<SkinnedMeshRenderer>();
@@ -224,12 +226,10 @@ public class BossController : MonoBehaviour
                 if (material.HasProperty("_EmissionColor"))
                 {
                     UnityEngine.Color emissionColor = material.GetColor("_EmissionColor");
-                    print("emission colour is "+emissionColor);
 
                     // Check if the emission color is not black (non-zero)
                     if (emissionColor.r > 0f || emissionColor.g > 0f || emissionColor.b > 0f || emissionColor.a > 0f)
                     {
-                        Debug.Log("Material with emission detected: " + material.name);
                         System.Array.Resize(ref materialsWithEmission, materialsWithEmission.Length + 1);
                         materialsWithEmission[materialsWithEmission.Length - 1] = material;
                     }
@@ -242,9 +242,9 @@ public class BossController : MonoBehaviour
          return materialsWithEmission;
  
     }
+
     public void Spawn()
     {
-        //animator.SetTrigger("Spawn");
         CurrentState = bossState.Wait; 
     }
 
@@ -256,10 +256,9 @@ public class BossController : MonoBehaviour
 
     public void moveToPlayer()
     {
-
         agent.SetDestination(playerTransform.position);
 
-        if (Vector3.Distance(transform.position, playerTransform.position) < 4.0f)
+        if (Vector3.Distance(transform.position, playerTransform.position) < 2.0f)
         {
             CurrentState = bossState.PhaseFour;
             phaseTimer = phaseDuration; // Reset the phase timer for the next phase
@@ -272,23 +271,22 @@ public class BossController : MonoBehaviour
         playerTransform.GetComponent<Rigidbody>().AddForce(-directionToPlayer * PullForce, ForceMode.Impulse);
         phaseTimer = phaseDuration;
         CurrentState = bossState.PhaseFive;
-        
 
     }
 
     public void aoeBlast()
     {
         print("Blast");
-
-        if (phaseTimer <= 0f)
-        {
-            CurrentState = bossState.Wait;
-            phaseTimer = phaseDuration;
-        }
-        else
-        {
-            phaseTimer -= Time.deltaTime;
-        }
+        CurrentState = bossState.Wait;
+        //if (phaseTimer <= 0f)
+        //{
+        //    CurrentState = bossState.Wait;
+        //    phaseTimer = phaseDuration;
+        //}
+        //else
+        //{
+        //    phaseTimer -= Time.deltaTime;
+        //}
     }
 
     public void rasengan()
@@ -321,7 +319,6 @@ public class BossController : MonoBehaviour
 
     }
 
-
     public void shinraTensei()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, tenseiRadius);
@@ -333,15 +330,16 @@ public class BossController : MonoBehaviour
                 collider.GetComponent<Rigidbody>().AddForce(directionToPlayer * 10f, ForceMode.Impulse);
             }
         }
-        if (phaseTimer <= 0f)
-        {
-            CurrentState = bossState.Wait;
-            phaseTimer = phaseDuration;
-        }
-        else
-        {
-            phaseTimer -= Time.deltaTime;
-        }
+        CurrentState = bossState.Wait;
+        //if (phaseTimer <= 0f)
+        //{
+            
+        //    phaseTimer = phaseDuration;
+        //}
+        //else
+        //{
+        //    phaseTimer -= Time.deltaTime;
+        //}
     }
 
 }
