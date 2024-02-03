@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -138,7 +139,7 @@ public class BossController : MonoBehaviour
 
     public void PhaseInterval()
     {
-        transform.LookAt(playerTransform.position, Vector3.forward);
+        transform.LookAt(playerTransform.position);
         // Transition to a random phase after the wait duration
         if (waitTimer <= 0f)
         {
@@ -169,20 +170,27 @@ public class BossController : MonoBehaviour
     public void colorChange()
     {
         print("change!");
+        SkinnedMeshRenderer renderer = BossObject.GetComponent<SkinnedMeshRenderer>();
+        Material[] emiMat = DetectMaterials();
         int randomNumber = Random.Range(1, 4);
         switch (randomNumber)
         {
             //Red
             case 1:
                 BossObject.tag = "Red";
-                BossObject.GetComponent<Renderer>().material = redMat;
+                foreach (Material mat in emiMat) {
+                    mat.SetColor("_EmissionColor", UnityEngine.Color.red);
+                }
                 print(BossObject.gameObject.tag);
                 isChanged = false;
                 break;
             //Green   
             case 2:
                 BossObject.tag = "Green";
-                BossObject.GetComponent<Renderer>().material = greenMat;
+                foreach (Material mat in emiMat)
+                {
+                    mat.SetColor("_EmissionColor", UnityEngine.Color.green);
+                }
                 print(BossObject.gameObject.tag);
                 isChanged = false;
                 break;
@@ -190,7 +198,10 @@ public class BossController : MonoBehaviour
             case 3:
 
                 BossObject.tag = "Blue";
-                BossObject.GetComponent<Renderer>().material = blueMat;
+                foreach (Material mat in emiMat)
+                {
+                    mat.SetColor("_EmissionColor", UnityEngine.Color.blue);
+                }
                 print(BossObject.gameObject.tag);
                 isChanged = false;
                 break;
@@ -198,6 +209,39 @@ public class BossController : MonoBehaviour
         
     }
 
+    Material[] DetectMaterials()
+    {
+        SkinnedMeshRenderer renderer = BossObject.GetComponent<SkinnedMeshRenderer>();
+        Material[] materialsWithEmission = new Material[0];
+
+        if (renderer != null)
+        {
+            Material[] materials = renderer.materials;
+
+            foreach (Material material in materials)
+            {
+                // Check if the material has an emission color
+                if (material.HasProperty("_EmissionColor"))
+                {
+                    UnityEngine.Color emissionColor = material.GetColor("_EmissionColor");
+                    print("emission colour is "+emissionColor);
+
+                    // Check if the emission color is not black (non-zero)
+                    if (emissionColor.r > 0f || emissionColor.g > 0f || emissionColor.b > 0f || emissionColor.a > 0f)
+                    {
+                        Debug.Log("Material with emission detected: " + material.name);
+                        System.Array.Resize(ref materialsWithEmission, materialsWithEmission.Length + 1);
+                        materialsWithEmission[materialsWithEmission.Length - 1] = material;
+                    }
+
+                }
+
+
+            }
+        }
+         return materialsWithEmission;
+ 
+    }
     public void Spawn()
     {
         //animator.SetTrigger("Spawn");
