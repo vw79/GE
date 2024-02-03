@@ -51,6 +51,8 @@ public class BossController : MonoBehaviour
 
     [Header("Phase 4")]
     public float tenseiRadius;
+    public GameObject OrbVFX;
+
 
 
     private enum bossState
@@ -72,7 +74,7 @@ public class BossController : MonoBehaviour
 
     private void Awake()
     {
-        CurrentState = bossState.Wait;
+        CurrentState = bossState.Spawn;
         transform.rotation = Quaternion.identity;
         currentHealth = maxHealth;
         inMotion = false;
@@ -89,7 +91,7 @@ public class BossController : MonoBehaviour
         
     private void Update()
     {
-        OnDrawGizmos();
+        //OnDrawGizmos();
         if (!inMotion) { stateHandler(); }
         
         if (!isChanged)
@@ -115,7 +117,7 @@ public class BossController : MonoBehaviour
                     break;
                 case bossState.Wait:
                     print("WAIT PHASE");
-                    animator.SetTrigger("Idle");
+                    animator.Play("Idle");
                     PhaseInterval();
                     break;
                 case bossState.PhaseOne:
@@ -125,11 +127,11 @@ public class BossController : MonoBehaviour
                     break;
                 case bossState.PhaseTwo:
                     print("PHASE TWO");
-                    animator.SetTrigger("Pull");
+                    animator.Play("Pull");
                     break;
                 case bossState.PhaseThree:
                     print("PHASE THREE");
-                    animator.SetTrigger("Missile");
+                    animator.Play("Missile");
                     break;
                 case bossState.PhaseFour:
                     print("PHASE FOUR");
@@ -138,17 +140,12 @@ public class BossController : MonoBehaviour
                     break;
             case bossState.PhaseFive:
                     print("PHASE FIVE");
-                    animator.SetTrigger("Slam");
+                    animator.Play("Slam");
                     break;
                 case bossState.Shinda:
                     Death();
                     break;
             }
-    }
-
-    public void setWaitState()
-    {
-        CurrentState = bossState.Wait;
     }
     public void PhaseInterval()
     {
@@ -159,7 +156,7 @@ public class BossController : MonoBehaviour
         {
             // Choose a random phase
             //CurrentState = (bossState)Random.Range((int)bossState.PhaseOne, (int)bossState.PhaseFive + 1);
-            CurrentState = bossState.PhaseOne;
+            CurrentState = bossState.PhaseFour;
 
             // Reset the phase timer
             waitTimer = waitDuration;
@@ -300,16 +297,15 @@ public class BossController : MonoBehaviour
     public void rasengan()
     {
         print("RASENENGAN");
-        if (bulletsShot < maxBulletsPerWave)
+
+        foreach (Transform shootingPoint in spawnPoint)
         {
-            foreach (Transform shootingPoint in spawnPoint)
-            {
-                GameObject clone = Instantiate(Sphere, shootingPoint.position, transform.rotation);
-                clone.GetComponent<Rigidbody>().AddForce(transform.forward * shootForce, ForceMode.Acceleration);
-                // Increment the counter
-                bulletsShot++;
-            }
+            GameObject clone = Instantiate(Sphere, shootingPoint.position, transform.rotation);
+            clone.GetComponent<Rigidbody>().AddForce(transform.forward * shootForce, ForceMode.Acceleration);
+            // Increment the counter
+            bulletsShot++;
         }
+
         // Check if all bullets for this wave have been shot
         if (bulletsShot >= maxBulletsPerWave)
         {
@@ -317,7 +313,6 @@ public class BossController : MonoBehaviour
             bulletsShot = 0;
             CurrentState = bossState.Wait;
             phaseTimer = phaseDuration;
-            animator.ResetTrigger("Missile");
 
         }
 
@@ -327,6 +322,7 @@ public class BossController : MonoBehaviour
     public void shinraTensei()
     {
         print("shinra");
+        GameObject clone = Instantiate(OrbVFX, transform.position, transform.rotation);
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, tenseiRadius);
         foreach (Collider collider in hitColliders)
         {
@@ -353,7 +349,6 @@ public class BossController : MonoBehaviour
     {
         print("Blast");
         animator.ResetTrigger("Slam");
-        Invoke("setWaitState", 2.0f);
         //if (phaseTimer <= 0f)
         //{
         //    CurrentState = bossState.Wait;
