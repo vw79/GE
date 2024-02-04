@@ -53,7 +53,9 @@ public class BossController : MonoBehaviour
     public float tenseiRadius;
     public GameObject OrbVFX;
 
-
+    [Header("Phase 5")]
+    public float slamRadius;
+    public GameObject SlamVFX;
 
     private enum bossState
     {
@@ -154,7 +156,7 @@ public class BossController : MonoBehaviour
         {
             // Choose a random phase
             //CurrentState = (bossState)Random.Range((int)bossState.PhaseOne, (int)bossState.PhaseFive + 1);
-            CurrentState = bossState.PhaseFour;
+            CurrentState = bossState.PhaseFive;
 
             // Reset the phase timer
             waitTimer = waitDuration;
@@ -351,6 +353,7 @@ public class BossController : MonoBehaviour
     public void aoeBlast()
     {
         print("Blast");
+        GameObject clone = Instantiate(SlamVFX, transform.position, transform.rotation);
         CurrentState = bossState.Wait;
         //if (phaseTimer <= 0f)
         //{

@@ -1382,6 +1382,8 @@ MonoBehaviour:
   - {fileID: 645034484}
   tenseiRadius: 6
   OrbVFX: {fileID: 3786618107601338595, guid: 996b12f0bf384704e99f98a9c30829d8, type: 3}
+  slamRadius: 0
+  SlamVFX: {fileID: 6941301140816892180, guid: 2bc8cb3b3e244cc45b5ee53f912cdfba, type: 3}
 --- !u!54 &620683358
 Rigidbody:
   m_ObjectHideFlags: 0
