@@ -20,7 +20,7 @@ MonoBehaviour:
     x: -22
     y: -227
     width: 3176
-    height: 2073
+    height: 2075
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -813,7 +813,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Gradient, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"colorKeys":[{"color":{"r":0.019607843831181527,"g":0.0,"b":0.0008652537944726646,"a":1.0},"time":0.0},{"color":{"r":0.019607843831181527,"g":0.0,"b":0.0008652537944726646,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":0.0,"time":0.0},{"alpha":1.0,"time":0.2823529541492462},{"alpha":1.0,"time":0.7264667749404907},{"alpha":0.0,"time":1.0}],"gradientMode":0}'
+      m_SerializableObject: '{"colorKeys":[{"color":{"r":0.0,"g":0.0,"b":0.1411764770746231,"a":1.0},"time":0.0},{"color":{"r":0.0,"g":0.0,"b":0.1411764770746231,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":0.0,"time":0.0},{"alpha":1.0,"time":0.2823529541492462},{"alpha":1.0,"time":0.7264667749404907},{"alpha":0.0,"time":1.0}],"gradientMode":0}'
     m_Space: 2147483647
   m_Property:
     name: Color
@@ -2630,7 +2630,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Gradient, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"colorKeys":[{"color":{"r":50.70066452026367,"g":11.240241050720215,"b":11.240241050720215,"a":1.0},"time":0.0},{"color":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":0.0,"time":0.0},{"alpha":1.0,"time":0.13235676288604737},{"alpha":1.0,"time":0.5205920338630676},{"alpha":0.0,"time":1.0}],"gradientMode":0}'
+      m_SerializableObject: '{"colorKeys":[{"color":{"r":11.750094413757325,"g":11.41428279876709,"b":50.700660705566409,"a":1.0},"time":0.0},{"color":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":0.0,"time":0.0},{"alpha":1.0,"time":0.13235676288604737},{"alpha":1.0,"time":0.5205920338630676},{"alpha":0.0,"time":1.0}],"gradientMode":0}'
     m_Space: 2147483647
   m_Property:
     name: Color
@@ -7039,7 +7039,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Color, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"r":0.08490568399429321,"g":0.0,"b":0.0,"a":1.0}'
+      m_SerializableObject: '{"r":0.0,"g":0.00010819155431818217,"b":0.007843137718737126,"a":1.0}'
     m_Space: 2147483647
   m_Property:
     name: _FrontCOlor
@@ -7209,7 +7209,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Color, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"r":3.4415903091430666,"g":0.0,"b":0.0,"a":1.0}'
+      m_SerializableObject: '{"r":0.0,"g":0.017049528658390046,"b":1.2359726428985596,"a":1.0}'
     m_Space: 2147483647
   m_Property:
     name: _BackCOlor
