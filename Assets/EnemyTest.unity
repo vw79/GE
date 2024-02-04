@@ -1366,7 +1366,7 @@ MonoBehaviour:
   isGreen: 0
   colourTimer: 5
   phaseDuration: 10
-  waitDuration: 2
+  waitDuration: 5
   phaseTimer: 0
   waitTimer: 0
   playerTransform: {fileID: 0}

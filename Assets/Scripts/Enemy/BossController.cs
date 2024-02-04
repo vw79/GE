@@ -133,7 +133,8 @@ public class BossController : MonoBehaviour
                     break;
                 case bossState.PhaseFour:
                     print("PHASE FOUR");
-                    Invoke("shinraTensei", 1f);
+                    animator.Play("Push");
+                Invoke("shinraTensei", 1.5f);
                     break;
             case bossState.PhaseFive:
                     print("PHASE FIVE");
@@ -251,7 +252,6 @@ public class BossController : MonoBehaviour
 
     public void Spawn()
     {
-        animator.ResetTrigger("Spawn");
         CurrentState = bossState.Wait; 
     }
 
@@ -294,7 +294,6 @@ public class BossController : MonoBehaviour
     public void rasengan()
     {
         print("RASENENGAN");
-        inMotion = true;
         foreach (Transform shootingPoint in spawnPoint)
         {
             GameObject clone = Instantiate(Sphere, shootingPoint.position, transform.rotation);
@@ -307,7 +306,6 @@ public class BossController : MonoBehaviour
         if (bulletsShot >= maxBulletsPerWave)
         {
             // Reset the counter for the next wave
-            inMotion = false;
             bulletsShot = 0;
             CurrentState = bossState.Wait;
             phaseTimer = phaseDuration;
@@ -318,11 +316,11 @@ public class BossController : MonoBehaviour
     //Phase 4
     public void shinraTensei()
     {
+        GameObject clone = null;
         print("shinra");
         if (!inMotion) 
         {
-            animator.Play("Push");
-            GameObject clone = Instantiate(OrbVFX, transform.position, transform.rotation);
+            clone = Instantiate(OrbVFX, transform.position, transform.rotation);
             inMotion = true;
         }
         
@@ -341,6 +339,7 @@ public class BossController : MonoBehaviour
             inMotion = false;
             CurrentState = bossState.Wait;
             phaseTimer = phaseDuration;
+            GameObject.Destroy(clone);
         }
         else
         {
@@ -352,7 +351,7 @@ public class BossController : MonoBehaviour
     public void aoeBlast()
     {
         print("Blast");
-        animator.ResetTrigger("Slam");
+        CurrentState = bossState.Wait;
         //if (phaseTimer <= 0f)
         //{
         //    CurrentState = bossState.Wait;

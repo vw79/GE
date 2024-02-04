@@ -450,6 +450,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   pHealth: {fileID: 0}
+  maxEnemyHealth: 0
   meleeAnimation: []
   rangedAnimation: []
   walkPoint: {x: 0, y: 0, z: 0}
