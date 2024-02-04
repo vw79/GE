@@ -10,6 +10,7 @@ public class BossController : MonoBehaviour
     public bool inMotion;
     public Animator animator;
     public NavMeshAgent agent;
+    PlayerHealthSystem playerHealthSystem;
 
     [Header("Health")]
     public float maxHealth;
@@ -55,7 +56,9 @@ public class BossController : MonoBehaviour
 
     [Header("Phase 5")]
     public float slamRadius;
+    public float slamDamage;
     public GameObject SlamVFX;
+    
 
     private enum bossState
     {
@@ -93,7 +96,7 @@ public class BossController : MonoBehaviour
 
     private void Update()
     {
-        stateHandler();
+        if (!inMotion) { stateHandler(); }
         if (!isChanged)
         {
             Invoke("colorChange", colourTimer);
@@ -105,7 +108,7 @@ public class BossController : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.color = UnityEngine.Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, tenseiRadius);
+        Gizmos.DrawWireSphere(transform.position, slamRadius);
     }
 
     public void stateHandler()
@@ -136,7 +139,7 @@ public class BossController : MonoBehaviour
                 case bossState.PhaseFour:
                     print("PHASE FOUR");
                     animator.Play("Push");
-                Invoke("shinraTensei", 1.5f);
+                    shinraTensei();
                     break;
             case bossState.PhaseFive:
                     print("PHASE FIVE");
@@ -156,7 +159,7 @@ public class BossController : MonoBehaviour
         {
             // Choose a random phase
             //CurrentState = (bossState)Random.Range((int)bossState.PhaseOne, (int)bossState.PhaseFive + 1);
-            CurrentState = bossState.PhaseFive;
+            CurrentState = bossState.PhaseThree;
 
             // Reset the phase timer
             waitTimer = waitDuration;
@@ -299,49 +302,50 @@ public class BossController : MonoBehaviour
         foreach (Transform shootingPoint in spawnPoint)
         {
             GameObject clone = Instantiate(Sphere, shootingPoint.position, transform.rotation);
-            clone.GetComponent<Rigidbody>().AddForce(transform.forward * shootForce, ForceMode.Acceleration);
+            clone.GetComponent<Rigidbody>().AddForce((clone.transform.forward).normalized * shootForce, ForceMode.Acceleration);
             // Increment the counter
             bulletsShot++;
         }
+         CurrentState = bossState.Wait;
 
-        // Check if all bullets for this wave have been shot
-        if (bulletsShot >= maxBulletsPerWave)
-        {
-            // Reset the counter for the next wave
-            bulletsShot = 0;
-            CurrentState = bossState.Wait;
-            phaseTimer = phaseDuration;
+        //// Check if all bullets for this wave have been shot
+        //if (bulletsShot >= maxBulletsPerWave)
+        //{
+        //    // Reset the counter for the next wave
+        //    bulletsShot = 0;
+        //    CurrentState = bossState.Wait;
+        //    phaseTimer = phaseDuration;
 
-        }
+        //}
 
     }
     //Phase 4
     public void shinraTensei()
     {
-        GameObject clone = null;
         print("shinra");
         if (!inMotion) 
         {
-            clone = Instantiate(OrbVFX, transform.position, transform.rotation);
             inMotion = true;
+            OrbVFX.SetActive(true);
         }
         
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, tenseiRadius);
-        foreach (Collider collider in hitColliders)
-        {
-            if (collider.CompareTag("Player"))
-            {
-                Vector3 directionToPlayer = (collider.transform.position - transform.position).normalized;
-                collider.GetComponent<Rigidbody>().AddForce(directionToPlayer * 10f, ForceMode.Impulse);
-            }
-        }
+        //Collider[] hitColliders = Physics.OverlapSphere(transform.position, tenseiRadius);
+        //foreach (Collider collider in hitColliders)
+        //{
+        //    if (collider.CompareTag("Player"))
+        //    {
+        //        Vector3 directionToPlayer = (collider.transform.position - transform.position).normalized;
+        //        collider.GetComponent<Rigidbody>().AddForce(directionToPlayer * 10f, ForceMode.Impulse);
+        //    }
+        //}
 
         if (phaseTimer <= 0f)
         {
-            inMotion = false;
+            OrbVFX.SetActive(false);
             CurrentState = bossState.Wait;
             phaseTimer = phaseDuration;
-            GameObject.Destroy(clone);
+            inMotion = false;
+
         }
         else
         {
@@ -354,16 +358,17 @@ public class BossController : MonoBehaviour
     {
         print("Blast");
         GameObject clone = Instantiate(SlamVFX, transform.position, transform.rotation);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, slamRadius);
+        foreach (Collider collider in hitColliders)
+        {
+            if (collider.CompareTag("Player"))
+            {
+                playerHealthSystem = collider.GetComponent<PlayerHealthSystem>();
+                playerHealthSystem.TakeDamage(slamDamage);
+            }
+        }
         CurrentState = bossState.Wait;
-        //if (phaseTimer <= 0f)
-        //{
-        //    CurrentState = bossState.Wait;
-        //    phaseTimer = phaseDuration;
-        //}
-        //else
-        //{
-        //    phaseTimer -= Time.deltaTime;
-        //}
+
     }
 
 
