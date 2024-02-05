@@ -14774,8 +14774,8 @@ MonoBehaviour:
   redImage: {fileID: 21300000, guid: d5582c470bac1dd4c9b89e2122f70b07, type: 3}
   greenImage: {fileID: 21300000, guid: 10f50665cf900874ab738fa6bf081b6f, type: 3}
   stateSkillImage: {fileID: 860800279}
-  blueSkillImage: {fileID: 21300000, guid: 826561f6d3ba813449c5cc588a803ac4, type: 3}
-  redSkillImage: {fileID: 21300000, guid: 826561f6d3ba813449c5cc588a803ac4, type: 3}
+  blueSkillImage: {fileID: 21300000, guid: 993eb8f699ccc8c4798d23db99653589, type: 3}
+  redSkillImage: {fileID: 21300000, guid: f768497cb968691448bd76fe028e7f8e, type: 3}
   greenSkillImage: {fileID: 21300000, guid: 02dab1a30090e314bacdc767f45a30bc, type: 3}
   redCD: {fileID: 732613580}
   blueCD: {fileID: 177640587}
