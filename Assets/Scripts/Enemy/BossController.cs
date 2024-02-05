@@ -131,6 +131,7 @@ public class BossController : MonoBehaviour
                 case bossState.PhaseTwo:
                     print("PHASE TWO");
                     animator.Play("Pull");
+                    Invoke("BanshoTenin", 1f);
                     break;
                 case bossState.PhaseThree:
                     print("PHASE THREE");
@@ -160,6 +161,7 @@ public class BossController : MonoBehaviour
         {
             // Choose a random phase
             CurrentState = (bossState)Random.Range((int)bossState.PhaseOne, (int)bossState.PhaseFive + 1);
+            //CurrentState = bossState.PhaseTwo;
             
 
             // Reset the phase timer
