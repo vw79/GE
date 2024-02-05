@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1252,6 +1252,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6503322898390279049, guid: e1f70507cb5416e47a357220a7f8cd2e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1034975162}
+    - targetCorrespondingSourceObject: {fileID: 6503322898390279049, guid: e1f70507cb5416e47a357220a7f8cd2e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2037605126}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1f70507cb5416e47a357220a7f8cd2e, type: 3}
 --- !u!1 &608400480 stripped
@@ -3930,9 +3933,13 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5511599750140632134, guid: 2b4f2d2fdee7f8847bf8315398549e57, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 9728
+      objectReference: {fileID: 0}
     - target: {fileID: 5974175574580476992, guid: 2b4f2d2fdee7f8847bf8315398549e57, type: 3}
       propertyPath: m_UseGravity
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5974175574580476992, guid: 2b4f2d2fdee7f8847bf8315398549e57, type: 3}
       propertyPath: m_AngularDrag
@@ -3948,7 +3955,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5974175574580476992, guid: 2b4f2d2fdee7f8847bf8315398549e57, type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
-      value: 0
+      value: 8192
       objectReference: {fileID: 0}
     - target: {fileID: 6674223599212601940, guid: 2b4f2d2fdee7f8847bf8315398549e57, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4823,6 +4830,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2037605125
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2037605126}
+  m_Layer: 7
+  m_Name: ShootingPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2037605126
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2037605125}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1697190285}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2098754740
 GameObject:
   m_ObjectHideFlags: 0
@@ -4975,6 +5013,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 192474359290482618, guid: 746a98f6a520605418ac832776144547, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 2915772903158808556, guid: 746a98f6a520605418ac832776144547, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.581
+      objectReference: {fileID: 0}
+    - target: {fileID: 3225438802983842859, guid: 746a98f6a520605418ac832776144547, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.23
+      objectReference: {fileID: 0}
     - target: {fileID: 3358523716305371465, guid: 746a98f6a520605418ac832776144547, type: 3}
       propertyPath: OrbVFX
       value: 
@@ -4984,12 +5034,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 675558344}
     - target: {fileID: 3358523716305371465, guid: 746a98f6a520605418ac832776144547, type: 3}
+      propertyPath: shootForce
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3358523716305371465, guid: 746a98f6a520605418ac832776144547, type: 3}
       propertyPath: slamDamage
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3358523716305371465, guid: 746a98f6a520605418ac832776144547, type: 3}
       propertyPath: slamRadius
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5325130399403943345, guid: 746a98f6a520605418ac832776144547, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 7939262887830126014, guid: 746a98f6a520605418ac832776144547, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.581
       objectReference: {fileID: 0}
     - target: {fileID: 8476570333203794353, guid: 746a98f6a520605418ac832776144547, type: 3}
       propertyPath: m_Name

@@ -135,7 +135,7 @@ public class BossController : MonoBehaviour
                 case bossState.PhaseThree:
                     print("PHASE THREE");
                     animator.Play("Missile");
-                    Invoke("rasengan", 1.5f);
+                    
                     break;
                 case bossState.PhaseFour:
                     print("PHASE FOUR");
@@ -159,8 +159,8 @@ public class BossController : MonoBehaviour
         if (waitTimer <= 0f)
         {
             // Choose a random phase
-            //CurrentState = (bossState)Random.Range((int)bossState.PhaseOne, (int)bossState.PhaseFive + 1);
-            CurrentState = bossState.PhaseThree;
+            CurrentState = (bossState)Random.Range((int)bossState.PhaseOne, (int)bossState.PhaseFive + 1);
+            
 
             // Reset the phase timer
             waitTimer = waitDuration;
@@ -302,10 +302,10 @@ public class BossController : MonoBehaviour
         print("RASENENGAN");
         foreach (Transform shootingPoint in spawnPoint)
         {
-            GameObject clone = Instantiate(Sphere, shootingPoint.position, transform.rotation);
-            clone.GetComponent<Rigidbody>().AddForce((clone.transform.forward).normalized * shootForce, ForceMode.Acceleration);
-            // Increment the counter
-            bulletsShot++;
+            GameObject clone = Instantiate(Sphere, shootingPoint.position, Quaternion.identity);
+            Vector3 playerOffset = new Vector3(0, 1, 0);
+            Vector3 directionToShoot = playerTransform.position + playerOffset - shootingPoint.position;
+            clone.GetComponent<Rigidbody>().AddForce(directionToShoot.normalized * shootForce, ForceMode.Impulse);
         }
          CurrentState = bossState.Wait;
 
