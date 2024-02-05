@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameVictory : MonoBehaviour
@@ -12,6 +13,11 @@ public class GameVictory : MonoBehaviour
     {
         // Ensure the win screen is not visible when the game starts
         winScreen.SetActive(false);
+    }
+    public void MainMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Main Menu");
     }
     // Update is called once per frame
     void Update()

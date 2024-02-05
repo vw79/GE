@@ -12,6 +12,11 @@ public class GameOver : MonoBehaviour
         // Ensure the win screen is not visible when the game starts
         LoseScreen.SetActive(false);
     }
+    public void MainMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Main Menu");
+    }
     void Update()
     {
         // When the 'L' key is pressed, display the win screen
