@@ -8,6 +8,8 @@ TagManager:
   - Green
   - Blue
   - Sword
+  - Enemy
+  - Spawner
   layers:
   - Default
   - TransparentFX

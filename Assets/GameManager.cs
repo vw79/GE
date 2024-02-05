@@ -6,14 +6,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    private List<GameObject> enemies = new List<GameObject>();
-
-    // Reference to the door you want to unlock
-    public GameObject doorToUnlock;
+    private Dictionary<GameObject, List<GameObject>> doorEnemies = new Dictionary<GameObject, List<GameObject>>();
 
     private void Awake()
     {
-        // Singleton pattern to ensure only one GameManager exists
         if (Instance == null)
         {
             Instance = this;
@@ -23,40 +19,50 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        InitializeDoors();
     }
 
-    public void RegisterEnemy(GameObject enemy)
+    void InitializeDoors()
     {
-        enemies.Add(enemy);
+        GameObject door1 = GameObject.Find("CheckDoor1");
+        GameObject door2 = GameObject.Find("CheckDoor2");
+
+        doorEnemies.Add(door1, new List<GameObject>()); 
+        doorEnemies.Add(door2, new List<GameObject>());
+    }
+
+    public void RegisterEnemy(GameObject enemy, GameObject door)
+    {
+        if (doorEnemies.ContainsKey(door))
+        {
+            doorEnemies[door].Add(enemy);
+        }
     }
 
     public void EnemyDefeated(GameObject enemy)
     {
-        // Remove the enemy from the list
-        if (enemies.Contains(enemy))
+        foreach (var door in doorEnemies.Keys)
         {
-            enemies.Remove(enemy);
-            CheckEnemies();
-        }
-
-        Debug.Log(enemies.Count);
-    }
-
-    void CheckEnemies()
-    {
-        // If there are no more enemies, unlock the door
-        if (enemies.Count == 0)
-        {
-            UnlockDoor();
-            Debug.Log("All enemies defeated!");
+            if (doorEnemies[door].Contains(enemy))
+            {
+                doorEnemies[door].Remove(enemy);
+                CheckEnemies(door);
+                break; 
+            }
         }
     }
 
-    void UnlockDoor()
+    void CheckEnemies(GameObject door)
     {
-        // Implement door unlocking logic here
-        doorToUnlock.SetActive(false); // Example of unlocking by deactivating the door GameObject
-        Debug.Log("Door Unlocked!");
+        if (doorEnemies[door].Count == 0)
+        {
+            UnlockDoor(door);
+        }
+    }
+
+    void UnlockDoor(GameObject door)
+    {
+        door.SetActive(false); 
     }
 }
-

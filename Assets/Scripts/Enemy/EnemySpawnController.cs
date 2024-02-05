@@ -16,6 +16,7 @@ public class EnemySpawnController : MonoBehaviour
     public bool isGreen;
     [HideInInspector]
     bool Melee;
+    [SerializeField] private GameObject checkDoor;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -72,7 +73,7 @@ public class EnemySpawnController : MonoBehaviour
             {
                 spawnedEnemy = Instantiate(rangedPrefab, GetRandomSpawnPoint().position, GetRandomSpawnPoint().rotation);
             }
-            GameManager.Instance.RegisterEnemy(spawnedEnemy);
+            GameManager.Instance.RegisterEnemy(spawnedEnemy, checkDoor);
         }
     }
 }
