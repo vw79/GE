@@ -96,7 +96,7 @@ public class BossController : MonoBehaviour
 
     private void Update()
     {
-        if (!inMotion) { stateHandler(); }
+        stateHandler();
         if (!isChanged)
         {
             Invoke("colorChange", colourTimer);
@@ -135,6 +135,7 @@ public class BossController : MonoBehaviour
                 case bossState.PhaseThree:
                     print("PHASE THREE");
                     animator.Play("Missile");
+                    Invoke("rasengan", 1.5f);
                     break;
                 case bossState.PhaseFour:
                     print("PHASE FOUR");
@@ -308,16 +309,6 @@ public class BossController : MonoBehaviour
         }
          CurrentState = bossState.Wait;
 
-        //// Check if all bullets for this wave have been shot
-        //if (bulletsShot >= maxBulletsPerWave)
-        //{
-        //    // Reset the counter for the next wave
-        //    bulletsShot = 0;
-        //    CurrentState = bossState.Wait;
-        //    phaseTimer = phaseDuration;
-
-        //}
-
     }
     //Phase 4
     public void shinraTensei()
@@ -328,16 +319,6 @@ public class BossController : MonoBehaviour
             inMotion = true;
             OrbVFX.SetActive(true);
         }
-        
-        //Collider[] hitColliders = Physics.OverlapSphere(transform.position, tenseiRadius);
-        //foreach (Collider collider in hitColliders)
-        //{
-        //    if (collider.CompareTag("Player"))
-        //    {
-        //        Vector3 directionToPlayer = (collider.transform.position - transform.position).normalized;
-        //        collider.GetComponent<Rigidbody>().AddForce(directionToPlayer * 10f, ForceMode.Impulse);
-        //    }
-        //}
 
         if (phaseTimer <= 0f)
         {
