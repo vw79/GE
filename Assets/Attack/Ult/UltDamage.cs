@@ -7,10 +7,11 @@ public class UltDamage : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         int enemyLayer = LayerMask.NameToLayer("Enemy");
+        EnemyAI enemy = other.GetComponent<EnemyAI>();
 
         if (other.gameObject.layer == enemyLayer)
         {
-            Destroy(other.gameObject);
+            enemy.takeDamage(500);
         }
     }
 }

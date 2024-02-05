@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 
     private Dictionary<GameObject, List<GameObject>> doorEnemies = new Dictionary<GameObject, List<GameObject>>();
 
+    private GameObject loseMenu;
+
     private void Awake()
     {
         if (Instance == null)
@@ -21,6 +23,13 @@ public class GameManager : MonoBehaviour
         }
 
         InitializeDoors();
+
+        loseMenu = GameObject.Find("LoseMenu");
+    }
+
+    void Start()
+    {
+        loseMenu.SetActive(false);
     }
 
     void InitializeDoors()
@@ -64,5 +73,12 @@ public class GameManager : MonoBehaviour
     void UnlockDoor(GameObject door)
     {
         door.SetActive(false); 
+    }
+
+    // Game Over
+    public void PlayerDied()
+    {
+        loseMenu.SetActive(true);
+        Time.timeScale = 0;
     }
 }

@@ -11,6 +11,7 @@ public class Weapon : MonoBehaviour
     private ChromaticAberrationEffect chromaticEffect;
     private CinemachineImpulseSource impulseSource;
     private EnemyAI enemyAI;
+    private PlayerHealthSystem playerHealth;
 
     private void Awake()
     {
@@ -18,6 +19,7 @@ public class Weapon : MonoBehaviour
         triggerBox = GetComponent<BoxCollider>();
         stateManager = FindObjectOfType<StateManager>();
         chromaticEffect = FindObjectOfType<ChromaticAberrationEffect>();
+        playerHealth = GameObject.FindWithTag("Player").GetComponent<PlayerHealthSystem>();
     }
 
 
@@ -29,6 +31,7 @@ public class Weapon : MonoBehaviour
             if (stateManager != null && stateManager.CanAttack(other.gameObject))
             {
                 enemyAI = other.GetComponent<EnemyAI>();
+                playerHealth.Heal(10);
                 enemyAI.takeDamage(damage);
             }
             else

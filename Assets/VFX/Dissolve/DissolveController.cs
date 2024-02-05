@@ -63,6 +63,7 @@ public class DissolveController: MonoBehaviour
         }
 
         Destroy(player);
+        GameManager.Instance.PlayerDied();
     }
 }
 
