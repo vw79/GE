@@ -39,6 +39,7 @@ public class BossController : MonoBehaviour
 
 
     [Header("Phase 2")]
+    public AudioSource banshotenin;
     public float PullForce;
 
 
@@ -51,10 +52,12 @@ public class BossController : MonoBehaviour
 
 
     [Header("Phase 4")]
+    public AudioSource shinra;
     public float tenseiRadius;
     public GameObject OrbVFX;
 
     [Header("Phase 5")]
+    public AudioSource slam;
     public float slamRadius;
     public float slamDamage;
     public GameObject SlamVFX;
@@ -131,6 +134,7 @@ public class BossController : MonoBehaviour
                 case bossState.PhaseTwo:
                     print("PHASE TWO");
                     animator.Play("Pull");
+                    banshotenin.Play();
                     Invoke("BanshoTenin", 1f);
                     break;
                 case bossState.PhaseThree:
@@ -160,8 +164,8 @@ public class BossController : MonoBehaviour
         if (waitTimer <= 0f)
         {
             // Choose a random phase
-            CurrentState = (bossState)Random.Range((int)bossState.PhaseOne, (int)bossState.PhaseFive + 1);
-            //CurrentState = bossState.PhaseTwo;
+           // CurrentState = (bossState)Random.Range((int)bossState.PhaseOne, (int)bossState.PhaseFive + 1);
+            CurrentState = bossState.PhaseFour;
             
 
             // Reset the phase timer
@@ -269,6 +273,8 @@ public class BossController : MonoBehaviour
         Destroy(BossObject);
     }
 
+
+
     //Phase 1
     public void moveToPlayer()
     {
@@ -290,7 +296,7 @@ public class BossController : MonoBehaviour
         playerTransform.GetComponent<Rigidbody>().AddForce(-directionToPlayer * PullForce, ForceMode.VelocityChange);
         if (Vector3.Distance(transform.position, playerTransform.position) < 2.0f)
         {
-            animator.ResetTrigger("Pull");
+            
             phaseTimer = phaseDuration;
             CurrentState = bossState.PhaseFive;
         }
@@ -315,10 +321,10 @@ public class BossController : MonoBehaviour
     //Phase 4
     public void shinraTensei()
     {
-        print("shinra");
         if (!inMotion) 
         {
             inMotion = true;
+            shinra.Play();
             OrbVFX.SetActive(true);
         }
 
@@ -340,6 +346,7 @@ public class BossController : MonoBehaviour
     public void aoeBlast()
     {
         print("Blast");
+        slam.Play();
         GameObject clone = Instantiate(SlamVFX, transform.position, transform.rotation);
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, slamRadius);
         foreach (Collider collider in hitColliders)
