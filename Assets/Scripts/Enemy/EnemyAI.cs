@@ -97,10 +97,10 @@ public class EnemyAI : MonoBehaviour
                 stateMachine.ChangeState(EnemyStateId.Attacking);
             }
 
-            if (Input.GetKeyDown(KeyCode.J))
+            /*if (Input.GetKeyDown(KeyCode.J))
             {
                 dead();
-            }
+            }*/
         }
 
     }
@@ -108,11 +108,16 @@ public class EnemyAI : MonoBehaviour
     public void takeDamage(float damage)
     {
         currentHealth -= damage;
-        if(currentHealth <= 0)
+        animator.Play("Hurt");
+
+        Debug.Log("Enemy took damage" + damage);
+        Debug.Log("Enemy current health" + currentHealth);
+
+        if (currentHealth <= 0)
         {
-            GameManager.Instance.EnemyDefeated(gameObject);
+            //GameManager.Instance.EnemyDefeated(gameObject);
             dead();
-        }
+        }    
     }
 
     public void dead()
@@ -133,8 +138,12 @@ public class EnemyAI : MonoBehaviour
     }
     public void DealDamage()
     {
-        pHealth.TakeDamage(attackDamage);
-        nextAttack = true;
+        if (pHealth != null)
+        {
+            pHealth.TakeDamage(attackDamage);
+            nextAttack = true;
+        }
+        else return;
     }
     public void Disintegrate()
     {
@@ -213,7 +222,7 @@ public class EnemyDeathState : EnemyState
 
     public void Update(EnemyAI agent)
     {
-        agent.animator.SetTrigger("Death");
+        agent.animator.Play("Death");
 
     }
 

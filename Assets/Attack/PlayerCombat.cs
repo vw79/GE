@@ -119,15 +119,13 @@ public class PlayerCombat : MonoBehaviour
     #region Sword Collider
     public void SwordCollider()
     {
+        swordCollider.enabled = true;
         StartCoroutine(EnableSwordCollider());
     }
 
     private IEnumerator EnableSwordCollider()
     {
-        swordCollider.enabled = true;
-
         yield return new WaitForSeconds(hitDuration);
-
         swordCollider.enabled = false;
     }
     #endregion

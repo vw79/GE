@@ -60,17 +60,27 @@ public class StateManager : MonoBehaviour
     private bool isActionCooldown = false;
 
     private Warp warp;
+    private Ice ice;
+    private Fire fire;
     private PlayerCombat playerCombat;
+    private PlayerHealthSystem playerHealth;
+    private PlayerController playerController;
+    private CapsuleCollider playerCollider;
 
     private void Awake()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         warp = player.GetComponent<Warp>();
+        ice = player.GetComponent<Ice>();
+        fire = player.GetComponent<Fire>();
         playerCombat = player.GetComponent<PlayerCombat>();
         playerRenderer = player.GetComponentInChildren<SkinnedMeshRenderer>();
         playerMaterialDefault = playerRenderer.materials;
+        playerHealth = player.GetComponent<PlayerHealthSystem>();
+        playerController = player.GetComponent<PlayerController>(); 
+        playerCollider = player.GetComponent<CapsuleCollider>();
 
-        actionCooldowns = new float[3] { 10f, 20f, 30f }; 
+        actionCooldowns = new float[3] { 10f, 10f, 10f }; 
         isActionCooldowns = new bool[3] { false, false, false };
        
         redCDScript = redCD.GetComponentInChildren<Cooldown>();
@@ -132,16 +142,19 @@ public class StateManager : MonoBehaviour
     // Perform the action for the current CurrentState
     private bool PerformStateSpecificAction()
     {
+        playerHealth.enabled = false;
+        playerCombat.enabled = false; 
+        playerController.enabled = false;
+        playerCollider.enabled = false;
+
         if (currentState == State.State1)
         {
-            blueCDScript.UseSpell();
-            Debug.Log("Ice");
+            ice.StartIce();
             return true;
         }
         else if (currentState == State.State2)
         {
-            redCDScript.UseSpell();
-            Debug.Log("Fire");
+            fire.StartFire();
             return true;
         }
         else if (currentState == State.State3)

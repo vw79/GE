@@ -22,6 +22,7 @@ public class Warp : MonoBehaviour
     private PlayerCombat playerCombat;
     private PlayerController playerController;
     private CapsuleCollider playerCollider;
+    private PlayerHealthSystem playerHealth;
 
     private Cooldown greenCDScript;
     private GameObject greenCD;
@@ -31,6 +32,7 @@ public class Warp : MonoBehaviour
         playerCombat = GetComponent<PlayerCombat>();
         playerController = GetComponent<PlayerController>();
         playerCollider = GetComponent<CapsuleCollider>();
+        playerHealth = GetComponent<PlayerHealthSystem>();
         greenCD = GameObject.Find("GreenCdUI");
         greenCDScript = greenCD.GetComponentInChildren<Cooldown>();
     }
@@ -112,9 +114,6 @@ public class Warp : MonoBehaviour
             }
         }
         
-        playerCombat.enabled = false;
-        playerController.enabled = false;
-        playerCollider.enabled = false;
         animator.Play("Warp");
         greenCDScript.UseSpell();
         StartCoroutine(WaitAnim());
@@ -141,6 +140,7 @@ public class Warp : MonoBehaviour
         playerController.enabled = true;
         playerCombat.enabled = true;
         playerCollider.enabled = true;
+        playerHealth.enabled = true;
     }
 
     // Revert the material of the enemy after a delay
