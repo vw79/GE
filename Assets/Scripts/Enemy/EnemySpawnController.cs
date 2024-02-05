@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class EnemySpawnController : MonoBehaviour
 {
@@ -17,42 +16,38 @@ public class EnemySpawnController : MonoBehaviour
     public bool isGreen;
     [HideInInspector]
     bool Melee;
-    [SerializeField]public EnemyAI enemy;
-    private void Awake()
-    {
-        
-    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")&&!isEntered) 
+        if (other.CompareTag("Player") && !isEntered)
         {
             SpawnEnemies();
             isEntered = true;
         }
     }
+
     public void SpawnEnemies()
+    {
+        if (isRed)
         {
-            if (isRed)
-            {
-                SpawnColorEnemies(RedEnemyPrefab, redRangeEnemyPrefab);
-            }
-
-            if (isBlue)
-            {
-                SpawnColorEnemies(BlueEnemyPrefab, blueRangeEnemyPrefab);
-            }
-
-            if (isGreen)
-            {
-                SpawnColorEnemies(GreenEnemyPrefab, greenRangeEnemyPrefab);
-            }
+            SpawnColorEnemies(RedEnemyPrefab, redRangeEnemyPrefab);
         }
+
+        if (isBlue)
+        {
+            SpawnColorEnemies(BlueEnemyPrefab, blueRangeEnemyPrefab);
+        }
+
+        if (isGreen)
+        {
+            SpawnColorEnemies(GreenEnemyPrefab, greenRangeEnemyPrefab);
+        }
+    }
 
     private Transform GetRandomSpawnPoint()
     {
         if (spawnPoints.Length > 0)
         {
-            // Choose a random spawn point from the array
             int randomIndex = Random.Range(0, spawnPoints.Length);
             return spawnPoints[randomIndex];
         }
@@ -68,16 +63,16 @@ public class EnemySpawnController : MonoBehaviour
         for (int i = 0; i < numberOfEnemies; i++)
         {
             Melee = Random.value > 0.5f;
+            GameObject spawnedEnemy;
             if (Melee)
             {
-                enemy.isMelee = true;
-                Instantiate(meleePrefab, GetRandomSpawnPoint().position, GetRandomSpawnPoint().rotation);
+                spawnedEnemy = Instantiate(meleePrefab, GetRandomSpawnPoint().position, GetRandomSpawnPoint().rotation);
             }
             else
             {
-                enemy.isMelee = false;
-                Instantiate(rangedPrefab, GetRandomSpawnPoint().position, GetRandomSpawnPoint().rotation);
+                spawnedEnemy = Instantiate(rangedPrefab, GetRandomSpawnPoint().position, GetRandomSpawnPoint().rotation);
             }
+            GameManager.Instance.RegisterEnemy(spawnedEnemy);
         }
     }
 }

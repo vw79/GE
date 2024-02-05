@@ -83,6 +83,8 @@ public class PlayerCombat : MonoBehaviour
 
                     anim.runtimeAnimatorController = combo[comboCounter].animatorOV;
                     anim.Play("Attack", 0, 0);
+
+                    // Can set custom damage for each attack in the combo
                     weapon.damage = combo[comboCounter].damage;
                 }
 

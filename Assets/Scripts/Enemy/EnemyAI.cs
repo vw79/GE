@@ -110,6 +110,7 @@ public class EnemyAI : MonoBehaviour
         currentHealth -= damage;
         if(currentHealth <= 0)
         {
+            GameManager.Instance.EnemyDefeated(gameObject);
             dead();
         }
     }
