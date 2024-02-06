@@ -63,7 +63,7 @@ public class Fire : MonoBehaviour
 
     IEnumerator Invincible()
     {
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(15f);
         playerHealth.enabled = true;
     }
 }
