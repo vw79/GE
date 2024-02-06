@@ -31,9 +31,6 @@ public class StateManager : MonoBehaviour
     public Sprite redSkillImage;
     public Sprite greenSkillImage;
 
-    private Cooldown redCDScript;
-    private Cooldown blueCDScript;
-
     public GameObject redCD;
     public GameObject blueCD;
     public GameObject greenCD;
@@ -56,16 +53,12 @@ public class StateManager : MonoBehaviour
     private float[] actionCooldowns;
     private bool[] isActionCooldowns;
 
-
     private bool isActionCooldown = false;
 
     private Warp warp;
     private Ice ice;
     private Fire fire;
     private PlayerCombat playerCombat;
-    private PlayerHealthSystem playerHealth;
-    private PlayerController playerController;
-    private CapsuleCollider playerCollider;
 
     private void Awake()
     {
@@ -76,16 +69,10 @@ public class StateManager : MonoBehaviour
         playerCombat = player.GetComponent<PlayerCombat>();
         playerRenderer = player.GetComponentInChildren<SkinnedMeshRenderer>();
         playerMaterialDefault = playerRenderer.materials;
-        playerHealth = player.GetComponent<PlayerHealthSystem>();
-        playerController = player.GetComponent<PlayerController>(); 
-        playerCollider = player.GetComponent<CapsuleCollider>();
 
         actionCooldowns = new float[3] { 10f, 10f, 10f }; 
         isActionCooldowns = new bool[3] { false, false, false };
        
-        redCDScript = redCD.GetComponentInChildren<Cooldown>();
-        blueCDScript = blueCD.GetComponentInChildren<Cooldown>();
-
         redCanvas = redCD.GetComponentInChildren<Canvas>();
         blueCanvas = blueCD.GetComponentInChildren<Canvas>();
         greenCanvas = greenCD.GetComponentInChildren<Canvas>();
@@ -142,11 +129,6 @@ public class StateManager : MonoBehaviour
     // Perform the action for the current CurrentState
     private bool PerformStateSpecificAction()
     {
-        playerHealth.enabled = false;
-        playerCombat.enabled = false; 
-        playerController.enabled = false;
-        playerCollider.enabled = false;
-
         if (currentState == State.State1)
         {
             ice.StartIce();

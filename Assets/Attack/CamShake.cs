@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-
 public class CamShake : MonoBehaviour
 {
     public static CamShake instance;
-
-    [SerializeField] private float globalShakeForce1 = 1f;
 
     private void Awake()
     {
@@ -18,8 +15,9 @@ public class CamShake : MonoBehaviour
         }   
     }
 
-    public void CameraShake(CinemachineImpulseSource impulseSource)
+    // Modified CameraShake method to accept shake intensity as a parameter
+    public void CameraShake(CinemachineImpulseSource impulseSource, float shakeIntensity)
     {
-        impulseSource.GenerateImpulseWithForce(globalShakeForce1);
+        impulseSource.GenerateImpulseWithForce(shakeIntensity);
     }
 }

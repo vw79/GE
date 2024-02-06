@@ -21,7 +21,6 @@ public class Warp : MonoBehaviour
     public Animator animator;
     private PlayerCombat playerCombat;
     private PlayerController playerController;
-    private CapsuleCollider playerCollider;
     private PlayerHealthSystem playerHealth;
 
     private Cooldown greenCDScript;
@@ -31,7 +30,6 @@ public class Warp : MonoBehaviour
     {
         playerCombat = GetComponent<PlayerCombat>();
         playerController = GetComponent<PlayerController>();
-        playerCollider = GetComponent<CapsuleCollider>();
         playerHealth = GetComponent<PlayerHealthSystem>();
         greenCD = GameObject.Find("GreenCdUI");
         greenCDScript = greenCD.GetComponentInChildren<Cooldown>();
@@ -88,6 +86,10 @@ public class Warp : MonoBehaviour
     // Change the material of the enemy and start the warp animation
     public void StartWarp()
     {
+        playerHealth.enabled = false;
+        playerCombat.enabled = false;
+        playerController.enabled = false;
+
         string enemyTag = furthestEnemy.gameObject.tag;
         if (enemyTag == "Red" || enemyTag == "Green" || enemyTag == "Blue")
         {
@@ -139,7 +141,6 @@ public class Warp : MonoBehaviour
         warpStartTime = Time.time;
         playerController.enabled = true;
         playerCombat.enabled = true;
-        playerCollider.enabled = true;
         playerHealth.enabled = true;
     }
 

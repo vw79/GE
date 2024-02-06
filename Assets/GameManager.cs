@@ -10,6 +10,12 @@ public class GameManager : MonoBehaviour
 
     private GameObject loseMenu;
 
+    private GameObject player;
+    public Transform spawn1;
+
+    public GameObject door1;
+    public GameObject door2;
+
     private void Awake()
     {
         if (Instance == null)
@@ -25,18 +31,18 @@ public class GameManager : MonoBehaviour
         InitializeDoors();
 
         loseMenu = GameObject.Find("LoseMenu");
+        player = GameObject.FindWithTag("Player");
+        DontDestroyOnLoad(player);
     }
 
     void Start()
     {
         loseMenu.SetActive(false);
+        SpawnPlayer();
     }
 
     void InitializeDoors()
     {
-        GameObject door1 = GameObject.Find("CheckDoor1");
-        GameObject door2 = GameObject.Find("CheckDoor2");
-
         doorEnemies.Add(door1, new List<GameObject>()); 
         doorEnemies.Add(door2, new List<GameObject>());
     }
@@ -73,6 +79,11 @@ public class GameManager : MonoBehaviour
     void UnlockDoor(GameObject door)
     {
         door.SetActive(false); 
+    }
+
+    void SpawnPlayer() 
+    { 
+        player.transform.position = spawn1.position;
     }
 
     // Game Over

@@ -37,7 +37,7 @@ public class Weapon : MonoBehaviour
             else
             {
                 chromaticEffect?.TriggerChromaAb();
-                CamShake.instance.CameraShake(impulseSource);
+                CamShake.instance.CameraShake(impulseSource, 0.2f);
                 animator.SetTrigger("WrongColor");
             }
         }

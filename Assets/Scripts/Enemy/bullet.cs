@@ -18,7 +18,7 @@ public class bullet : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && playerHealth.enabled)
         {
             playerHealth.TakeDamage(bulletDamage);
         }

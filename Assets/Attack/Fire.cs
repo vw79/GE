@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,11 +10,11 @@ public class Fire : MonoBehaviour
     private PlayerCombat playerCombat;
     private PlayerController playerController;
     private PlayerHealthSystem playerHealth;
-    private CapsuleCollider playerCollider;
-    
 
     private ParticleSystem fireEffect;
     private SphereCollider fireAttackCollider;
+
+    private CinemachineImpulseSource impulseSource;
 
     private Cooldown redCDScript;
 
@@ -23,10 +24,10 @@ public class Fire : MonoBehaviour
         playerHealth = GetComponent<PlayerHealthSystem>();
         playerCombat = GetComponent<PlayerCombat>();
         playerController = GetComponent<PlayerController>();
-        playerCollider = GetComponent<CapsuleCollider>();
         redCDScript = GameObject.Find("RedCdUI").GetComponentInChildren<Cooldown>();
         fireEffect = GameObject.Find("FireAttack").GetComponent<ParticleSystem>();
         fireAttackCollider = GameObject.Find("FireAttack").GetComponent<SphereCollider>();
+        impulseSource = GetComponent<CinemachineImpulseSource>();
     }
 
     private void Start()
@@ -37,7 +38,11 @@ public class Fire : MonoBehaviour
 
     public void StartFire()
     {
-        animator.Play("Fire");
+        playerHealth.enabled = false;
+        playerCombat.enabled = false;
+        playerController.enabled = false;
+
+        animator.Play("Fire");        
         redCDScript.UseSpell();
         StartCoroutine(WaitAnim());
     }
@@ -46,24 +51,18 @@ public class Fire : MonoBehaviour
     {
         yield return new WaitForSeconds(1.25f);
         fireEffect.Play();
+        CamShake.instance.CameraShake(impulseSource, 5f);
         fireAttackCollider.enabled = true;
         StartCoroutine(FireDamage()); 
     }
 
     IEnumerator FireDamage()
     {
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(1.5f);
         fireEffect.Stop();
         fireAttackCollider.enabled = false;
         playerCombat.enabled = true;
         playerController.enabled = true;
-        playerCollider.enabled = true;
-        StartCoroutine(Invincible());
-    }
-
-    IEnumerator Invincible()
-    {
-        yield return new WaitForSeconds(15f);
         playerHealth.enabled = true;
     }
 }

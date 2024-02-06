@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class IceAttackCollider: MonoBehaviour
 {
-    private Ice ice;    
+    private Ice ice;
+    [SerializeField] private float iceDamage = 50;
 
     private void Awake()
     {
@@ -19,7 +20,7 @@ public class IceAttackCollider: MonoBehaviour
         if (other.gameObject.layer == enemyLayer)
         {
             StartCoroutine(ice.SlowEnemy(enemy));
-            enemy.takeDamage(50);
+            enemy.takeDamage(iceDamage);
         }
     }
 }

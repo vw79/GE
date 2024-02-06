@@ -44931,6 +44931,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c248c629cb3c3b44689b407c2df56094, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  iceDamage: 50
 --- !u!1 &6206946345767521453
 GameObject:
   m_ObjectHideFlags: 0
@@ -59879,6 +59880,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4ca918efe63aad4c96ba328da802dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fireDamage: 10
 --- !u!1 &7728129289470054909
 GameObject:
   m_ObjectHideFlags: 0
@@ -65756,7 +65758,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sword 4_1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7053501553881842495, guid: 49df8c3e53985574db1e0efb23e21d63, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

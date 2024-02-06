@@ -9,7 +9,6 @@ public class Ice : MonoBehaviour
     private Animator animator;
     private PlayerCombat playerCombat;
     private PlayerController playerController;
-    private CapsuleCollider playerCollider;
     private PlayerHealthSystem playerHealth;
 
     private VisualEffect iceEffect;
@@ -24,7 +23,6 @@ public class Ice : MonoBehaviour
         playerHealth = GetComponent<PlayerHealthSystem>();
         playerCombat = GetComponent<PlayerCombat>();
         playerController = GetComponent<PlayerController>();
-        playerCollider = GetComponent<CapsuleCollider>();
         blueCD = GameObject.Find("BlueCdUI");
         blueCDScript = blueCD.GetComponentInChildren<Cooldown>();
         iceEffect = GameObject.Find("IceAttack").GetComponent<VisualEffect>();
@@ -39,6 +37,10 @@ public class Ice : MonoBehaviour
 
     public void StartIce()
     {
+        playerHealth.enabled = false;
+        playerCombat.enabled = false;
+        playerController.enabled = false;
+
         animator.Play("Ice");
         iceEffect.Play();
         blueCDScript.UseSpell();
@@ -53,24 +55,20 @@ public class Ice : MonoBehaviour
         iceAttackCollider.enabled = false;
         playerCombat.enabled = true;
         playerController.enabled = true;
-        playerCollider.enabled = true;
-        StartCoroutine (Invincible());
-    }
-
-    IEnumerator Invincible()
-    {
-        yield return new WaitForSeconds(10f);      
         playerHealth.enabled = true;
     }
 
     public IEnumerator SlowEnemy(EnemyAI enemy)
     {
         float originalSpeed = enemy.navMeshAgent.speed;
-        enemy.navMeshAgent.speed *= (1 - 0.5f);
+        float originalAnimationSpeed = enemy.animator.speed;
+
+        enemy.navMeshAgent.speed *= 0.5f;
+        enemy.animator.speed = 0.5f; 
 
         yield return new WaitForSeconds(5f);
 
         enemy.navMeshAgent.speed = originalSpeed;
-
+        enemy.animator.speed = originalAnimationSpeed;
     }
 }

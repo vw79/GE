@@ -75,10 +75,10 @@ public class EnemyAI : MonoBehaviour
         stateMachine.RegisterState(new EnemyAttackState());
         stateMachine.RegisterState(new EnemyDeathState());
         stateMachine.ChangeState(initialState);
+        currentHealth = maxEnemyHealth;
     }
     void Update()
-    {
-        currentHealth = maxEnemyHealth;
+    {   
         stateMachine.Update();
         if (!isDead)
         {
@@ -96,13 +96,7 @@ public class EnemyAI : MonoBehaviour
             {
                 stateMachine.ChangeState(EnemyStateId.Attacking);
             }
-
-            /*if (Input.GetKeyDown(KeyCode.J))
-            {
-                dead();
-            }*/
         }
-
     }
 
     public void takeDamage(float damage)
@@ -110,12 +104,9 @@ public class EnemyAI : MonoBehaviour
         currentHealth -= damage;
         animator.Play("Hurt");
 
-        Debug.Log("Enemy took damage" + damage);
-        Debug.Log("Enemy current health" + currentHealth);
-
         if (currentHealth <= 0)
         {
-            //GameManager.Instance.EnemyDefeated(gameObject);
+            GameManager.Instance.EnemyDefeated(gameObject);
             dead();
         }    
     }
@@ -138,18 +129,17 @@ public class EnemyAI : MonoBehaviour
     }
     public void DealDamage()
     {
-        if (pHealth != null)
+        if (pHealth != null && pHealth.enabled)
         {
             pHealth.TakeDamage(attackDamage);
             nextAttack = true;
         }
-        else return;
     }
+
     public void Disintegrate()
     {
         GameObject.Destroy(gameObject);
     }
-  
 }
 
 

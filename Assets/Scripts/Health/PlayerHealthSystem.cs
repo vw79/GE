@@ -50,7 +50,7 @@ public class PlayerHealthSystem: MonoBehaviour
         playerController.enabled = false;
         animator.Play("Impact");
         chromaticEffect?.TriggerChromaAb();
-        CamShake.instance.CameraShake(impulseSource);        
+        CamShake.instance.CameraShake(impulseSource,0.2f);        
         healthBar.SetHealth(current_health);
 
         if (current_health <= 0)
