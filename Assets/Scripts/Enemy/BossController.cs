@@ -25,6 +25,7 @@ public class BossController : MonoBehaviour
     public bool isBlue;
     public bool isGreen;
     public float colourTimer;
+    
 
 
     [Header("State")]
@@ -39,6 +40,7 @@ public class BossController : MonoBehaviour
 
 
     [Header("Phase 2")]
+    public GameObject pullVFX;
     public AudioSource banshotenin;
     public float PullForce;
 
@@ -134,8 +136,7 @@ public class BossController : MonoBehaviour
                 case bossState.PhaseTwo:
                     print("PHASE TWO");
                     animator.Play("Pull");
-                    banshotenin.Play();
-                    Invoke("BanshoTenin", 1f);
+                    Invoke("BanshoTenin", 0.7f);
                     break;
                 case bossState.PhaseThree:
                     print("PHASE THREE");
@@ -159,13 +160,12 @@ public class BossController : MonoBehaviour
     public void PhaseInterval()
     {
         transform.LookAt(playerTransform.position);
-        
         // Transition to a random phase after the wait duration
         if (waitTimer <= 0f)
         {
             // Choose a random phase
            // CurrentState = (bossState)Random.Range((int)bossState.PhaseOne, (int)bossState.PhaseFive + 1);
-            CurrentState = bossState.PhaseFour;
+            CurrentState = bossState.PhaseTwo;
             
 
             // Reset the phase timer
@@ -291,7 +291,7 @@ public class BossController : MonoBehaviour
     //Phase 2
     public void BanshoTenin()
     {
-        print("BANSHO");
+        pullVFX.SetActive(true);
         Vector3 directionToPlayer =  (playerTransform.position - transform.position).normalized;
         playerTransform.GetComponent<Rigidbody>().AddForce(-directionToPlayer * PullForce, ForceMode.VelocityChange);
         if (Vector3.Distance(transform.position, playerTransform.position) < 2.0f)
@@ -300,14 +300,14 @@ public class BossController : MonoBehaviour
             phaseTimer = phaseDuration;
             CurrentState = bossState.PhaseFive;
         }
-        
-
+        StartCoroutine(disableVFX(pullVFX));
     }
 
     //Phase 3
     public void rasengan()
     {
         print("RASENENGAN");
+        transform.LookAt(playerTransform.position);
         foreach (Transform shootingPoint in spawnPoint)
         {
             GameObject clone = Instantiate(Sphere, shootingPoint.position, Quaternion.identity);
@@ -324,7 +324,6 @@ public class BossController : MonoBehaviour
         if (!inMotion) 
         {
             inMotion = true;
-            shinra.Play();
             OrbVFX.SetActive(true);
         }
 
@@ -346,8 +345,9 @@ public class BossController : MonoBehaviour
     public void aoeBlast()
     {
         print("Blast");
-        slam.Play();
-        GameObject clone = Instantiate(SlamVFX, transform.position, transform.rotation);
+        inMotion = true;
+        SlamVFX.SetActive(true);
+        //GameObject clone = Instantiate(SlamVFX, transform.position, transform.rotation);
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, slamRadius);
         foreach (Collider collider in hitColliders)
         {
@@ -357,10 +357,16 @@ public class BossController : MonoBehaviour
                 playerHealthSystem.TakeDamage(slamDamage);
             }
         }
-        CurrentState = bossState.Wait;
-
+        StartCoroutine(disableVFX(SlamVFX));
     }
 
+    //vfx disabler coroutine
+    public IEnumerator disableVFX(GameObject VFX)
+    {
+        CurrentState = bossState.Wait;
+        yield return new WaitForSeconds(1.1f);
+        VFX.SetActive(false);
 
+    }
 }
 
