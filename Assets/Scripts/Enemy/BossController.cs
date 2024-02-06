@@ -57,6 +57,8 @@ public class BossController : MonoBehaviour
     public float slamRadius;
     public float slamDamage;
     public GameObject SlamVFX;
+
+    [SerializeField] private GameObject rocky;
     
     private enum bossState
     {
@@ -280,8 +282,14 @@ public class BossController : MonoBehaviour
 
     public void Death()
     {
+        Vector3 newPosition = transform.position - new Vector3(0, 0, 2);
+        if (rocky != null)
+        {
+            rocky.transform.position = newPosition;
+        }
+
         isDead = true;
-        Destroy(BossObject);
+        Destroy(gameObject);
     }
 
     //Phase 1

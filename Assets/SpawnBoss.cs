@@ -6,7 +6,8 @@ public class SpawnBoss: MonoBehaviour
 {
     [SerializeField] private GameObject boss;
     [SerializeField] private GameObject bossBullet;
-    [SerializeField] private GameObject door;
+    [SerializeField] private GameObject doorBeforeBoss;
+    [SerializeField] private GameObject doorAfterBoss;
 
     [Header("Boss")]
     public BossController bossController;
@@ -24,13 +25,21 @@ public class SpawnBoss: MonoBehaviour
         bossBullet.SetActive(false);
     }
 
+    private void Update()
+    {
+        if (bossController.isDead && doorAfterBoss)
+        {
+            doorAfterBoss.SetActive(false);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
             boss.SetActive(true);
             bossBullet.SetActive(true);
-            door.SetActive(true);
+            doorBeforeBoss.SetActive(true);
         }
     }
 }
