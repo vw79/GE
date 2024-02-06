@@ -50,6 +50,9 @@ public class EnemyAI : MonoBehaviour
     public float bulletDamage;
     [HideInInspector] public bullet Bullet;
 
+    public UltMeter ultMeter;
+    private CapsuleCollider enemyCollider;
+
     public void Awake()
     {
         //to randomly generate melee or range
@@ -60,6 +63,7 @@ public class EnemyAI : MonoBehaviour
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        enemyCollider = GetComponent<CapsuleCollider>();
         if (!isMelee)
         {
             Bullet.bulletDamage = bulletDamage;
@@ -106,6 +110,7 @@ public class EnemyAI : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            // For unlock door
             GameManager.Instance.EnemyDefeated(gameObject);
             dead();
         }    
@@ -113,6 +118,8 @@ public class EnemyAI : MonoBehaviour
 
     public void dead()
     {
+        enemyCollider.enabled = false;
+        ultMeter.IncrementKillCount();
         stateMachine.ChangeState(EnemyStateId.Death);
     }
 

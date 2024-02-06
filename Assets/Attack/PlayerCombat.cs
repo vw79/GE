@@ -30,6 +30,7 @@ public class PlayerCombat : MonoBehaviour
     #endregion
 
     public GameObject ult;
+    public UltMeter ultMeter;
 
     private void Awake()
     {
@@ -56,7 +57,7 @@ public class PlayerCombat : MonoBehaviour
             Attack();
         }
 
-        if (Input.GetKey(KeyCode.Q) && !isAttacking)
+        if (Input.GetKey(KeyCode.Q) && !isAttacking && ultMeter.canUlt)
         {
             Ultimate();
         }
@@ -161,6 +162,7 @@ public class PlayerCombat : MonoBehaviour
     #endregion
 
     #region Ultimate
+
     private void Ultimate() 
     {
         isUltimateActive = true;
@@ -187,6 +189,7 @@ public class PlayerCombat : MonoBehaviour
 
     private void UltEnd()
     {
+        ultMeter.ResetUltBar();
         isUltimateActive = false;
         anim.SetBool("Ultimate", false);
         ult.SetActive(false);
