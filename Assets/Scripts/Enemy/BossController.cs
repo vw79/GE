@@ -184,21 +184,23 @@ public class BossController : MonoBehaviour
     
     public void colorChange()
     {
-        SkinnedMeshRenderer renderer = BossObject.GetComponent<SkinnedMeshRenderer>();
-        Material[] emiMat = DetectMaterials();
-        int randomNumber;
-        if (isRed && !isBlue && !isGreen)
+        if (!isDead)
         {
-            randomNumber = 1;
-        }
-        else if (isRed && !isBlue && isGreen)
-        {
-            randomNumber = Random.Range(1, 3);
-        }
-        else
-        {
-            randomNumber = Random.Range(1, 4);
-        }
+            SkinnedMeshRenderer renderer = BossObject.GetComponent<SkinnedMeshRenderer>();
+            Material[] emiMat = DetectMaterials();
+            int randomNumber;
+            if (isRed && !isBlue && !isGreen)
+            {
+                randomNumber = 1;
+            }
+            else if (isRed && !isBlue && isGreen)
+            {
+                randomNumber = Random.Range(1, 3);
+            }
+            else
+            {
+                randomNumber = Random.Range(1, 4);
+            }
             switch (randomNumber)
             {
                 //Red
@@ -219,9 +221,9 @@ public class BossController : MonoBehaviour
                         mat.SetColor("_EmissionColor", UnityEngine.Color.green);
                     }
                     print(BossObject.gameObject.tag);
-                    isChanged = false; 
-                break;
-                
+                    isChanged = false;
+                    break;
+
                 //Blue
                 case 3:
                     BossMainObject.tag = "Blue";
@@ -231,11 +233,11 @@ public class BossController : MonoBehaviour
                     }
                     print(BossObject.gameObject.tag);
                     isChanged = false;
-                break;
+                    break;
 
-
+            }
         }
-        
+
     }
 
     //to detect emission materials
