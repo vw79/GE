@@ -179,7 +179,8 @@ public class BossController : MonoBehaviour
     public void takeDamage(float damage)
     {
         currentHealth -= damage;
-        if(currentHealth <= 0)
+        Debug.Log("Boss Health: " + currentHealth);
+        if (currentHealth <= 0)
         {
             CurrentState = bossState.Shinda;
         }

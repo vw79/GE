@@ -12,6 +12,7 @@ public class Weapon : MonoBehaviour
     private CinemachineImpulseSource impulseSource;
     private EnemyAI enemyAI;
     private PlayerHealthSystem playerHealth;
+    private BossController bossController;
 
     private void Awake()
     {
@@ -30,9 +31,16 @@ public class Weapon : MonoBehaviour
         {
             if (stateManager != null && stateManager.CanAttack(other.gameObject))
             {
-                enemyAI = other.GetComponent<EnemyAI>();
-                playerHealth.Heal(10);
-                enemyAI.takeDamage(damage);
+                if(enemyAI = other.GetComponent<EnemyAI>())
+                {
+                    enemyAI.takeDamage(damage);
+                    playerHealth.Heal(10);
+                }
+                else if(bossController = other.GetComponent<BossController>())
+                {
+                    bossController.takeDamage(damage);
+                    playerHealth.Heal(10);
+                }
             }
             else
             {

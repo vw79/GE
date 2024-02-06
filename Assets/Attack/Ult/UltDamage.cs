@@ -4,14 +4,23 @@ using UnityEngine;
 
 public class UltDamage : MonoBehaviour
 {
+    private EnemyAI enemyAI;
+    private BossController bossController;
+
     void OnTriggerEnter(Collider other)
     {
         int enemyLayer = LayerMask.NameToLayer("Enemy");
-        EnemyAI enemy = other.GetComponent<EnemyAI>();
 
         if (other.gameObject.layer == enemyLayer)
         {
-            enemy.takeDamage(500);
+            if (enemyAI = other.GetComponent<EnemyAI>())
+            {
+                enemyAI.takeDamage(500);
+            }
+            else if (bossController = other.GetComponent<BossController>())
+            {
+                bossController.takeDamage(500);
+            }
         }
     }
 }

@@ -6,6 +6,8 @@ public class IceAttackCollider: MonoBehaviour
 {
     private Ice ice;
     [SerializeField] private float iceDamage = 50;
+    private EnemyAI enemyAI;
+    private BossController bossController;
 
     private void Awake()
     {
@@ -15,12 +17,18 @@ public class IceAttackCollider: MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         int enemyLayer = LayerMask.NameToLayer("Enemy");
-        EnemyAI enemy = other.GetComponent<EnemyAI>();
 
         if (other.gameObject.layer == enemyLayer)
         {
-            StartCoroutine(ice.SlowEnemy(enemy));
-            enemy.takeDamage(iceDamage);
+            if (enemyAI = other.GetComponent<EnemyAI>())
+            {
+                StartCoroutine(ice.SlowEnemy(enemyAI));
+                enemyAI.takeDamage(iceDamage);
+            }
+            else if (bossController = other.GetComponent<BossController>())
+            {
+                bossController.takeDamage(iceDamage);
+            }
         }
     }
 }

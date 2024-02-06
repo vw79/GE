@@ -19298,6 +19298,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 54764b4e65afd724499edcf415815f07, type: 3}
     - target: {fileID: 3358523716305371465, guid: 746a98f6a520605418ac832776144547, type: 3}
+      propertyPath: isRed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3358523716305371465, guid: 746a98f6a520605418ac832776144547, type: 3}
       propertyPath: OrbVFX
       value: 
       objectReference: {fileID: 1783604775}
@@ -19313,6 +19317,10 @@ PrefabInstance:
       propertyPath: pullVFX
       value: 
       objectReference: {fileID: 186118737}
+    - target: {fileID: 3358523716305371465, guid: 746a98f6a520605418ac832776144547, type: 3}
+      propertyPath: isChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3358523716305371465, guid: 746a98f6a520605418ac832776144547, type: 3}
       propertyPath: shootForce
       value: 10
@@ -42860,8 +42868,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sword 4_1
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7053501553881842495, guid: 49df8c3e53985574db1e0efb23e21d63, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
