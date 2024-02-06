@@ -27,8 +27,6 @@ public class BossController : MonoBehaviour
     public bool isGreen;
     public float colourTimer;
     
-
-
     [Header("State")]
     public float phaseDuration; //duration for each attack
     public float waitDuration; //duration for each attack
@@ -163,7 +161,7 @@ public class BossController : MonoBehaviour
         {
             // Choose a random phase
             //CurrentState = (bossState)Random.Range((int)bossState.PhaseOne, (int)bossState.PhaseFive + 1);
-            CurrentState = bossState.PhaseTwo;
+            CurrentState = bossState.PhaseThree;
             
 
             // Reset the phase timer

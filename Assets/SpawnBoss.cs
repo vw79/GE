@@ -14,10 +14,6 @@ public class SpawnBoss: MonoBehaviour
     public bool isBlue;
     public bool isGreen;
 
-    private void Awake()
-    {
-        
-    }
 
     private void Start()
     {
