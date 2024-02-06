@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     private Dictionary<GameObject, List<GameObject>> doorEnemies = new Dictionary<GameObject, List<GameObject>>();
 
     private GameObject loseMenu;
+    private GameObject winMenu;
 
     private GameObject player;
     public Transform spawn1;
@@ -31,6 +32,7 @@ public class GameManager : MonoBehaviour
         InitializeDoors();
 
         loseMenu = GameObject.Find("LoseMenu");
+        winMenu = GameObject.Find("WinMenu");
         player = GameObject.FindWithTag("Player");
         DontDestroyOnLoad(player);
     }
@@ -38,6 +40,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         loseMenu.SetActive(false);
+        winMenu.SetActive(false);
         SpawnPlayer();
     }
 
@@ -86,10 +89,15 @@ public class GameManager : MonoBehaviour
         player.transform.position = spawn1.position;
     }
 
-    // Game Over
     public void PlayerDied()
     {
         loseMenu.SetActive(true);
+        Time.timeScale = 0;
+    }
+
+    public void PlayerWon()
+    {
+        winMenu.SetActive(true);
         Time.timeScale = 0;
     }
 }
