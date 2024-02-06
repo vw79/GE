@@ -17,6 +17,8 @@ public class Ice : MonoBehaviour
     private Cooldown blueCDScript;
     private GameObject blueCD;
 
+    private AudioSource iceAudioSource;
+
     void Awake()
     {
         animator = GetComponent<Animator>();
@@ -27,6 +29,7 @@ public class Ice : MonoBehaviour
         blueCDScript = blueCD.GetComponentInChildren<Cooldown>();
         iceEffect = GameObject.Find("IceAttack").GetComponent<VisualEffect>();
         iceAttackCollider = GameObject.Find("IceAttack").GetComponent<BoxCollider>();
+        iceAudioSource = GameObject.Find("IceAttack").GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -43,6 +46,7 @@ public class Ice : MonoBehaviour
 
         animator.Play("Ice");
         iceEffect.Play();
+        iceAudioSource.Play();
         blueCDScript.UseSpell();
         iceAttackCollider.enabled = true;
         StartCoroutine(IceDamage());

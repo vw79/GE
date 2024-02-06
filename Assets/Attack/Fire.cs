@@ -15,6 +15,7 @@ public class Fire : MonoBehaviour
     private SphereCollider fireAttackCollider;
 
     private CinemachineImpulseSource impulseSource;
+    private AudioSource fireAudioSource;
 
     private Cooldown redCDScript;
 
@@ -28,6 +29,7 @@ public class Fire : MonoBehaviour
         fireEffect = GameObject.Find("FireAttack").GetComponent<ParticleSystem>();
         fireAttackCollider = GameObject.Find("FireAttack").GetComponent<SphereCollider>();
         impulseSource = GetComponent<CinemachineImpulseSource>();
+        fireAudioSource = GameObject.Find("FireAttack").GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -51,7 +53,8 @@ public class Fire : MonoBehaviour
     {
         yield return new WaitForSeconds(1.25f);
         fireEffect.Play();
-        CamShake.instance.CameraShake(impulseSource, 5f);
+        fireAudioSource.Play();
+        CamShake.instance.CameraShake(impulseSource, 3f);
         fireAttackCollider.enabled = true;
         StartCoroutine(FireDamage()); 
     }
