@@ -9,6 +9,7 @@ public class BossController : MonoBehaviour
     public GameObject BossMainObject;
     public GameObject BossObject;
     public bool inMotion;
+    public bool isDead;
     public Animator animator;
     public NavMeshAgent agent;
     PlayerHealthSystem playerHealthSystem;
@@ -37,11 +38,9 @@ public class BossController : MonoBehaviour
     [Header("Phase 1")]
     [HideInInspector]public Transform playerTransform;
 
-
     [Header("Phase 2")]
     public GameObject pullVFX;
     public float PullForce;
-
 
     [Header("Phase 3")]
     public int bulletsShot;
@@ -49,7 +48,6 @@ public class BossController : MonoBehaviour
     public float shootForce;
     public GameObject Sphere;
     public Transform[] spawnPoint;
-
 
     [Header("Phase 4")]
     public float tenseiRadius;
@@ -60,7 +58,6 @@ public class BossController : MonoBehaviour
     public float slamDamage;
     public GameObject SlamVFX;
     
-
     private enum bossState
     {
         Spawn,
@@ -97,13 +94,15 @@ public class BossController : MonoBehaviour
 
     private void Update()
     {
-        stateHandler();
-        if (!isChanged)
+        if (!isDead)
         {
-            Invoke("colorChange", colourTimer);
-            isChanged = true;
+            stateHandler();
+            if (!isChanged)
+            {
+                Invoke("colorChange", colourTimer);
+                isChanged = true;
+            }
         }
-
     }
 
     void OnDrawGizmos()
@@ -160,9 +159,7 @@ public class BossController : MonoBehaviour
         if (waitTimer <= 0f)
         {
             // Choose a random phase
-            //CurrentState = (bossState)Random.Range((int)bossState.PhaseOne, (int)bossState.PhaseFive + 1);
-            CurrentState = bossState.PhaseThree;
-            
+            CurrentState = (bossState)Random.Range((int)bossState.PhaseOne, (int)bossState.PhaseFive + 1);
 
             // Reset the phase timer
             waitTimer = waitDuration;
@@ -281,11 +278,9 @@ public class BossController : MonoBehaviour
 
     public void Death()
     {
-        //animator.SetTrigger("Death");
+        isDead = true;
         Destroy(BossObject);
     }
-
-
 
     //Phase 1
     public void moveToPlayer()
@@ -307,10 +302,7 @@ public class BossController : MonoBehaviour
         playerTransform.GetComponent<Rigidbody>().AddForce(-directionToPlayer * PullForce, ForceMode.VelocityChange);
         print(Vector3.Distance(transform.position, playerTransform.position));
         StartCoroutine(disableVFX(pullVFX));
-        //if (Vector3.Distance(transform.position, playerTransform.position) < 2.0f)
-        //{ 
         CurrentState = bossState.PhaseFive;
-        //}
         
     }
 
@@ -358,7 +350,6 @@ public class BossController : MonoBehaviour
         print("Blast");
         inMotion = true;
         SlamVFX.SetActive(true);
-        //GameObject clone = Instantiate(SlamVFX, transform.position, transform.rotation);
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, slamRadius);
         foreach (Collider collider in hitColliders)
         {
