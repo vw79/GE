@@ -6,6 +6,7 @@ using UnityEngine.AI;
 
 public class BossController : MonoBehaviour
 {
+    public GameObject BossMainObject;
     public GameObject BossObject;
     public bool inMotion;
     public Animator animator;
@@ -190,39 +191,54 @@ public class BossController : MonoBehaviour
     {
         SkinnedMeshRenderer renderer = BossObject.GetComponent<SkinnedMeshRenderer>();
         Material[] emiMat = DetectMaterials();
-        int randomNumber = Random.Range(1, 4);
-        switch (randomNumber)
+        int randomNumber;
+        if (isRed && !isBlue && !isGreen)
         {
-            //Red
-            case 1:
-                BossObject.tag = "Red";
-                foreach (Material mat in emiMat) {
-                    mat.SetColor("_EmissionColor", UnityEngine.Color.red);
-                }
-                print(BossObject.gameObject.tag);
-                isChanged = false;
+            randomNumber = 1;
+        }
+        else if (isRed && !isBlue && isGreen)
+        {
+            randomNumber = Random.Range(1, 3);
+        }
+        else
+        {
+            randomNumber = Random.Range(1, 4);
+        }
+            switch (randomNumber)
+            {
+                //Red
+                case 1:
+                    BossMainObject.tag = "Red";
+                    foreach (Material mat in emiMat)
+                    {
+                        mat.SetColor("_EmissionColor", UnityEngine.Color.red);
+                    }
+                    print(BossObject.gameObject.tag);
+                    isChanged = false;
+                    break;
+                //Green  
+                case 2:
+                    BossMainObject.tag = "Green";
+                    foreach (Material mat in emiMat)
+                    {
+                        mat.SetColor("_EmissionColor", UnityEngine.Color.green);
+                    }
+                    print(BossObject.gameObject.tag);
+                    isChanged = false; 
                 break;
-            //Green   
-            case 2:
-                BossObject.tag = "Green";
-                foreach (Material mat in emiMat)
-                {
-                    mat.SetColor("_EmissionColor", UnityEngine.Color.green);
-                }
-                print(BossObject.gameObject.tag);
-                isChanged = false;
+                
+                //Blue
+                case 3:
+                    BossMainObject.tag = "Blue";
+                    foreach (Material mat in emiMat)
+                    {
+                        mat.SetColor("_EmissionColor", UnityEngine.Color.blue);
+                    }
+                    print(BossObject.gameObject.tag);
+                    isChanged = false;
                 break;
-            //Blue
-            case 3:
 
-                BossObject.tag = "Blue";
-                foreach (Material mat in emiMat)
-                {
-                    mat.SetColor("_EmissionColor", UnityEngine.Color.blue);
-                }
-                print(BossObject.gameObject.tag);
-                isChanged = false;
-                break;
+
         }
         
     }

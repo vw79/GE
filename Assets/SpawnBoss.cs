@@ -8,8 +8,22 @@ public class SpawnBoss: MonoBehaviour
     [SerializeField] private GameObject bossBullet;
     [SerializeField] private GameObject door;
 
+    [Header("Boss")]
+    public BossController bossController;
+    public bool isRed;
+    public bool isBlue;
+    public bool isGreen;
+
+    private void Awake()
+    {
+        
+    }
+
     private void Start()
     {
+        bossController.isRed = isRed;
+        bossController.isBlue = isBlue;
+        bossController.isGreen = isGreen;
         boss.SetActive(false);
         bossBullet.SetActive(false);
     }

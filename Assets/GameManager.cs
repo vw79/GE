@@ -17,6 +17,11 @@ public class GameManager : MonoBehaviour
     public GameObject door1;
     public GameObject door2;
 
+    [Header("Boss")]
+    public bool isBossOneDed;
+    public bool isBossTwoDed;
+    public bool isBossThreeDed;
+
     private void Awake()
     {
         if (Instance == null)

@@ -24,22 +24,10 @@ MonoBehaviour:
     - model: {fileID: 8926484042661614555}
       id: 0
       isStickyNote: 0
-    - model: {fileID: 8926484042661614606}
-      id: 0
-      isStickyNote: 0
     - model: {fileID: 8926484042661614558}
       id: 0
       isStickyNote: 0
-    - model: {fileID: 8926484042661614580}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614619}
-      id: 0
-      isStickyNote: 0
     - model: {fileID: 8926484042661614583}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614636}
       id: 0
       isStickyNote: 0
     - model: {fileID: 8926484042661614656}
@@ -52,15 +40,6 @@ MonoBehaviour:
       id: 0
       isStickyNote: 0
     - model: {fileID: 8926484042661614610}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614625}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614615}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614631}
       id: 0
       isStickyNote: 0
     - model: {fileID: 8926484042661614752}
@@ -77,34 +56,13 @@ MonoBehaviour:
     - model: {fileID: 8926484042661614674}
       id: 0
       isStickyNote: 0
-    - model: {fileID: 8926484042661614676}
-      id: 0
-      isStickyNote: 0
     - model: {fileID: 8926484042661614680}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614695}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614698}
       id: 0
       isStickyNote: 0
     - model: {fileID: 8926484042661614704}
       id: 0
       isStickyNote: 0
-    - model: {fileID: 8926484042661614706}
-      id: 0
-      isStickyNote: 0
     - model: {fileID: 8926484042661614711}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614724}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614730}
-      id: 0
-      isStickyNote: 0
-    - model: {fileID: 8926484042661614733}
       id: 0
       isStickyNote: 0
     - model: {fileID: 8926484042661614738}
@@ -158,7 +116,7 @@ MonoBehaviour:
     x: 241
     y: -309
     width: 3759
-    height: 1831
+    height: 1833
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
