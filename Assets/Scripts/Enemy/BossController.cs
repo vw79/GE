@@ -23,9 +23,9 @@ public class BossController : MonoBehaviour
     public Material blueMat;
     public Material greenMat;
     public bool isChanged;
-    public bool isRed;
-    public bool isBlue;
-    public bool isGreen;
+    [SerializeField]public bool isRed;
+    [SerializeField] public bool isBlue;
+    [SerializeField] public bool isGreen;
     public float colourTimer;
     
     [Header("State")]

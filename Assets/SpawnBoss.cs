@@ -11,9 +11,9 @@ public class SpawnBoss: MonoBehaviour
 
     [Header("Boss")]
     public BossController bossController;
-    public bool isRed;
-    public bool isBlue;
-    public bool isGreen;
+    [SerializeField] public bool isRed;
+    [SerializeField] public bool isBlue;
+    [SerializeField] public bool isGreen;
 
 
     private void Start()
