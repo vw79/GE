@@ -7,6 +7,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     private Dictionary<GameObject, List<GameObject>> doorEnemies = new Dictionary<GameObject, List<GameObject>>();
+    public List<GameObject> tutorialHitboxes = new List<GameObject>();
+
+    public GameObject mobsSpawner1;
 
     private GameObject loseMenu;
     private GameObject winMenu;
@@ -48,6 +51,7 @@ public class GameManager : MonoBehaviour
         winMenu = GameObject.Find("WinMenu");
         player = GameObject.FindWithTag("Player");
         DontDestroyOnLoad(player);
+        mobsSpawner1.SetActive(false);
     }
 
     void Start()
@@ -55,6 +59,11 @@ public class GameManager : MonoBehaviour
         loseMenu.SetActive(false);
         winMenu.SetActive(false);
         SpawnPlayer();
+    }
+
+    void Update()
+    {
+        CheckTutorialHitboxes();
     }
 
     void InitializeDoors()
@@ -120,5 +129,19 @@ public class GameManager : MonoBehaviour
     {
         winMenu.SetActive(true);
         Time.timeScale = 0;
+    }
+
+    void CheckTutorialHitboxes()
+    {
+        if (tutorialHitboxes.Count <= 0)
+        {
+            
+            EnableMobsSpawner();
+        }
+    }
+
+    void EnableMobsSpawner()
+    {
+        mobsSpawner1.SetActive(true);
     }
 }
