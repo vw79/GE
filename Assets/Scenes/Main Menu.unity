@@ -2360,7 +2360,7 @@ MonoBehaviour:
   loadingMenu: {fileID: 353452697558075069}
   loadingBar: {fileID: 393972673311443043}
   loadPromptText: {fileID: 393764845589162975}
-  userPromptKey: 13
+  userPromptKey: 32
   hoverSound: {fileID: 416334276608293471}
   sliderSound: {fileID: 415493336971810505}
   swooshSound: {fileID: 415849237010942649}

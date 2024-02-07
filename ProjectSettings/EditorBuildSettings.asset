@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Mohab/Main Menu.unity
+    path: Assets/Scenes/Main Menu.unity
     guid: 139951993e223a74db8cb66860636bb8
   - enabled: 1
     path: Assets/Test.unity
