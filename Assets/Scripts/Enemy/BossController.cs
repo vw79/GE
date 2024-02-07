@@ -8,8 +8,8 @@ public class BossController : MonoBehaviour
 {
     public GameObject BossMainObject;
     public GameObject BossObject;
-    public bool inMotion;
-    public bool isDead;
+    [SerializeField]public bool inMotion;
+    [SerializeField] public bool isDead;
     public Animator animator;
     public NavMeshAgent agent;
     PlayerHealthSystem playerHealthSystem;
@@ -50,6 +50,7 @@ public class BossController : MonoBehaviour
     public Transform[] spawnPoint;
 
     [Header("Phase 4")]
+    [SerializeField] public bool isVulnerable;
     public float tenseiRadius;
     public GameObject OrbVFX;
 
@@ -176,11 +177,14 @@ public class BossController : MonoBehaviour
 
     public void takeDamage(float damage)
     {
-        currentHealth -= damage;
-        Debug.Log("Boss Health: " + currentHealth);
-        if (currentHealth <= 0)
+        if (!isVulnerable)
         {
-            CurrentState = bossState.Shinda;
+            currentHealth -= damage;
+            Debug.Log("Boss Health: " + currentHealth);
+            if (currentHealth <= 0)
+            {
+                CurrentState = bossState.Shinda;
+            }
         }
     }
     
@@ -336,12 +340,14 @@ public class BossController : MonoBehaviour
     {
         if (!inMotion) 
         {
+            isVulnerable = true;
             inMotion = true;
             OrbVFX.SetActive(true);
         }
 
         if (phaseTimer <= 0f)
         {
+            isVulnerable = false;
             OrbVFX.SetActive(false);
             CurrentState = bossState.Wait;
             phaseTimer = phaseDuration;
@@ -358,7 +364,6 @@ public class BossController : MonoBehaviour
     public void aoeBlast()
     {
         print("Blast");
-        inMotion = true;
         SlamVFX.SetActive(true);
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, slamRadius);
         foreach (Collider collider in hitColliders)
