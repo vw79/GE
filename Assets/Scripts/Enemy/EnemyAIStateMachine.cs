@@ -7,6 +7,7 @@ public enum EnemyStateId
     Idle,
     Chasing,
     Attacking,
+    TakeDamage,
     Death
 }
 

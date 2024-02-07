@@ -50,6 +50,10 @@ public class EnemyAI : MonoBehaviour
     public float bulletDamage;
     [HideInInspector] public bullet Bullet;
 
+    [Header("Take Damage")]
+    public float animCD;
+    public float animCDTimer;
+
     public UltMeter ultMeter;
     private CapsuleCollider enemyCollider;
 
@@ -60,6 +64,7 @@ public class EnemyAI : MonoBehaviour
         else attackRange = 1;
         nextAttack = true;
         isDead = false;
+        animCDTimer = 0;
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -78,6 +83,7 @@ public class EnemyAI : MonoBehaviour
         stateMachine.RegisterState(new EnemyChaseState());
         stateMachine.RegisterState(new EnemyAttackState());
         stateMachine.RegisterState(new EnemyDeathState());
+        stateMachine.RegisterState(new EnemyTakeDamageState());
         stateMachine.ChangeState(initialState);
         currentHealth = maxEnemyHealth;
     }
@@ -100,14 +106,20 @@ public class EnemyAI : MonoBehaviour
             {
                 stateMachine.ChangeState(EnemyStateId.Attacking);
             }
+            if (animCDTimer > 0)
+            {
+                animCDTimer -= Time.deltaTime;
+            }
         }
     }
 
     public void takeDamage(float damage)
     {
         currentHealth -= damage;
-        animator.Play("Hurt");
-
+        if(animCDTimer <= 0) 
+        {
+            stateMachine.ChangeState(EnemyStateId.TakeDamage);
+        }
         if (currentHealth <= 0)
         {
             // For unlock door
@@ -205,6 +217,30 @@ public class EnemyAttackState : EnemyState
     public void Exit(EnemyAI agent)
     {
         agent.nextAttack=true;
+    }
+
+}
+
+public class EnemyTakeDamageState : EnemyState
+{
+
+    public EnemyStateId getID()
+    {
+        return EnemyStateId.TakeDamage;
+    }
+    public void Enter(EnemyAI agent)
+    {
+
+    }
+
+    public void Update(EnemyAI agent)
+    {
+        agent.animator.Play("Hurt");
+    }
+
+    public void Exit(EnemyAI agent)
+    {
+        agent.animCDTimer = agent.animCD;
     }
 
 }
