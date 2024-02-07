@@ -17,6 +17,8 @@ public class EnemySpawnController : MonoBehaviour
     [HideInInspector]
     bool Melee;
     [SerializeField] private GameObject checkDoor;
+    public AudioSource meleeSpawn;
+    public AudioSource RangedSpawn;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -67,10 +69,12 @@ public class EnemySpawnController : MonoBehaviour
             GameObject spawnedEnemy;
             if (Melee)
             {
+                meleeSpawn.Play();
                 spawnedEnemy = Instantiate(meleePrefab, GetRandomSpawnPoint().position, GetRandomSpawnPoint().rotation);
             }
             else
             {
+                RangedSpawn.Play();
                 spawnedEnemy = Instantiate(rangedPrefab, GetRandomSpawnPoint().position, GetRandomSpawnPoint().rotation);
             }
             GameManager.Instance.RegisterEnemy(spawnedEnemy, checkDoor);

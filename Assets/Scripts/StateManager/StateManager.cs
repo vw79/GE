@@ -35,6 +35,8 @@ public class StateManager : MonoBehaviour
     public GameObject blueCD;
     public GameObject greenCD;
 
+    public AudioSource orbPickupSFX;
+
     private Canvas redCanvas;
     private Canvas blueCanvas;   
     private Canvas greenCanvas;
@@ -148,11 +150,13 @@ public class StateManager : MonoBehaviour
 
     public void UnlockState2()
     {
+        orbPickupSFX.Play();
         state2Unlocked = true;
     }
 
     public void UnlockState3()
     {
+        orbPickupSFX.Play();
         state3Unlocked = true;
     }
 

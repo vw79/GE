@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -13,6 +14,7 @@ public class BossController : MonoBehaviour
     public Animator animator;
     public NavMeshAgent agent;
     PlayerHealthSystem playerHealthSystem;
+    
 
     [Header("Health")]
     public float maxHealth;
@@ -64,8 +66,19 @@ public class BossController : MonoBehaviour
     public float animCD;
     public float animCDTimer;
 
+    [Header("SFX")]
+    public AudioSource awakeSFX;
+    public AudioSource awakeVoiceSFX;
+    public AudioSource walkSFX;
+    public AudioSource damagedSFX;
+    public AudioSource deadSFX;
+
+    [Header("Cinemachine")]
+    public CinemachineImpulseSource impulseSource;
+
     [SerializeField] private GameObject rocky;
     
+
     private enum bossState
     {
         Spawn,
@@ -126,12 +139,15 @@ public class BossController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, slamRadius);
     }
 
+    public void walkAudio()
+    {
+        walkSFX.Play();
+    }
     public void stateHandler()
     {
             switch (CurrentState)
             {
                 case bossState.Spawn:
-                    animator.SetTrigger("Spawn");
                     break;
                 case bossState.Wait:
                     print("WAIT PHASE");
@@ -170,6 +186,13 @@ public class BossController : MonoBehaviour
                 break;
             }
     }
+    public void SpawnAudio()
+    {
+        CamShake.instance.CameraShake(impulseSource, 1.5f);
+        awakeSFX.Play();
+        awakeVoiceSFX.Play();
+    }
+
     public void PhaseInterval()
     {
         transform.LookAt(playerTransform.position);
@@ -199,10 +222,11 @@ public class BossController : MonoBehaviour
     {
         if (!isVulnerable)
         {
+            damagedSFX.Play();
             currentHealth -= damage;
             if(animCDTimer <= 0)
             {
-                CurrentState = bossState.TakeDamage;
+               CurrentState = bossState.TakeDamage;
             }
             Debug.Log("Boss Health: " + currentHealth);
             if (currentHealth <= 0)
@@ -334,19 +358,27 @@ public class BossController : MonoBehaviour
         {
             rocky.transform.position = newPosition;
         }
-
         isDead = true;
-        Destroy(gameObject);
+        animator.Play("Death");
+        deadSFX.Play();
+        StartCoroutine(Despawn());
     }
 
+    public IEnumerator Despawn()
+    {
+        yield return new WaitForSeconds(3.5f);
+        Destroy(gameObject);
+    }
     //Phase 1
     public void moveToPlayer()
     {
+        isVulnerable = true;
         print("move");
         agent.SetDestination(playerTransform.position);
 
         if (Vector3.Distance(transform.position, playerTransform.position) < 1.5f)
         {
+            isVulnerable = false;
             CurrentState = bossState.PhaseFour;
         }
     }

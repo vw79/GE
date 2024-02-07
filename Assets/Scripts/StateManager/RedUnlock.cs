@@ -5,7 +5,7 @@ using UnityEngine;
 public class RedUnlock : MonoBehaviour
 {
     public StateManager stateManager;
-
+   
     void OnTriggerEnter(Collider other)
     {
         // Check if the collider is the player

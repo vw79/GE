@@ -15,6 +15,7 @@ public class PlayerCombat : MonoBehaviour
     int comboCounter;
     public bool isAttacking;
     public bool isUltimateActive;
+    public AudioSource AttackSFX;
 
     // References
     private Animator anim;
@@ -26,6 +27,9 @@ public class PlayerCombat : MonoBehaviour
     private PlayerController playerController;
     private PlayerHealthSystem healthSystem;
     private GameObject player;
+
+    [Header("SFX")]
+    public AudioSource ultSFX;
  
     #endregion
 
@@ -83,6 +87,7 @@ public class PlayerCombat : MonoBehaviour
                 {
 
                     anim.runtimeAnimatorController = combo[comboCounter].animatorOV;
+                    AttackSFX.Play();
                     anim.Play("Attack", 0, 0);
 
                     // Can set custom damage for each attack in the combo
@@ -182,6 +187,7 @@ public class PlayerCombat : MonoBehaviour
 
     private IEnumerator UltDamage()
     {
+        ultSFX.Play();
         ult.SetActive(true);
         yield return new WaitForSeconds(.8f);    
         UltEnd();

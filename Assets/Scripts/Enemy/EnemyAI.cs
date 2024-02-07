@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using Unity.AI.Navigation;
 using Unity.Transforms;
 using UnityEngine;
@@ -53,6 +54,13 @@ public class EnemyAI : MonoBehaviour
     [Header("Take Damage")]
     public float animCD;
     public float animCDTimer;
+
+    [Header("SFX")]
+    [SerializeField]public AudioSource MeleeTakeDamage;
+    [SerializeField]public AudioSource MeleeAttack;
+    [SerializeField]public AudioSource RangedTakeDamage;
+    [SerializeField]public AudioSource RangedAttack;
+    [SerializeField]public AudioSource Dying;
 
     public UltMeter ultMeter;
     private CapsuleCollider enemyCollider;
@@ -116,6 +124,8 @@ public class EnemyAI : MonoBehaviour
     public void takeDamage(float damage)
     {
         currentHealth -= damage;
+        if (!isMelee) RangedTakeDamage.Play();
+        else if (isMelee) MeleeTakeDamage.Play();
         if(animCDTimer <= 0) 
         {
             stateMachine.ChangeState(EnemyStateId.TakeDamage);
@@ -138,6 +148,7 @@ public class EnemyAI : MonoBehaviour
     //animation event functions
     public void Shoot()
     {
+        RangedAttack.Play();
         //instantiate bullet/projectile
         GameObject currentBullet = Instantiate(bullet, gunTip.position, Quaternion.identity);
 
@@ -146,10 +157,12 @@ public class EnemyAI : MonoBehaviour
 
         Destroy(currentBullet,2);
     }
+
     public void DealDamage()
     {
         if (pHealth != null && pHealth.enabled)
         {
+            MeleeAttack.Play();
             pHealth.TakeDamage(attackDamage);
             nextAttack = true;
         }
@@ -160,7 +173,6 @@ public class EnemyAI : MonoBehaviour
         GameObject.Destroy(gameObject);
     }
 }
-
 
 public class EnemyChaseState : EnemyState
 {
@@ -255,6 +267,7 @@ public class EnemyDeathState : EnemyState
 
     public void Update(EnemyAI agent)
     {
+        agent.Dying.Play();
         agent.animator.Play("Death");
 
     }

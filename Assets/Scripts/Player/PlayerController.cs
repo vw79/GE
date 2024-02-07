@@ -20,11 +20,14 @@ public class PlayerController : MonoBehaviour
     private Vector3 _input;
     private float _currentSpeed;
     private bool _isDashing;
-
+    public AudioSource walkAudio;
     private float _dashTimeLeft;
     private float _dashCooldownTimer;
     private Vector3 _lastInputDirection;
-
+    private void Walk()
+    {
+        walkAudio.Play();
+    }
     private void ResetMovement()
     {
         _currentSpeed = 0;
@@ -84,7 +87,6 @@ public class PlayerController : MonoBehaviour
     {
         get { return _turnSpeed; }
     }
-
 
     private void HandleDashInput()
     {

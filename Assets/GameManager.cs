@@ -33,6 +33,9 @@ public class GameManager : MonoBehaviour
     public bool isBossTwoDed;
     public bool isBossThreeDed;
 
+    [Header("SFX")]
+    public AudioSource openDoor;
+
     private void Awake()
     {
         if (Instance == null)
@@ -111,6 +114,7 @@ public class GameManager : MonoBehaviour
 
     void UnlockDoor(GameObject door)
     {
+        openDoor.Play();
         door.SetActive(false); 
     }
 
