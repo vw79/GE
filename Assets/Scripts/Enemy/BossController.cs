@@ -179,6 +179,7 @@ public class BossController : MonoBehaviour
     {
         if (!isVulnerable)
         {
+            animator.Play("Hurt");
             currentHealth -= damage;
             Debug.Log("Boss Health: " + currentHealth);
             if (currentHealth <= 0)
