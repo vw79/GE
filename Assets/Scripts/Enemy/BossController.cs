@@ -37,6 +37,7 @@ public class BossController : MonoBehaviour
 
     [Header("Phase 1")]
     [HideInInspector]public Transform playerTransform;
+    [HideInInspector]public float distanceToPlayer;
 
     [Header("Phase 2")]
     public GameObject pullVFX;
@@ -59,6 +60,10 @@ public class BossController : MonoBehaviour
     public float slamDamage;
     public GameObject SlamVFX;
 
+    [Header("Take Damage")]
+    public float animCD;
+    public float animCDTimer;
+
     [SerializeField] private GameObject rocky;
     
     private enum bossState
@@ -66,9 +71,10 @@ public class BossController : MonoBehaviour
         Spawn,
         Wait,
         Shinda,
+        TakeDamage,
         //Phase 1 - moving to player
         PhaseOne,
-        //Phase 2 - Laser
+        //Phase 2 - Bansho Tenin
         PhaseTwo,
         //Phase 3 - Sphere Spawn
         PhaseThree,
@@ -89,9 +95,11 @@ public class BossController : MonoBehaviour
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GetComponent<Animator>();
+        animCDTimer = 0;
         phaseTimer = 0f;
         waitTimer = 2f;
         agent = GetComponent<NavMeshAgent>();
+        distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
        
     }
 
@@ -105,6 +113,10 @@ public class BossController : MonoBehaviour
                 Invoke("colorChange", colourTimer);
                 isChanged = true;
             }
+        }
+        if(animCDTimer > 0)
+        {
+            animCDTimer -= Time.deltaTime;
         }
     }
 
@@ -146,13 +158,16 @@ public class BossController : MonoBehaviour
                     animator.Play("Push");
                     shinraTensei();
                     break;
-            case bossState.PhaseFive:
+                case bossState.PhaseFive:
                     print("PHASE FIVE");
                     animator.Play("Slam");
                     break;
                 case bossState.Shinda:
                     Death();
                     break;
+                case bossState.TakeDamage:
+                    Hurt();
+                break;
             }
     }
     public void PhaseInterval()
@@ -162,7 +177,11 @@ public class BossController : MonoBehaviour
         if (waitTimer <= 0f)
         {
             // Choose a random phase
-            CurrentState = (bossState)Random.Range((int)bossState.PhaseOne, (int)bossState.PhaseFive + 1);
+            if (distanceToPlayer > 10.0f)
+            {
+                CurrentState = (bossState)Random.Range((int)bossState.PhaseOne, (int)bossState.PhaseTwo + 1); ;
+            }
+            else CurrentState = (bossState)Random.Range((int)bossState.PhaseOne, (int)bossState.PhaseFive + 1);
 
             // Reset the phase timer
             waitTimer = waitDuration;
@@ -175,12 +194,16 @@ public class BossController : MonoBehaviour
         }
     }
 
+    #region Take Damage
     public void takeDamage(float damage)
     {
         if (!isVulnerable)
         {
-            animator.Play("Hurt");
             currentHealth -= damage;
+            if(animCDTimer <= 0)
+            {
+                CurrentState = bossState.TakeDamage;
+            }
             Debug.Log("Boss Health: " + currentHealth);
             if (currentHealth <= 0)
             {
@@ -188,7 +211,23 @@ public class BossController : MonoBehaviour
             }
         }
     }
-    
+
+    public void Hurt()
+    {
+        animator.Play("Hurt");
+        animCDTimer = animCD;
+        StartCoroutine(resetState());
+    }
+
+    public IEnumerator resetState()
+    {
+        yield return new WaitForSeconds(1.0f);
+        CurrentState = bossState.Wait;
+    }
+
+    #endregion
+
+    #region Change Color
     public void colorChange()
     {
         if (!isDead)
@@ -280,6 +319,9 @@ public class BossController : MonoBehaviour
  
     }
 
+    #endregion
+
+    #region States
     public void Spawn()
     {
         CurrentState = bossState.Wait; 
@@ -386,5 +428,6 @@ public class BossController : MonoBehaviour
         VFX.SetActive(false);
 
     }
+    #endregion
 }
 
