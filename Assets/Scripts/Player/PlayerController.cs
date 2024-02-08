@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
         _animator = GetComponent<Animator>();
         _animator.Play("Idle");
         _meshTrail = GetComponent<MeshTrail>();
-        
+
     }
 
     private void Update()
@@ -92,7 +92,9 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && !_isDashing && _dashCooldownTimer <= 0 && _currentSpeed >= 0.1)
         {
-            StartDash();
+            _isDashing = true;
+            _dashTimeLeft = _dashDuration;
+            _dashCooldownTimer = _dashCooldown;
         }
 
         if (_isDashing)
@@ -114,22 +116,6 @@ public class PlayerController : MonoBehaviour
     {
         StartCoroutine(_meshTrail.ActivateTrail(activeTime));
         _rb.AddForce(_input.ToIso().normalized * _dashSpeed, ForceMode.VelocityChange);
-    }
-
-    public void TryDash()
-    {
-        if (!_isDashing && _dashCooldownTimer <= 0)
-        {
-            _animator.SetTrigger("Escape");
-            StartDash();
-        }
-    }
-
-    private void StartDash()
-    {
-        _isDashing = true;
-        _dashTimeLeft = _dashDuration;
-        _dashCooldownTimer = _dashCooldown;
     }
 
     private void Look()

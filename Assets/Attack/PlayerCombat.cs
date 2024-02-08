@@ -55,6 +55,8 @@ public class PlayerCombat : MonoBehaviour
 
     void Update()
     {
+        if (healthSystem.isDead) return;
+
         if (Input.GetMouseButtonDown(0) && !isUltimateActive)
         {
             isAttacking = true;

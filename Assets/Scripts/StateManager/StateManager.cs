@@ -20,6 +20,7 @@ public class StateManager : MonoBehaviour
     private SkinnedMeshRenderer playerRenderer;
     private Material[] playerMaterialDefault;
     public Material[] playerNewMaterials;
+    private PlayerHealthSystem playerHealth;    
 
     public Image stateImage; 
     public Sprite blueImage; 
@@ -70,6 +71,7 @@ public class StateManager : MonoBehaviour
         fire = player.GetComponent<Fire>();
         playerCombat = player.GetComponent<PlayerCombat>();
         playerRenderer = player.GetComponentInChildren<SkinnedMeshRenderer>();
+        playerHealth = player.GetComponent<PlayerHealthSystem>();
         playerMaterialDefault = playerRenderer.materials;
 
         actionCooldowns = new float[3] { 10f, 20f, 10f }; 
@@ -89,7 +91,8 @@ public class StateManager : MonoBehaviour
     }
 
     void Update()
-    {
+    {   if (playerHealth.isDead) return;
+
         if (Input.GetKeyDown(KeyCode.Alpha1) && currentState != State.State1)
         {
             ChangeState(State.State1);
