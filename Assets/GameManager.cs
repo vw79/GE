@@ -16,9 +16,9 @@ public class GameManager : MonoBehaviour
     private GameObject winMenu;
 
     private GameObject player;
-    public Transform spawn1;
+    private Transform spawn1;
 
-    public GameObject door1;
+    /*public GameObject door1;
     public GameObject door2;
     public GameObject door3;
     public GameObject door4;
@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     public GameObject door7;
     public GameObject door8;
     public GameObject door9;
-    public GameObject door10;
+    public GameObject door10;*/
 
     [Header("Boss")]
     public bool isBossOneDed;
@@ -62,15 +62,12 @@ public class GameManager : MonoBehaviour
         winMenu = GameObject.Find("WinMenu");
         pauseMenu = GameObject.Find("PauseMenu");
         player = GameObject.FindWithTag("Player");
+        spawn1 = GameObject.FindWithTag("InitialSpawn").transform;
         
         playerController = player.GetComponent<PlayerController>();
         playerCombat = player.GetComponent<PlayerCombat>();        
         mobsSpawner1.SetActive(false);
-        DontDestroyOnLoad(player);
-    }
 
-    void Start()
-    {
         loseMenu.SetActive(false);
         winMenu.SetActive(false);
         pauseMenu.SetActive(false);
@@ -97,16 +94,16 @@ public class GameManager : MonoBehaviour
 
     void InitializeDoors()
     {
-        doorEnemies.Add(door1, new List<GameObject>()); 
-        doorEnemies.Add(door2, new List<GameObject>());
-        doorEnemies.Add(door3, new List<GameObject>());
-        doorEnemies.Add(door4, new List<GameObject>());
-        doorEnemies.Add(door5, new List<GameObject>());
-        doorEnemies.Add(door6, new List<GameObject>());
-        doorEnemies.Add(door7, new List<GameObject>());
-        doorEnemies.Add(door8, new List<GameObject>());
-        doorEnemies.Add(door9, new List<GameObject>());
-        doorEnemies.Add(door10, new List<GameObject>());
+        GameObject[] doors = GameObject.FindGameObjectsWithTag("Door");
+
+        // Iterate through each door and add it to the dictionary
+        foreach (GameObject door in doors)
+        {
+            if (!doorEnemies.ContainsKey(door))
+            {
+                doorEnemies.Add(door, new List<GameObject>());
+            }
+        }
     }
 
     public void RegisterEnemy(GameObject enemy, GameObject door)

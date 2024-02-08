@@ -47,19 +47,44 @@ public class PlayerHealthSystem: MonoBehaviour
         if (playerCombat.isUltimateActive) return;
 
         current_health -= damage;
+        healthBar.SetHealth(current_health);
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            playerController.TryDash();
+            if (current_health <= 0)
+            {
+                HandleDeath();
+            }
+            return;
+        }
+
         playerController.enabled = false;
         animator.Play("Impact");
         chromaticEffect?.TriggerChromaAb();
-        CamShake.instance.CameraShake(impulseSource,0.2f);        
-        healthBar.SetHealth(current_health);
+        CamShake.instance.CameraShake(impulseSource, 0.2f);
 
         if (current_health <= 0)
         {
-            if (!isDead)
-            {
-                isDead = true;
-                OnDeath.Invoke();
-            }
+            HandleDeath();
+        }
+        else
+        {             
+            Invoke("EnablePlayerController", 0.1f);
+        }
+    }
+
+    private void EnablePlayerController()
+    {
+        playerController.enabled = true;
+    }
+
+    private void HandleDeath()
+    {
+        if (!isDead)
+        {
+            isDead = true;
+            OnDeath.Invoke();
         }
     }
 
