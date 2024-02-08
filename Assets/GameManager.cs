@@ -16,22 +16,13 @@ public class GameManager : MonoBehaviour
     private GameObject winMenu;
 
     private GameObject player;
+    private PlayerHealthSystem playerHealth;
     private Transform spawn1;
 
-    /*public GameObject door1;
-    public GameObject door2;
-    public GameObject door3;
-    public GameObject door4;
-    public GameObject door5;
-    public GameObject door6;
-    public GameObject door7;
-    public GameObject door8;
-    public GameObject door9;
-    public GameObject door10;*/
+    private GameObject boss3;
+    private BossController bossController;
 
     [Header("Boss")]
-    public bool isBossOneDed;
-    public bool isBossTwoDed;
     public bool isBossThreeDed;
 
     [Header("SFX")]
@@ -57,11 +48,14 @@ public class GameManager : MonoBehaviour
         }
 
         InitializeDoors();
+        
 
         loseMenu = GameObject.Find("LoseMenu");
         winMenu = GameObject.Find("WinMenu");
         pauseMenu = GameObject.Find("PauseMenu");
         player = GameObject.FindWithTag("Player");
+        DontDestroyOnLoad(player);
+        playerHealth = player.GetComponent<PlayerHealthSystem>();
         spawn1 = GameObject.FindWithTag("InitialSpawn").transform;
         
         playerController = player.GetComponent<PlayerController>();
@@ -72,6 +66,12 @@ public class GameManager : MonoBehaviour
         winMenu.SetActive(false);
         pauseMenu.SetActive(false);
         SpawnPlayer();
+
+
+        boss3 = GameObject.FindWithTag("Boss3");
+        bossController = boss3.GetComponent<BossController>();
+
+        isBossThreeDed = false;
     }
 
     void Update()
@@ -90,6 +90,11 @@ public class GameManager : MonoBehaviour
 
         CheckTutorialHitboxes();
 
+        if (bossController.currentHealth <= 0)
+        {
+           isBossThreeDed = true;
+           StartCoroutine(PlayerWon());
+        }
     }
 
     void InitializeDoors()
@@ -152,8 +157,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
     }
 
-    public void PlayerWon()
+    IEnumerator PlayerWon()
     {
+        yield return new WaitForSeconds(5f);
         winMenu.SetActive(true);
         Time.timeScale = 0;
     }
@@ -170,6 +176,24 @@ public class GameManager : MonoBehaviour
     void EnableMobsSpawner()
     {
         mobsSpawner1.SetActive(true);
+    }
+
+    public void RestartGame()
+    {
+        player.SetActive(true);
+        player.transform.position = spawn1.position;
+        playerHealth.ResetHealth();
+
+        loseMenu.SetActive(false);
+        winMenu.SetActive(false);
+        pauseMenu.SetActive(false);
+
+        Time.timeScale = 1f;
+
+        playerCombat.enabled = true;
+        playerController.enabled = true;
+
+        isPaused = false;
     }
 
     #region PauseMenu

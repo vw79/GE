@@ -28,10 +28,6 @@ public class ChromaticAberrationEffect : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            TriggerChromaAb();
-        }
     }
 
     public void TriggerChromaAb()

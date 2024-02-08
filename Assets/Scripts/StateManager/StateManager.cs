@@ -72,7 +72,7 @@ public class StateManager : MonoBehaviour
         playerRenderer = player.GetComponentInChildren<SkinnedMeshRenderer>();
         playerMaterialDefault = playerRenderer.materials;
 
-        actionCooldowns = new float[3] { 10f, 10f, 10f }; 
+        actionCooldowns = new float[3] { 10f, 20f, 10f }; 
         isActionCooldowns = new bool[3] { false, false, false };
        
         redCanvas = redCD.GetComponentInChildren<Canvas>();

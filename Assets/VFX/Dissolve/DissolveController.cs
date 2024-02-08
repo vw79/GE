@@ -62,7 +62,7 @@ public class DissolveController: MonoBehaviour
             yield return new WaitForSeconds(RefreshRate);
         }
 
-        Destroy(player);
+        player.SetActive(false);
         GameManager.Instance.PlayerDied();
     }
 }

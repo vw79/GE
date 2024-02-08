@@ -70,7 +70,7 @@ public class PlayerHealthSystem: MonoBehaviour
         }
         else
         {             
-            Invoke("EnablePlayerController", 0.1f);
+            Invoke("EnablePlayerController", 0.2f);
         }
     }
 
@@ -95,6 +95,12 @@ public class PlayerHealthSystem: MonoBehaviour
         {
             current_health = max_health;
         }
+        healthBar.SetHealth(current_health);
+    }
+
+    public void ResetHealth()
+    {
+        current_health = max_health;
         healthBar.SetHealth(current_health);
     }
 }

@@ -18,7 +18,7 @@ public class BossController : MonoBehaviour
 
     [Header("Health")]
     public float maxHealth;
-    float currentHealth;
+    public float currentHealth;
 
     [Header("Colour")]
     public Material redMat;

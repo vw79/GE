@@ -13,6 +13,7 @@ TagManager:
   - Door
   - InitialSpawn
   - TutorialCheck
+  - Boss3
   layers:
   - Default
   - TransparentFX
