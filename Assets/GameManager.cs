@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -36,6 +37,13 @@ public class GameManager : MonoBehaviour
     [Header("SFX")]
     public AudioSource openDoor;
 
+    private GameObject pauseMenu;
+    private PlayerController playerController;
+    private PlayerCombat playerCombat;
+    public bool isPaused;
+    public bool isTutorial;
+
+
     private void Awake()
     {
         if (Instance == null)
@@ -52,21 +60,39 @@ public class GameManager : MonoBehaviour
 
         loseMenu = GameObject.Find("LoseMenu");
         winMenu = GameObject.Find("WinMenu");
+        pauseMenu = GameObject.Find("PauseMenu");
         player = GameObject.FindWithTag("Player");
-        DontDestroyOnLoad(player);
+        
+        playerController = player.GetComponent<PlayerController>();
+        playerCombat = player.GetComponent<PlayerCombat>();        
         mobsSpawner1.SetActive(false);
+        DontDestroyOnLoad(player);
     }
 
     void Start()
     {
         loseMenu.SetActive(false);
         winMenu.SetActive(false);
+        pauseMenu.SetActive(false);
         SpawnPlayer();
     }
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isPaused)
+            {
+                ResumeGame();
+            }
+            else
+            {
+                PauseGame();
+            }
+        }
+
         CheckTutorialHitboxes();
+
     }
 
     void InitializeDoors()
@@ -148,4 +174,38 @@ public class GameManager : MonoBehaviour
     {
         mobsSpawner1.SetActive(true);
     }
+
+    #region PauseMenu
+    public void PauseGame()
+    {
+        if (!isTutorial)
+        {
+            pauseMenu.SetActive(true);
+            playerCombat.enabled = false;
+            playerController.enabled = false;
+            Time.timeScale = 0f;
+            isPaused = true;
+        }    
+    }
+
+    public void ResumeGame()
+    {
+        pauseMenu.SetActive(false);
+        playerCombat.enabled = true;
+        playerController.enabled = true;
+        Time.timeScale = 1f;
+        isPaused = false;
+    }
+
+    public void MainMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(0);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+    #endregion
 }

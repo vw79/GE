@@ -24,6 +24,7 @@ public class TutorialTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            GameManager.Instance.isTutorial = true;
             ShowTutorial();
         }
     }
@@ -67,6 +68,7 @@ public class TutorialTrigger : MonoBehaviour
         tutorialImage.SetActive(false);
         Time.timeScale = 1f;
         GameManager.Instance.tutorialHitboxes.Remove(gameObject);
+        GameManager.Instance.isTutorial = false;
         Destroy(gameObject);
     }
 }

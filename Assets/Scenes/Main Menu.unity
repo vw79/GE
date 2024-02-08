@@ -776,7 +776,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &352418612980353571
 GameObject:
@@ -2849,8 +2849,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Press any key to continue
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: debe894442e153d479c7f9d07cce1276, type: 2}
-  m_sharedMaterial: {fileID: 21975412471922176, guid: debe894442e153d479c7f9d07cce1276, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9bfa50894eb4df34fa572611e0437d57, type: 2}
+  m_sharedMaterial: {fileID: 4660468678304884789, guid: 9bfa50894eb4df34fa572611e0437d57, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3167,8 +3167,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Loading
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0b65c99348f068b49bef5db0bb76a6e4, type: 2}
-  m_sharedMaterial: {fileID: 21809785584020342, guid: 0b65c99348f068b49bef5db0bb76a6e4, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9bfa50894eb4df34fa572611e0437d57, type: 2}
+  m_sharedMaterial: {fileID: 4660468678304884789, guid: 9bfa50894eb4df34fa572611e0437d57, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4907,8 +4907,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -618, y: -292.4}
-  m_SizeDelta: {x: 542, y: 27.2}
+  m_AnchoredPosition: {x: -555, y: -292.4}
+  m_SizeDelta: {x: 682.5, y: 27.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &575707394033013271
 RectTransform:
