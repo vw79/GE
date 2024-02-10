@@ -2,14 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.VFX;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    public MaterialData playerMaterialData;
     private Dictionary<GameObject, List<GameObject>> doorEnemies = new Dictionary<GameObject, List<GameObject>>();
     public List<GameObject> tutorialHitboxes = new List<GameObject>();
 
+    private StateManager stateManager;
+    private VisualEffect iceEffect;
+    private ParticleSystem fireEffect;
+    private SkinnedMeshRenderer playerRenderer;
+    private GameObject sword;
     public GameObject mobsSpawner1;
 
     private GameObject loseMenu;
@@ -55,6 +62,11 @@ public class GameManager : MonoBehaviour
         pauseMenu = GameObject.Find("PauseMenu");
         player = GameObject.FindWithTag("Player");
         DontDestroyOnLoad(player);
+        stateManager = GameObject.Find("StateManager").GetComponent<StateManager>();
+        playerRenderer = player.GetComponentInChildren<SkinnedMeshRenderer>();
+        iceEffect = GameObject.Find("IceAttack").GetComponent<VisualEffect>();
+        fireEffect = GameObject.Find("FireAttack").GetComponent<ParticleSystem>();
+        sword = GameObject.FindWithTag("Sword");
         playerHealth = player.GetComponent<PlayerHealthSystem>();
         spawn1 = GameObject.FindWithTag("InitialSpawn").transform;
         
@@ -96,6 +108,18 @@ public class GameManager : MonoBehaviour
            StartCoroutine(PlayerWon());
         }
     }
+
+    private void RestorePlayerMaterials()
+    {
+        if (playerMaterialData != null)
+        {          
+            if (playerRenderer != null)
+            {
+                playerRenderer.materials = playerMaterialData.originalMaterials;
+            }
+        }
+    }
+
 
     void InitializeDoors()
     {
@@ -154,6 +178,8 @@ public class GameManager : MonoBehaviour
     public void PlayerDied()
     {
         loseMenu.SetActive(true);
+        
+        playerRenderer.materials = new Material[0];
         Time.timeScale = 0;
     }
 
@@ -165,24 +191,34 @@ public class GameManager : MonoBehaviour
     }
 
     void CheckTutorialHitboxes()
-    {
-        if (tutorialHitboxes.Count <= 0)
-        {
-            
-            EnableMobsSpawner();
+    {   
+        if (tutorialHitboxes != null)
+        { 
+            if (tutorialHitboxes.Count <= 0)
+            {
+                EnableMobsSpawner();
+            } 
         }
     }
 
     void EnableMobsSpawner()
     {
-        mobsSpawner1.SetActive(true);
+        if (mobsSpawner1 != null)
+        {
+            mobsSpawner1.SetActive(true); 
+        }
     }
 
     public void RestartGame()
     {
         player.SetActive(true);
+        iceEffect.Stop();
+        fireEffect.Stop();
+        RestorePlayerMaterials();
+        sword.SetActive(true);
         player.transform.position = spawn1.position;
         playerHealth.ResetHealth();
+        stateManager.currentState = StateManager.State.State1;
 
         loseMenu.SetActive(false);
         winMenu.SetActive(false);

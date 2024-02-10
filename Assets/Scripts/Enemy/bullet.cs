@@ -18,6 +18,11 @@ public class bullet : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        if (playerHealth.isDead)
+        {
+            return;
+        }
+
         if (other.CompareTag("Player") && playerHealth.enabled)
         {
             playerHealth.TakeDamage(bulletDamage);

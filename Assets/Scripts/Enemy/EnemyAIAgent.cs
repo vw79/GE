@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static EnemyDeathState;
 
 public class EnemyAiAgent : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class EnemyAiAgent : MonoBehaviour
         stateMachine.RegisterState(new EnemyChaseState());
         //stateMachine.RegisterState(new EnemyPatrolState());
         stateMachine.RegisterState(new EnemyDeathState());
+        stateMachine.RegisterState(new EnemyIdle());
         stateMachine.ChangeState(initialState);
     }
 

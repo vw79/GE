@@ -49,7 +49,7 @@ public class StateManager : MonoBehaviour
         State3
     }
 
-    private State currentState = State.State1;
+    public State currentState = State.State1;
     private bool state2Unlocked = false;
     private bool state3Unlocked = false;
 
@@ -82,7 +82,7 @@ public class StateManager : MonoBehaviour
         greenCanvas = greenCD.GetComponentInChildren<Canvas>();
 
         redCanvas.enabled = false;
-        greenCanvas.enabled = false;
+        greenCanvas.enabled = false;    
     }
 
     void Start()

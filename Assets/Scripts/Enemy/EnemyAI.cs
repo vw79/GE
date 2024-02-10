@@ -5,6 +5,7 @@ using Unity.AI.Navigation;
 using Unity.Transforms;
 using UnityEngine;
 using UnityEngine.AI;
+using static EnemyDeathState;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -92,12 +93,15 @@ public class EnemyAI : MonoBehaviour
         stateMachine.RegisterState(new EnemyAttackState());
         stateMachine.RegisterState(new EnemyDeathState());
         stateMachine.RegisterState(new EnemyTakeDamageState());
+        stateMachine.RegisterState(new EnemyIdle());
         stateMachine.ChangeState(initialState);
         currentHealth = maxEnemyHealth;
     }
     void Update()
     {   
         stateMachine.Update();
+        
+
         if (!isDead)
         {
             playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, PlayerLayer);
@@ -160,6 +164,11 @@ public class EnemyAI : MonoBehaviour
 
     public void DealDamage()
     {
+        if (pHealth.isDead)
+        {
+            stateMachine.ChangeState(EnemyStateId.Idle);
+        }
+
         if (pHealth != null && pHealth.enabled)
         {
             MeleeAttack.Play();
@@ -279,6 +288,29 @@ public class EnemyDeathState : EnemyState
 
     public void Exit(EnemyAI agent)
     {
+    }
+
+    public class EnemyIdle : EnemyState
+    {
+
+        public EnemyStateId getID()
+        {
+            return EnemyStateId.Idle;
+        }
+        public void Enter(EnemyAI agent)
+        {
+
+        }
+
+        public void Update(EnemyAI agent)
+        {
+            agent.animator.Play("Idle");
+        }
+
+        public void Exit(EnemyAI agent)
+        {
+        }
+
     }
 }
 

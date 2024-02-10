@@ -36,6 +36,7 @@ public class PlayerCombat : MonoBehaviour
     public GameObject ult;
     public UltMeter ultMeter;
 
+
     private void Awake()
     {
         anim = GetComponent<Animator>();

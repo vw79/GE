@@ -17,7 +17,6 @@ public class EnemySpawnController : MonoBehaviour
     [HideInInspector]
     bool Melee;
     [SerializeField] private GameObject checkDoor;
-    [SerializeField] private GameObject previouscheckDoor;
     public AudioSource meleeSpawn;
     public AudioSource RangedSpawn;
 
@@ -26,11 +25,7 @@ public class EnemySpawnController : MonoBehaviour
         if (other.CompareTag("Player") && !isEntered)
         {
             SpawnEnemies();
-            isEntered = true;
-            if (previouscheckDoor != null)
-            {
-                previouscheckDoor.SetActive(true);
-            }             
+            isEntered = true;           
         }
     }
 

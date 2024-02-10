@@ -75,6 +75,7 @@ public class PlayerHealthSystem : MonoBehaviour
 
     public void ResetHealth()
     {
+        isDead = false;
         current_health = max_health;
         healthBar.SetHealth(current_health);
     }
